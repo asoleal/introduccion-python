@@ -1,3 +1,183 @@
-# Capítulo 3: Control de flujo
+# Control de flujo: decisiones, repeticiones y funciones
 
-En construcción.
+Hasta ahora tus programas ejecutan las líneas una tras otra, de arriba hacia abajo, siempre igual. Los programas útiles hacen tres cosas más: **deciden** (si pasa esto, haz aquello), **repiten** (haz esto 1000 veces) y **empaquetan** (guarda este procedimiento para usarlo cuando quiera). Eso es el control de flujo.
+
+## Decisiones: `if`, `elif`, `else`
+
+Un sistema de riego automático tiene una lógica muy simple: *si la humedad del suelo es baja, activar la bomba*. En Python eso se escribe casi igual que en español:
+
+```python
+humedad = 25  # porcentaje medido por el sensor
+
+if humedad < 30:
+    print("Humedad baja: activar riego")
+```
+
+Ejecútalo. Luego cambia `humedad` a `45` y ejecútalo de nuevo: no aparece nada, porque la condición ya no se cumple.
+
+Para cubrir más casos se usan `elif` ("si no, entonces si...") y `else` ("en cualquier otro caso"):
+
+```python
+humedad = 25
+
+if humedad < 30:
+    print("Humedad baja: activar riego")
+elif humedad < 60:
+    print("Humedad adecuada: no hacer nada")
+else:
+    print("Humedad excesiva: revisar drenaje")
+```
+
+::: {.callout-warning}
+**La indentación manda.** Fíjate que las líneas después de `if` van desplazadas 4 espacios a la derecha. Ese sangrado le dice a Python qué pertenece a cada bloque. Si lo quitas, da error. Es la regla más famosa de Python: la sangría no es decoración, es sintaxis.
+:::
+
+### Operadores de comparación y lógicos
+
+Las condiciones se construyen con estos operadores:
+
+| Tipo | Operador | Significado | Ejemplo | Resultado |
+|:-----|:--------:|:------------|:-------:|:---------:|
+| Comparación | `==` | Igual a | `5 == 5` | `True` |
+| Comparación | `!=` | Diferente de | `5 != 3` | `True` |
+| Comparación | `<` | Menor que | `25 < 30` | `True` |
+| Comparación | `>` | Mayor que | `7 > 4` | `True` |
+| Comparación | `<=` | Menor o igual | `3 <= 2` | `False` |
+| Comparación | `>=` | Mayor o igual | `30 >= 30` | `True` |
+| Lógico | `and` | Y (ambas verdaderas) | `True and False` | `False` |
+| Lógico | `or` | O (al menos una) | `True or False` | `True` |
+| Lógico | `not` | Negación | `not True` | `False` |
+
+: Operadores de comparación y lógicos {#tbl-comparacion}
+
+::: {.callout-important}
+**Doble igual para comparar.** Es el error número 1 de los principiantes: `=` asigna, `==` compara. `if humedad = 30:` es error; `if humedad == 30:` es correcto.
+:::
+
+Con `and` y `or` puedes combinar condiciones, como una alarma de invernadero que se activa por temperatura **o** por humedad:
+
+```python
+temperatura = 38
+humedad = 45
+
+if temperatura > 35 or humedad > 80:
+    print("ALARMA: condiciones fuera de rango")
+else:
+    print("Condiciones normales")
+```
+
+## Repeticiones: el ciclo `for`
+
+Un sensor toma una lectura cada hora. Un administrador calcula la nómina de 50 empleados. Un ingeniero evalúa 12 parcelas. En todos los casos: **la misma operación, muchas veces**. Para eso está el ciclo `for`.
+
+La forma más simple usa `range()`, que genera una secuencia de números:
+
+```python
+for hora in range(24):
+    print(f"Tomando lectura de la hora {hora}")
+```
+
+Esto ejecuta el `print` 24 veces, con `hora` tomando los valores 0, 1, 2, ..., 23.
+
+Ejemplo agro: calcular la producción total recorriendo las parcelas de una finca:
+
+```python
+producciones = [4.2, 3.8, 5.1, 4.6, 3.9]  # toneladas por parcela
+total = 0
+
+for p in producciones:
+    total = total + p
+
+print(f"Producción total: {total} toneladas")
+```
+
+El patrón `total = total + p` se llama **acumulador**: una variable que empieza en cero y va sumando. Lo usarás constantemente.
+
+Ejemplo de administración: proyectar las ventas de los próximos 5 años con crecimiento del 8 % anual:
+
+```python
+ventas = 50000000  # ventas del año actual
+
+for año in range(1, 6):
+    ventas = ventas * 1.08
+    print(f"Año {año}: ${ventas:,.0f}")
+```
+
+Fíjate en el truco `{ventas:,.0f}` dentro de la f-string: formatea el número con separador de miles y sin decimales.
+
+## Repeticiones con condición: el ciclo `while`
+
+El `for` repite un número conocido de veces. El `while` repite **mientras una condición sea verdadera** — cuando no sabes cuántas vueltas harán falta:
+
+```python
+tanque = 0      # litros
+capacidad = 1000
+
+while tanque < capacidad:
+    tanque = tanque + 150   # la bomba llena 150 litros por ciclo
+    print(f"Nivel actual: {tanque} litros")
+
+print("Tanque lleno")
+```
+
+::: {.callout-warning}
+Si la condición de un `while` jamás se hace falsa, el ciclo corre para siempre (ciclo infinito). En Colab lo detienes con el botón ⏹️. Asegúrate siempre de que algo dentro del ciclo acerque la condición a su fin.
+:::
+
+## Empaquetar: las funciones
+
+Ya usaste funciones que vienen con Python: `print()`, `input()`, `int()`. Ahora crearás las tuyas. Una función es un procedimiento con nombre: le das entradas (**parámetros**), hace su trabajo y te devuelve un resultado (**retorno**).
+
+```python
+def valor_futuro(capital, tasa, años):
+    vf = capital * (1 + tasa) ** años
+    return vf
+```
+
+- `def` le dice a Python "voy a definir una función".
+- Entre paréntesis van los parámetros: lo que la función necesita recibir.
+- `return` entrega el resultado y termina la función.
+
+Se usa así, todas las veces que quieras:
+
+```python
+inversion1 = valor_futuro(1000000, 0.12, 5)
+inversion2 = valor_futuro(5000000, 0.08, 10)
+
+print(f"Proyecto A: ${inversion1:,.0f}")
+print(f"Proyecto B: ${inversion2:,.0f}")
+```
+
+La ventaja enorme: la fórmula se escribe **una sola vez**. Si mañana hay que corregirla, se corrige en un solo lugar.
+
+Otro ejemplo, ahora de mecatrónica: una función que clasifica la lectura de un sensor de temperatura:
+
+```python
+def clasificar_temperatura(t):
+    if t < 15:
+        return "frío"
+    elif t <= 30:
+        return "óptimo"
+    else:
+        return "caliente"
+
+print(clasificar_temperatura(22))
+print(clasificar_temperatura(38))
+```
+
+## Ejercicios
+
+1. Escribe un `if` que imprima "Crédito aprobado" si el puntaje crediticio es mayor o igual a 700, y "Crédito rechazado" en caso contrario. Prueba con 650 y con 720.
+2. Un motor debe apagarse si la temperatura supera 90 °C **y** el voltaje es inestable (variable booleana `voltaje_inestable`). Escribe la condición con `and` y pruébala con distintos valores.
+3. Con un `for` y un acumulador, suma los costos de una lista de insumos: `[120000, 85000, 210000, 45000]`. Imprime el total.
+4. Escribe una función `area_parcela(largo, ancho)` que devuelva el área en metros cuadrados, y úsala para tres parcelas distintas.
+5. Escribe una función `es_rentable(ingresos, costos)` que devuelva `True` si los ingresos superan a los costos y `False` si no.
+6. **Mini-reto (agro + economía):** tienes las producciones de 6 parcelas: `[4.2, 2.8, 5.1, 3.3, 4.6, 2.1]` toneladas. Con un `for` y un contador, calcula cuántas parcelas produjeron menos de 3 toneladas (bajo rendimiento) e imprime el porcentaje que representan del total. Luego empaqueta tu solución en una función `porcentaje_bajo_rendimiento(producciones, umbral)`.
+
+## Resumen
+
+- `if` / `elif` / `else` ejecutan bloques según condiciones; la **indentación define los bloques**.
+- Comparar con `==`, asignar con `=`. Combinar condiciones con `and`, `or`, `not`.
+- `for` repite un número conocido de veces; `while` repite mientras la condición sea verdadera.
+- El **acumulador** (`total = total + x`) es el patrón básico para sumar en ciclos.
+- Las **funciones** (`def` ... `return`) empaquetan procedimientos para reutilizarlos sin duplicar código.

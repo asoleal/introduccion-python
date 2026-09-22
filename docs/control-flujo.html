@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>3&nbsp; Capítulo 3: Control de flujo – Introducción a Python para Ingeniería, Datos y Economía</title>
+<title>3&nbsp; Control de flujo: decisiones, repeticiones y funciones – Introducción a Python para Ingeniería, Datos y Economía</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -25,6 +25,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -88,7 +123,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./control-flujo.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Capítulo 3: Control de flujo</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./control-flujo.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Control de flujo: decisiones, repeticiones y funciones</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -137,7 +172,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./control-flujo.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Capítulo 3: Control de flujo</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Control de flujo: decisiones, repeticiones y funciones</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -175,15 +210,29 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#decisiones-if-elif-else" id="toc-decisiones-if-elif-else" class="nav-link active" data-scroll-target="#decisiones-if-elif-else"><span class="header-section-number">3.1</span> Decisiones: <code>if</code>, <code>elif</code>, <code>else</code></a>
+  <ul class="collapse">
+  <li><a href="#operadores-de-comparación-y-lógicos" id="toc-operadores-de-comparación-y-lógicos" class="nav-link" data-scroll-target="#operadores-de-comparación-y-lógicos"><span class="header-section-number">3.1.1</span> Operadores de comparación y lógicos</a></li>
+  </ul></li>
+  <li><a href="#repeticiones-el-ciclo-for" id="toc-repeticiones-el-ciclo-for" class="nav-link" data-scroll-target="#repeticiones-el-ciclo-for"><span class="header-section-number">3.2</span> Repeticiones: el ciclo <code>for</code></a></li>
+  <li><a href="#repeticiones-con-condición-el-ciclo-while" id="toc-repeticiones-con-condición-el-ciclo-while" class="nav-link" data-scroll-target="#repeticiones-con-condición-el-ciclo-while"><span class="header-section-number">3.3</span> Repeticiones con condición: el ciclo <code>while</code></a></li>
+  <li><a href="#empaquetar-las-funciones" id="toc-empaquetar-las-funciones" class="nav-link" data-scroll-target="#empaquetar-las-funciones"><span class="header-section-number">3.4</span> Empaquetar: las funciones</a></li>
+  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">3.5</span> Ejercicios</a></li>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen"><span class="header-section-number">3.6</span> Resumen</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Capítulo 3: Control de flujo</span></h1>
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Control de flujo: decisiones, repeticiones y funciones</span></h1>
 </div>
 
 
@@ -200,9 +249,250 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>En construcción.</p>
+<p>Hasta ahora tus programas ejecutan las líneas una tras otra, de arriba hacia abajo, siempre igual. Los programas útiles hacen tres cosas más: <strong>deciden</strong> (si pasa esto, haz aquello), <strong>repiten</strong> (haz esto 1000 veces) y <strong>empaquetan</strong> (guarda este procedimiento para usarlo cuando quiera). Eso es el control de flujo.</p>
+<section id="decisiones-if-elif-else" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="decisiones-if-elif-else"><span class="header-section-number">3.1</span> Decisiones: <code>if</code>, <code>elif</code>, <code>else</code></h2>
+<p>Un sistema de riego automático tiene una lógica muy simple: <em>si la humedad del suelo es baja, activar la bomba</em>. En Python eso se escribe casi igual que en español:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>humedad <span class="op">=</span> <span class="dv">25</span>  <span class="co"># porcentaje medido por el sensor</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> humedad <span class="op">&lt;</span> <span class="dv">30</span>:</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Humedad baja: activar riego"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Ejecútalo. Luego cambia <code>humedad</code> a <code>45</code> y ejecútalo de nuevo: no aparece nada, porque la condición ya no se cumple.</p>
+<p>Para cubrir más casos se usan <code>elif</code> (“si no, entonces si…”) y <code>else</code> (“en cualquier otro caso”):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>humedad <span class="op">=</span> <span class="dv">25</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> humedad <span class="op">&lt;</span> <span class="dv">30</span>:</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Humedad baja: activar riego"</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> humedad <span class="op">&lt;</span> <span class="dv">60</span>:</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Humedad adecuada: no hacer nada"</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Humedad excesiva: revisar drenaje"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Advertencia
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>La indentación manda.</strong> Fíjate que las líneas después de <code>if</code> van desplazadas 4 espacios a la derecha. Ese sangrado le dice a Python qué pertenece a cada bloque. Si lo quitas, da error. Es la regla más famosa de Python: la sangría no es decoración, es sintaxis.</p>
+</div>
+</div>
+<section id="operadores-de-comparación-y-lógicos" class="level3" data-number="3.1.1">
+<h3 data-number="3.1.1" class="anchored" data-anchor-id="operadores-de-comparación-y-lógicos"><span class="header-section-number">3.1.1</span> Operadores de comparación y lógicos</h3>
+<p>Las condiciones se construyen con estos operadores:</p>
+<div id="tbl-comparacion" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-comparacion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;3.1: Operadores de comparación y lógicos
+</figcaption>
+<div aria-describedby="tbl-comparacion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Tipo</th>
+<th style="text-align: center;">Operador</th>
+<th style="text-align: left;">Significado</th>
+<th style="text-align: center;">Ejemplo</th>
+<th style="text-align: center;">Resultado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Comparación</td>
+<td style="text-align: center;"><code>==</code></td>
+<td style="text-align: left;">Igual a</td>
+<td style="text-align: center;"><code>5 == 5</code></td>
+<td style="text-align: center;"><code>True</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Comparación</td>
+<td style="text-align: center;"><code>!=</code></td>
+<td style="text-align: left;">Diferente de</td>
+<td style="text-align: center;"><code>5 != 3</code></td>
+<td style="text-align: center;"><code>True</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Comparación</td>
+<td style="text-align: center;"><code>&lt;</code></td>
+<td style="text-align: left;">Menor que</td>
+<td style="text-align: center;"><code>25 &lt; 30</code></td>
+<td style="text-align: center;"><code>True</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Comparación</td>
+<td style="text-align: center;"><code>&gt;</code></td>
+<td style="text-align: left;">Mayor que</td>
+<td style="text-align: center;"><code>7 &gt; 4</code></td>
+<td style="text-align: center;"><code>True</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Comparación</td>
+<td style="text-align: center;"><code>&lt;=</code></td>
+<td style="text-align: left;">Menor o igual</td>
+<td style="text-align: center;"><code>3 &lt;= 2</code></td>
+<td style="text-align: center;"><code>False</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Comparación</td>
+<td style="text-align: center;"><code>&gt;=</code></td>
+<td style="text-align: left;">Mayor o igual</td>
+<td style="text-align: center;"><code>30 &gt;= 30</code></td>
+<td style="text-align: center;"><code>True</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Lógico</td>
+<td style="text-align: center;"><code>and</code></td>
+<td style="text-align: left;">Y (ambas verdaderas)</td>
+<td style="text-align: center;"><code>True and False</code></td>
+<td style="text-align: center;"><code>False</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Lógico</td>
+<td style="text-align: center;"><code>or</code></td>
+<td style="text-align: left;">O (al menos una)</td>
+<td style="text-align: center;"><code>True or False</code></td>
+<td style="text-align: center;"><code>True</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Lógico</td>
+<td style="text-align: center;"><code>not</code></td>
+<td style="text-align: left;">Negación</td>
+<td style="text-align: center;"><code>not True</code></td>
+<td style="text-align: center;"><code>False</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Doble igual para comparar.</strong> Es el error número 1 de los principiantes: <code>=</code> asigna, <code>==</code> compara. <code>if humedad = 30:</code> es error; <code>if humedad == 30:</code> es correcto.</p>
+</div>
+</div>
+<p>Con <code>and</code> y <code>or</code> puedes combinar condiciones, como una alarma de invernadero que se activa por temperatura <strong>o</strong> por humedad:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>temperatura <span class="op">=</span> <span class="dv">38</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>humedad <span class="op">=</span> <span class="dv">45</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> temperatura <span class="op">&gt;</span> <span class="dv">35</span> <span class="kw">or</span> humedad <span class="op">&gt;</span> <span class="dv">80</span>:</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"ALARMA: condiciones fuera de rango"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Condiciones normales"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="repeticiones-el-ciclo-for" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="repeticiones-el-ciclo-for"><span class="header-section-number">3.2</span> Repeticiones: el ciclo <code>for</code></h2>
+<p>Un sensor toma una lectura cada hora. Un administrador calcula la nómina de 50 empleados. Un ingeniero evalúa 12 parcelas. En todos los casos: <strong>la misma operación, muchas veces</strong>. Para eso está el ciclo <code>for</code>.</p>
+<p>La forma más simple usa <code>range()</code>, que genera una secuencia de números:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> hora <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">24</span>):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Tomando lectura de la hora </span><span class="sc">{</span>hora<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Esto ejecuta el <code>print</code> 24 veces, con <code>hora</code> tomando los valores 0, 1, 2, …, 23.</p>
+<p>Ejemplo agro: calcular la producción total recorriendo las parcelas de una finca:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>producciones <span class="op">=</span> [<span class="fl">4.2</span>, <span class="fl">3.8</span>, <span class="fl">5.1</span>, <span class="fl">4.6</span>, <span class="fl">3.9</span>]  <span class="co"># toneladas por parcela</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>total <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> p <span class="kw">in</span> producciones:</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    total <span class="op">=</span> total <span class="op">+</span> p</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Producción total: </span><span class="sc">{</span>total<span class="sc">}</span><span class="ss"> toneladas"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>El patrón <code>total = total + p</code> se llama <strong>acumulador</strong>: una variable que empieza en cero y va sumando. Lo usarás constantemente.</p>
+<p>Ejemplo de administración: proyectar las ventas de los próximos 5 años con crecimiento del 8 % anual:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ventas <span class="op">=</span> <span class="dv">50000000</span>  <span class="co"># ventas del año actual</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> año <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">6</span>):</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    ventas <span class="op">=</span> ventas <span class="op">*</span> <span class="fl">1.08</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Año </span><span class="sc">{</span>a<span class="sc">ñ</span>o<span class="sc">}</span><span class="ss">: $</span><span class="sc">{</span>ventas<span class="sc">:,.0f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Fíjate en el truco <code>{ventas:,.0f}</code> dentro de la f-string: formatea el número con separador de miles y sin decimales.</p>
+</section>
+<section id="repeticiones-con-condición-el-ciclo-while" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="repeticiones-con-condición-el-ciclo-while"><span class="header-section-number">3.3</span> Repeticiones con condición: el ciclo <code>while</code></h2>
+<p>El <code>for</code> repite un número conocido de veces. El <code>while</code> repite <strong>mientras una condición sea verdadera</strong> — cuando no sabes cuántas vueltas harán falta:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>tanque <span class="op">=</span> <span class="dv">0</span>      <span class="co"># litros</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>capacidad <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> tanque <span class="op">&lt;</span> capacidad:</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    tanque <span class="op">=</span> tanque <span class="op">+</span> <span class="dv">150</span>   <span class="co"># la bomba llena 150 litros por ciclo</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Nivel actual: </span><span class="sc">{</span>tanque<span class="sc">}</span><span class="ss"> litros"</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Tanque lleno"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Advertencia
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si la condición de un <code>while</code> jamás se hace falsa, el ciclo corre para siempre (ciclo infinito). En Colab lo detienes con el botón ⏹️. Asegúrate siempre de que algo dentro del ciclo acerque la condición a su fin.</p>
+</div>
+</div>
+</section>
+<section id="empaquetar-las-funciones" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="empaquetar-las-funciones"><span class="header-section-number">3.4</span> Empaquetar: las funciones</h2>
+<p>Ya usaste funciones que vienen con Python: <code>print()</code>, <code>input()</code>, <code>int()</code>. Ahora crearás las tuyas. Una función es un procedimiento con nombre: le das entradas (<strong>parámetros</strong>), hace su trabajo y te devuelve un resultado (<strong>retorno</strong>).</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> valor_futuro(capital, tasa, años):</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    vf <span class="op">=</span> capital <span class="op">*</span> (<span class="dv">1</span> <span class="op">+</span> tasa) <span class="op">**</span> años</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> vf</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li><code>def</code> le dice a Python “voy a definir una función”.</li>
+<li>Entre paréntesis van los parámetros: lo que la función necesita recibir.</li>
+<li><code>return</code> entrega el resultado y termina la función.</li>
+</ul>
+<p>Se usa así, todas las veces que quieras:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>inversion1 <span class="op">=</span> valor_futuro(<span class="dv">1000000</span>, <span class="fl">0.12</span>, <span class="dv">5</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>inversion2 <span class="op">=</span> valor_futuro(<span class="dv">5000000</span>, <span class="fl">0.08</span>, <span class="dv">10</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Proyecto A: $</span><span class="sc">{</span>inversion1<span class="sc">:,.0f}</span><span class="ss">"</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Proyecto B: $</span><span class="sc">{</span>inversion2<span class="sc">:,.0f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>La ventaja enorme: la fórmula se escribe <strong>una sola vez</strong>. Si mañana hay que corregirla, se corrige en un solo lugar.</p>
+<p>Otro ejemplo, ahora de mecatrónica: una función que clasifica la lectura de un sensor de temperatura:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> clasificar_temperatura(t):</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> t <span class="op">&lt;</span> <span class="dv">15</span>:</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"frío"</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> t <span class="op">&lt;=</span> <span class="dv">30</span>:</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"óptimo"</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"caliente"</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(clasificar_temperatura(<span class="dv">22</span>))</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(clasificar_temperatura(<span class="dv">38</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="ejercicios" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">3.5</span> Ejercicios</h2>
+<ol type="1">
+<li>Escribe un <code>if</code> que imprima “Crédito aprobado” si el puntaje crediticio es mayor o igual a 700, y “Crédito rechazado” en caso contrario. Prueba con 650 y con 720.</li>
+<li>Un motor debe apagarse si la temperatura supera 90 °C <strong>y</strong> el voltaje es inestable (variable booleana <code>voltaje_inestable</code>). Escribe la condición con <code>and</code> y pruébala con distintos valores.</li>
+<li>Con un <code>for</code> y un acumulador, suma los costos de una lista de insumos: <code>[120000, 85000, 210000, 45000]</code>. Imprime el total.</li>
+<li>Escribe una función <code>area_parcela(largo, ancho)</code> que devuelva el área en metros cuadrados, y úsala para tres parcelas distintas.</li>
+<li>Escribe una función <code>es_rentable(ingresos, costos)</code> que devuelva <code>True</code> si los ingresos superan a los costos y <code>False</code> si no.</li>
+<li><strong>Mini-reto (agro + economía):</strong> tienes las producciones de 6 parcelas: <code>[4.2, 2.8, 5.1, 3.3, 4.6, 2.1]</code> toneladas. Con un <code>for</code> y un contador, calcula cuántas parcelas produjeron menos de 3 toneladas (bajo rendimiento) e imprime el porcentaje que representan del total. Luego empaqueta tu solución en una función <code>porcentaje_bajo_rendimiento(producciones, umbral)</code>.</li>
+</ol>
+</section>
+<section id="resumen" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="resumen"><span class="header-section-number">3.6</span> Resumen</h2>
+<ul>
+<li><code>if</code> / <code>elif</code> / <code>else</code> ejecutan bloques según condiciones; la <strong>indentación define los bloques</strong>.</li>
+<li>Comparar con <code>==</code>, asignar con <code>=</code>. Combinar condiciones con <code>and</code>, <code>or</code>, <code>not</code>.</li>
+<li><code>for</code> repite un número conocido de veces; <code>while</code> repite mientras la condición sea verdadera.</li>
+<li>El <strong>acumulador</strong> (<code>total = total + x</code>) es el patrón básico para sumar en ciclos.</li>
+<li>Las <strong>funciones</strong> (<code>def</code> … <code>return</code>) empaquetan procedimientos para reutilizarlos sin duplicar código.</li>
+</ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

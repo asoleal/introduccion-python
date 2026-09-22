@@ -202,11 +202,71 @@
   {
     "objectID": "control-flujo.html",
     "href": "control-flujo.html",
-    "title": "3  Capítulo 3: Control de flujo",
+    "title": "3  Control de flujo: decisiones, repeticiones y funciones",
     "section": "",
-    "text": "En construcción.",
+    "text": "3.1 Decisiones: if, elif, else\nHasta ahora tus programas ejecutan las líneas una tras otra, de arriba hacia abajo, siempre igual. Los programas útiles hacen tres cosas más: deciden (si pasa esto, haz aquello), repiten (haz esto 1000 veces) y empaquetan (guarda este procedimiento para usarlo cuando quiera). Eso es el control de flujo.\nUn sistema de riego automático tiene una lógica muy simple: si la humedad del suelo es baja, activar la bomba. En Python eso se escribe casi igual que en español:\nEjecútalo. Luego cambia humedad a 45 y ejecútalo de nuevo: no aparece nada, porque la condición ya no se cumple.\nPara cubrir más casos se usan elif (“si no, entonces si…”) y else (“en cualquier otro caso”):",
     "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Capítulo 3: Control de flujo</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Control de flujo: decisiones, repeticiones y funciones</span>"
+    ]
+  },
+  {
+    "objectID": "control-flujo.html#decisiones-if-elif-else",
+    "href": "control-flujo.html#decisiones-if-elif-else",
+    "title": "3  Control de flujo: decisiones, repeticiones y funciones",
+    "section": "",
+    "text": "humedad = 25  # porcentaje medido por el sensor\n\nif humedad &lt; 30:\n    print(\"Humedad baja: activar riego\")\n\n\nhumedad = 25\n\nif humedad &lt; 30:\n    print(\"Humedad baja: activar riego\")\nelif humedad &lt; 60:\n    print(\"Humedad adecuada: no hacer nada\")\nelse:\n    print(\"Humedad excesiva: revisar drenaje\")\n\n\n\n\n\n\nAdvertencia\n\n\n\nLa indentación manda. Fíjate que las líneas después de if van desplazadas 4 espacios a la derecha. Ese sangrado le dice a Python qué pertenece a cada bloque. Si lo quitas, da error. Es la regla más famosa de Python: la sangría no es decoración, es sintaxis.\n\n\n\n3.1.1 Operadores de comparación y lógicos\nLas condiciones se construyen con estos operadores:\n\n\n\nTabla 3.1: Operadores de comparación y lógicos\n\n\n\n\n\nTipo\nOperador\nSignificado\nEjemplo\nResultado\n\n\n\n\nComparación\n==\nIgual a\n5 == 5\nTrue\n\n\nComparación\n!=\nDiferente de\n5 != 3\nTrue\n\n\nComparación\n&lt;\nMenor que\n25 &lt; 30\nTrue\n\n\nComparación\n&gt;\nMayor que\n7 &gt; 4\nTrue\n\n\nComparación\n&lt;=\nMenor o igual\n3 &lt;= 2\nFalse\n\n\nComparación\n&gt;=\nMayor o igual\n30 &gt;= 30\nTrue\n\n\nLógico\nand\nY (ambas verdaderas)\nTrue and False\nFalse\n\n\nLógico\nor\nO (al menos una)\nTrue or False\nTrue\n\n\nLógico\nnot\nNegación\nnot True\nFalse\n\n\n\n\n\n\n\n\n\n\n\n\nImportante\n\n\n\nDoble igual para comparar. Es el error número 1 de los principiantes: = asigna, == compara. if humedad = 30: es error; if humedad == 30: es correcto.\n\n\nCon and y or puedes combinar condiciones, como una alarma de invernadero que se activa por temperatura o por humedad:\ntemperatura = 38\nhumedad = 45\n\nif temperatura &gt; 35 or humedad &gt; 80:\n    print(\"ALARMA: condiciones fuera de rango\")\nelse:\n    print(\"Condiciones normales\")",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Control de flujo: decisiones, repeticiones y funciones</span>"
+    ]
+  },
+  {
+    "objectID": "control-flujo.html#repeticiones-el-ciclo-for",
+    "href": "control-flujo.html#repeticiones-el-ciclo-for",
+    "title": "3  Control de flujo: decisiones, repeticiones y funciones",
+    "section": "3.2 Repeticiones: el ciclo for",
+    "text": "3.2 Repeticiones: el ciclo for\nUn sensor toma una lectura cada hora. Un administrador calcula la nómina de 50 empleados. Un ingeniero evalúa 12 parcelas. En todos los casos: la misma operación, muchas veces. Para eso está el ciclo for.\nLa forma más simple usa range(), que genera una secuencia de números:\nfor hora in range(24):\n    print(f\"Tomando lectura de la hora {hora}\")\nEsto ejecuta el print 24 veces, con hora tomando los valores 0, 1, 2, …, 23.\nEjemplo agro: calcular la producción total recorriendo las parcelas de una finca:\nproducciones = [4.2, 3.8, 5.1, 4.6, 3.9]  # toneladas por parcela\ntotal = 0\n\nfor p in producciones:\n    total = total + p\n\nprint(f\"Producción total: {total} toneladas\")\nEl patrón total = total + p se llama acumulador: una variable que empieza en cero y va sumando. Lo usarás constantemente.\nEjemplo de administración: proyectar las ventas de los próximos 5 años con crecimiento del 8 % anual:\nventas = 50000000  # ventas del año actual\n\nfor año in range(1, 6):\n    ventas = ventas * 1.08\n    print(f\"Año {año}: ${ventas:,.0f}\")\nFíjate en el truco {ventas:,.0f} dentro de la f-string: formatea el número con separador de miles y sin decimales.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Control de flujo: decisiones, repeticiones y funciones</span>"
+    ]
+  },
+  {
+    "objectID": "control-flujo.html#repeticiones-con-condición-el-ciclo-while",
+    "href": "control-flujo.html#repeticiones-con-condición-el-ciclo-while",
+    "title": "3  Control de flujo: decisiones, repeticiones y funciones",
+    "section": "3.3 Repeticiones con condición: el ciclo while",
+    "text": "3.3 Repeticiones con condición: el ciclo while\nEl for repite un número conocido de veces. El while repite mientras una condición sea verdadera — cuando no sabes cuántas vueltas harán falta:\ntanque = 0      # litros\ncapacidad = 1000\n\nwhile tanque &lt; capacidad:\n    tanque = tanque + 150   # la bomba llena 150 litros por ciclo\n    print(f\"Nivel actual: {tanque} litros\")\n\nprint(\"Tanque lleno\")\n\n\n\n\n\n\nAdvertencia\n\n\n\nSi la condición de un while jamás se hace falsa, el ciclo corre para siempre (ciclo infinito). En Colab lo detienes con el botón ⏹️. Asegúrate siempre de que algo dentro del ciclo acerque la condición a su fin.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Control de flujo: decisiones, repeticiones y funciones</span>"
+    ]
+  },
+  {
+    "objectID": "control-flujo.html#empaquetar-las-funciones",
+    "href": "control-flujo.html#empaquetar-las-funciones",
+    "title": "3  Control de flujo: decisiones, repeticiones y funciones",
+    "section": "3.4 Empaquetar: las funciones",
+    "text": "3.4 Empaquetar: las funciones\nYa usaste funciones que vienen con Python: print(), input(), int(). Ahora crearás las tuyas. Una función es un procedimiento con nombre: le das entradas (parámetros), hace su trabajo y te devuelve un resultado (retorno).\ndef valor_futuro(capital, tasa, años):\n    vf = capital * (1 + tasa) ** años\n    return vf\n\ndef le dice a Python “voy a definir una función”.\nEntre paréntesis van los parámetros: lo que la función necesita recibir.\nreturn entrega el resultado y termina la función.\n\nSe usa así, todas las veces que quieras:\ninversion1 = valor_futuro(1000000, 0.12, 5)\ninversion2 = valor_futuro(5000000, 0.08, 10)\n\nprint(f\"Proyecto A: ${inversion1:,.0f}\")\nprint(f\"Proyecto B: ${inversion2:,.0f}\")\nLa ventaja enorme: la fórmula se escribe una sola vez. Si mañana hay que corregirla, se corrige en un solo lugar.\nOtro ejemplo, ahora de mecatrónica: una función que clasifica la lectura de un sensor de temperatura:\ndef clasificar_temperatura(t):\n    if t &lt; 15:\n        return \"frío\"\n    elif t &lt;= 30:\n        return \"óptimo\"\n    else:\n        return \"caliente\"\n\nprint(clasificar_temperatura(22))\nprint(clasificar_temperatura(38))",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Control de flujo: decisiones, repeticiones y funciones</span>"
+    ]
+  },
+  {
+    "objectID": "control-flujo.html#ejercicios",
+    "href": "control-flujo.html#ejercicios",
+    "title": "3  Control de flujo: decisiones, repeticiones y funciones",
+    "section": "3.5 Ejercicios",
+    "text": "3.5 Ejercicios\n\nEscribe un if que imprima “Crédito aprobado” si el puntaje crediticio es mayor o igual a 700, y “Crédito rechazado” en caso contrario. Prueba con 650 y con 720.\nUn motor debe apagarse si la temperatura supera 90 °C y el voltaje es inestable (variable booleana voltaje_inestable). Escribe la condición con and y pruébala con distintos valores.\nCon un for y un acumulador, suma los costos de una lista de insumos: [120000, 85000, 210000, 45000]. Imprime el total.\nEscribe una función area_parcela(largo, ancho) que devuelva el área en metros cuadrados, y úsala para tres parcelas distintas.\nEscribe una función es_rentable(ingresos, costos) que devuelva True si los ingresos superan a los costos y False si no.\nMini-reto (agro + economía): tienes las producciones de 6 parcelas: [4.2, 2.8, 5.1, 3.3, 4.6, 2.1] toneladas. Con un for y un contador, calcula cuántas parcelas produjeron menos de 3 toneladas (bajo rendimiento) e imprime el porcentaje que representan del total. Luego empaqueta tu solución en una función porcentaje_bajo_rendimiento(producciones, umbral).",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Control de flujo: decisiones, repeticiones y funciones</span>"
+    ]
+  },
+  {
+    "objectID": "control-flujo.html#resumen",
+    "href": "control-flujo.html#resumen",
+    "title": "3  Control de flujo: decisiones, repeticiones y funciones",
+    "section": "3.6 Resumen",
+    "text": "3.6 Resumen\n\nif / elif / else ejecutan bloques según condiciones; la indentación define los bloques.\nComparar con ==, asignar con =. Combinar condiciones con and, or, not.\nfor repite un número conocido de veces; while repite mientras la condición sea verdadera.\nEl acumulador (total = total + x) es el patrón básico para sumar en ciclos.\nLas funciones (def … return) empaquetan procedimientos para reutilizarlos sin duplicar código.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Control de flujo: decisiones, repeticiones y funciones</span>"
     ]
   },
   {
