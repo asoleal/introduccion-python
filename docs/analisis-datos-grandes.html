@@ -270,7 +270,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="primero-crear-el-dataset-grande" class="level2" data-number="11.1">
 <h2 data-number="11.1" class="anchored" data-anchor-id="primero-crear-el-dataset-grande"><span class="header-section-number">11.1</span> Primero: crear el dataset grande</h2>
 <p>Para practicar necesitamos un archivo pesado. Generemos uno sintético: 2 millones de registros de ventas de una cadena agroindustrial:</p>
-<div id="dea79901" class="cell" data-execution_count="1">
+<div id="ae73eb84" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -291,7 +291,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Archivo creado con 2,000,000 filas</code></pre>
 </div>
 </div>
-<div id="5bb0ad05" class="cell" data-execution_count="2">
+<div id="971339b2" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Tamaño en disco: </span><span class="sc">{</span>os<span class="sc">.</span>path<span class="sc">.</span>getsize(<span class="st">'ventas_grandes.csv'</span>) <span class="op">/</span> <span class="fl">1e6</span><span class="sc">:.1f}</span><span class="ss"> MB"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -303,7 +303,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="técnica-1-optimizar-la-memoria-con-tipos-de-datos" class="level2" data-number="11.2">
 <h2 data-number="11.2" class="anchored" data-anchor-id="técnica-1-optimizar-la-memoria-con-tipos-de-datos"><span class="header-section-number">11.2</span> Técnica 1: optimizar la memoria con tipos de datos</h2>
 <p>Carguemos el archivo completo y miremos cuánta memoria gasta:</p>
-<div id="c17eee81" class="cell" data-execution_count="3">
+<div id="bd9ac19b" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"ventas_grandes.csv"</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df.info(memory_usage<span class="op">=</span><span class="st">"deep"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -322,7 +322,7 @@ memory usage: 286.1 MB</code></pre>
 </div>
 </div>
 <p>Fíjate en la última línea: el total en memoria. Ahora el truco: pandas usa por defecto <code>int64</code> y <code>float64</code> (8 bytes por número), pero muchos datos no necesitan tanta precisión. Y las columnas de texto repetido (como <code>producto</code>) se pueden convertir a <strong>category</strong>:</p>
-<div id="b41e1eaf" class="cell" data-execution_count="4">
+<div id="16c9fa8b" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"tienda"</span>] <span class="op">=</span> df[<span class="st">"tienda"</span>].astype(<span class="st">"int16"</span>)       <span class="co"># 120 tiendas caben en int16</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"cantidad"</span>] <span class="op">=</span> df[<span class="st">"cantidad"</span>].astype(<span class="st">"int8"</span>)    <span class="co"># valores 1-50</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"precio"</span>] <span class="op">=</span> df[<span class="st">"precio"</span>].astype(<span class="st">"float32"</span>)</span>
@@ -349,7 +349,7 @@ memory usage: 145.0 MB</code></pre>
 <section id="técnica-2-leer-por-chunks-nunca-cargar-todo" class="level2" data-number="11.3">
 <h2 data-number="11.3" class="anchored" data-anchor-id="técnica-2-leer-por-chunks-nunca-cargar-todo"><span class="header-section-number">11.3</span> Técnica 2: leer por chunks (nunca cargar todo)</h2>
 <p>Cuando el archivo no cabe en memoria, se procesa <strong>por pedazos</strong>: <code>chunksize</code> convierte <code>read_csv</code> en un iterador que entrega el archivo por bloques:</p>
-<div id="a0df4f22" class="cell" data-execution_count="5">
+<div id="47b0f905" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ventas_por_producto <span class="op">=</span> {}</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> chunk <span class="kw">in</span> pd.read_csv(<span class="st">"ventas_grandes.csv"</span>, chunksize<span class="op">=</span><span class="dv">300_000</span>):</span>
@@ -373,7 +373,7 @@ memory usage: 145.0 MB</code></pre>
 <section id="técnica-3-parquet-el-formato-profesional" class="level2" data-number="11.4">
 <h2 data-number="11.4" class="anchored" data-anchor-id="técnica-3-parquet-el-formato-profesional"><span class="header-section-number">11.4</span> Técnica 3: Parquet, el formato profesional</h2>
 <p>El CSV es universal pero ineficiente: texto plano, pesado y lento de leer. <strong>Parquet</strong> guarda los datos en binario, por columnas y comprimidos. Comparémoslos:</p>
-<div id="f7598042" class="cell" data-execution_count="6">
+<div id="f1105052" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df.to_parquet(<span class="st">"ventas_grandes.parquet"</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>csv_mb  <span class="op">=</span> os.path.getsize(<span class="st">"ventas_grandes.csv"</span>) <span class="op">/</span> <span class="fl">1e6</span></span>
@@ -385,7 +385,7 @@ memory usage: 145.0 MB</code></pre>
 Parquet: 16.3 MB  (20% del tamaño)</code></pre>
 </div>
 </div>
-<div id="7850dbab" class="cell" data-execution_count="7">
+<div id="bceaca1e" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>t0 <span class="op">=</span> time.time()<span class="op">;</span> pd.read_csv(<span class="st">"ventas_grandes.csv"</span>)<span class="op">;</span>     t_csv <span class="op">=</span> time.time() <span class="op">-</span> t0</span>
@@ -394,8 +394,8 @@ Parquet: 16.3 MB  (20% del tamaño)</code></pre>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Leer CSV:     </span><span class="sc">{</span>t_csv<span class="sc">:.2f}</span><span class="ss"> s"</span>)</span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Leer Parquet: </span><span class="sc">{</span>t_pq<span class="sc">:.2f}</span><span class="ss"> s"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Leer CSV:     1.23 s
-Leer Parquet: 0.67 s</code></pre>
+<pre><code>Leer CSV:     1.19 s
+Leer Parquet: 0.63 s</code></pre>
 </div>
 </div>
 <p>Mismo contenido, una fracción del tamaño y mucho más rápido. Además, Parquet recuerda los tipos de datos (no hay que convertir fechas ni categorías de nuevo). <strong>Regla profesional: CSV para intercambiar con humanos, Parquet para trabajar.</strong></p>
@@ -403,7 +403,7 @@ Leer Parquet: 0.67 s</code></pre>
 <section id="técnica-4-muestrear-para-explorar" class="level2" data-number="11.5">
 <h2 data-number="11.5" class="anchored" data-anchor-id="técnica-4-muestrear-para-explorar"><span class="header-section-number">11.5</span> Técnica 4: muestrear para explorar</h2>
 <p>Para explorar no necesitas todos los datos: una <strong>muestra aleatoria</strong> de 1 % suele mostrar las mismas distribuciones y patrones, en segundos:</p>
-<div id="773187e3" class="cell" data-execution_count="8">
+<div id="41789358" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>muestra <span class="op">=</span> df.sample(frac<span class="op">=</span><span class="fl">0.01</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Muestra: </span><span class="sc">{</span><span class="bu">len</span>(muestra)<span class="sc">:,}</span><span class="ss"> filas"</span>)</span>
@@ -418,7 +418,7 @@ Precio medio — completo: 8,000 | muestra: 7,969</code></pre>
 <section id="el-siguiente-nivel-pyspark" class="level2" data-number="11.6">
 <h2 data-number="11.6" class="anchored" data-anchor-id="el-siguiente-nivel-pyspark"><span class="header-section-number">11.6</span> El siguiente nivel: PySpark</h2>
 <p>Cuando ni estas técnicas alcanzan, entra <strong>Spark</strong> — el motor de procesamiento en cluster del capítulo anterior. Su interfaz Python se llama <strong>PySpark</strong> y, curiosamente, puedes probarlo en Colab. El código de abajo es un adelanto (no lo ejecutes aquí; en Colab requiere <code>!pip install pyspark</code>):</p>
-<div id="19c5debc" class="cell" data-execution_count="9">
+<div id="488a97b6" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql <span class="im">import</span> SparkSession</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql <span class="im">import</span> functions <span class="im">as</span> F</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>

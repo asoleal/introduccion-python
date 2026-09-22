@@ -1,3 +1,6 @@
 # Archivos generados al compilar (datos sinteticos del cap. 11)
 ventas_grandes.csv
 ventas_grandes.parquet
+
+/.quarto/
+**/*.quarto_ipynb

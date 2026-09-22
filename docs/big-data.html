@@ -374,7 +374,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="un-experimento-rápido-para-calibrar-tu-intuición" class="level2" data-number="10.5">
 <h2 data-number="10.5" class="anchored" data-anchor-id="un-experimento-rápido-para-calibrar-tu-intuición"><span class="header-section-number">10.5</span> Un experimento rápido para calibrar tu intuición</h2>
 <p>Mide cuánto tarda pandas con un millón de filas — te sorprenderá lo lejos que llega:</p>
-<div id="b6217e84" class="cell" data-execution_count="1">
+<div id="962230b1" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
@@ -398,16 +398,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 3    135    4.039273   9153.223380
 4    154    4.323608  10398.155333
 
-Un millón de filas cargadas en 0.05 segundos</code></pre>
+Un millón de filas cargadas en 0.04 segundos</code></pre>
 </div>
 </div>
-<div id="b2493471" class="cell" data-execution_count="2">
+<div id="16dbb503" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>inicio <span class="op">=</span> time.time()</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>resumen <span class="op">=</span> df.groupby(<span class="st">"finca"</span>)[<span class="st">"produccion"</span>].mean()</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Promedio por finca (500 grupos) calculado en </span><span class="sc">{</span>time<span class="sc">.</span>time() <span class="op">-</span> inicio<span class="sc">:.3f}</span><span class="ss"> segundos"</span>)</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(resumen.head())</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Promedio por finca (500 grupos) calculado en 0.020 segundos
+<pre><code>Promedio por finca (500 grupos) calculado en 0.015 segundos
 finca
 1    4.189503
 2    4.182327
