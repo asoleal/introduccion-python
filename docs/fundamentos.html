@@ -272,12 +272,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="2.1" class="anchored" data-anchor-id="qué-es-una-variable"><span class="header-section-number">2.1</span> ¿Qué es una variable?</h2>
 <p>Imagina una caja con una etiqueta. Dentro de la caja guardas algo (un número, un texto), y la etiqueta te permite encontrarla después. Eso es una <strong>variable</strong>: un nombre que guarda un valor.</p>
 <p>En Python, guardar un valor en una variable se llama <strong>asignar</strong>, y se hace con el signo <code>=</code>:</p>
-<div id="c40710f3" class="cell" data-execution_count="1">
+<div id="ab1d2d93" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>precio <span class="op">=</span> <span class="dv">9500</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Lee esa línea así: “la variable <code>precio</code> guarda el valor 9500”. Ojo: el <code>=</code> de Python <strong>no es</strong> el igual de las matemáticas; no afirma que dos cosas sean iguales, sino que <strong>guarda</strong> el valor de la derecha en el nombre de la izquierda.</p>
 <p>A partir de ahí, puedes usar la variable en cualquier cálculo:</p>
-<div id="08584fc1" class="cell" data-execution_count="2">
+<div id="2fa04f62" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>precio <span class="op">=</span> <span class="dv">9500</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>cantidad <span class="op">=</span> <span class="dv">37</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>total <span class="op">=</span> precio <span class="op">*</span> cantidad</span>
@@ -291,7 +291,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="reglas-para-nombrar-variables" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="reglas-para-nombrar-variables"><span class="header-section-number">2.2</span> Reglas para nombrar variables</h2>
 <p>Python es estricto con los nombres. Estos son válidos:</p>
-<div id="11aa2e35" class="cell" data-execution_count="3">
+<div id="03bad5be" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>precio_tonelada <span class="op">=</span> <span class="dv">9500</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>temperatura2 <span class="op">=</span> <span class="fl">25.4</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>nombre_finca <span class="op">=</span> <span class="st">"La Esperanza"</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
@@ -354,28 +354,28 @@ Nota
 </tbody>
 </table>
 <p>Python detecta el tipo automáticamente según lo que guardes. Puedes preguntárselo con la función <code>type()</code>:</p>
-<div id="9037258b" class="cell" data-execution_count="4">
+<div id="fddefbc0" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>precio <span class="op">=</span> <span class="dv">9500</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(precio))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'int'&gt;</code></pre>
 </div>
 </div>
-<div id="f60a8cb9" class="cell" data-execution_count="5">
+<div id="8b772a21" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>rendimiento <span class="op">=</span> <span class="fl">4.2</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(rendimiento))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'float'&gt;</code></pre>
 </div>
 </div>
-<div id="6d4185a4" class="cell" data-execution_count="6">
+<div id="bc2c1bd2" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>nombre <span class="op">=</span> <span class="st">"Ana"</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(nombre))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'str'&gt;</code></pre>
 </div>
 </div>
-<div id="bbb85518" class="cell" data-execution_count="7">
+<div id="d4858526" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>es_rentable <span class="op">=</span> <span class="va">True</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(es_rentable))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -400,7 +400,7 @@ Advertencia
 <h2 data-number="2.4" class="anchored" data-anchor-id="convertir-entre-tipos"><span class="header-section-number">2.4</span> Convertir entre tipos</h2>
 <p>A veces necesitas transformar un tipo en otro. Se hace con funciones que tienen el nombre del tipo: <code>int()</code>, <code>float()</code>, <code>str()</code>.</p>
 <p>El caso clásico: los números que vienen como texto no se pueden sumar:</p>
-<div id="1d54e7a8" class="cell" data-execution_count="8">
+<div id="4927e1ab" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="st">"2"</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> <span class="st">"3"</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a <span class="op">+</span> b)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
@@ -409,7 +409,7 @@ Advertencia
 </div>
 </div>
 <p>¿Sorprendido? El resultado es <code>"23"</code>, no <code>5</code>. Como <code>a</code> y <code>b</code> son <strong>texto</strong>, el <code>+</code> los une en lugar de sumarlos (pegar textos se llama <strong>concatenar</strong>). La solución es convertirlos primero:</p>
-<div id="c16cd445" class="cell" data-execution_count="9">
+<div id="e28602f6" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="st">"2"</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> <span class="st">"3"</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">int</span>(a) <span class="op">+</span> <span class="bu">int</span>(b))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
@@ -421,7 +421,7 @@ Advertencia
 <section id="pedir-datos-al-usuario-input" class="level2" data-number="2.5">
 <h2 data-number="2.5" class="anchored" data-anchor-id="pedir-datos-al-usuario-input"><span class="header-section-number">2.5</span> Pedir datos al usuario: <code>input()</code></h2>
 <p>Hasta ahora los valores estaban escritos en el código. Pero normalmente querrás preguntarle a la persona que usa tu programa. Eso se hace con <code>input()</code>:</p>
-<div id="bd1d7fc6" class="cell" data-execution_count="10">
+<div id="f52a2638" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>nombre <span class="op">=</span> <span class="bu">input</span>(<span class="st">"¿Cómo te llamas? "</span>)</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Hola,"</span>, nombre)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -442,20 +442,20 @@ Importante
 <p><strong>Lo que input() devuelve siempre es texto</strong> (<code>str</code>), aunque la persona escriba un número. Si vas a hacer cuentas con esa respuesta, conviértela primero con <code>int()</code> o <code>float()</code>.</p>
 </div>
 </div>
-<div id="daafc4e1" class="cell" data-execution_count="11">
+<div id="f6b83a47" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>edad <span class="op">=</span> <span class="bu">input</span>(<span class="st">"¿Cuántos años tienes? "</span>)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>edad <span class="op">=</span> <span class="bu">int</span>(edad)</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"El próximo año tendrás"</span>, edad <span class="op">+</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>O en una sola línea, que es como lo verás en la práctica:</p>
-<div id="4c4b5c2d" class="cell" data-execution_count="12">
+<div id="06b4bfb4" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>edad <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>(<span class="st">"¿Cuántos años tienes? "</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="imprimir-con-formato-las-f-strings" class="level2" data-number="2.6">
 <h2 data-number="2.6" class="anchored" data-anchor-id="imprimir-con-formato-las-f-strings"><span class="header-section-number">2.6</span> Imprimir con formato: las f-strings</h2>
 <p>Ya sabes que <code>print()</code> muestra cosas. Cuando quieras mezclar texto con variables de forma elegante, usa una <strong>f-string</strong>: una cadena con una <code>f</code> antes de las comillas, donde las variables van entre llaves <code>{}</code>:</p>
-<div id="aa387222" class="cell" data-execution_count="13">
+<div id="c153881d" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>precio <span class="op">=</span> <span class="dv">9500</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>cantidad <span class="op">=</span> <span class="dv">37</span></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>total <span class="op">=</span> precio <span class="op">*</span> cantidad</span>
@@ -465,7 +465,7 @@ Importante
 </div>
 </div>
 <p>Todo lo que está dentro de las llaves se evalúa. Puedes incluso hacer cuentas ahí dentro:</p>
-<div id="ec0918bd" class="cell" data-execution_count="14">
+<div id="72c5f913" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>tasa <span class="op">=</span> <span class="fl">0.12</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>capital <span class="op">=</span> <span class="dv">1000000</span></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"En 5 años tendrás $</span><span class="sc">{</span>capital <span class="op">*</span> (<span class="dv">1</span> <span class="op">+</span> tasa) <span class="op">**</span> <span class="dv">5</span><span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
@@ -477,7 +477,7 @@ Importante
 <section id="comentarios-notas-para-humanos" class="level2" data-number="2.7">
 <h2 data-number="2.7" class="anchored" data-anchor-id="comentarios-notas-para-humanos"><span class="header-section-number">2.7</span> Comentarios: notas para humanos</h2>
 <p>Todo lo que escribas después de un <code>#</code> en una línea, Python lo ignora por completo. Sirve para dejar notas que expliquen tu código:</p>
-<div id="d9bead49" class="cell" data-execution_count="15">
+<div id="5f75966a" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cálculo del valor futuro a 5 años</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>tasa <span class="op">=</span> <span class="fl">0.12</span>          <span class="co"># tasa anual</span></span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>capital <span class="op">=</span> <span class="dv">1000000</span>    <span class="co"># inversión inicial en pesos</span></span>

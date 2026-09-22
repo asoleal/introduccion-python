@@ -26,6 +26,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -193,8 +228,21 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#primero-crear-el-dataset-grande" id="toc-primero-crear-el-dataset-grande" class="nav-link active" data-scroll-target="#primero-crear-el-dataset-grande"><span class="header-section-number">11.1</span> Primero: crear el dataset grande</a></li>
+  <li><a href="#técnica-1-optimizar-la-memoria-con-tipos-de-datos" id="toc-técnica-1-optimizar-la-memoria-con-tipos-de-datos" class="nav-link" data-scroll-target="#técnica-1-optimizar-la-memoria-con-tipos-de-datos"><span class="header-section-number">11.2</span> Técnica 1: optimizar la memoria con tipos de datos</a></li>
+  <li><a href="#técnica-2-leer-por-chunks-nunca-cargar-todo" id="toc-técnica-2-leer-por-chunks-nunca-cargar-todo" class="nav-link" data-scroll-target="#técnica-2-leer-por-chunks-nunca-cargar-todo"><span class="header-section-number">11.3</span> Técnica 2: leer por chunks (nunca cargar todo)</a></li>
+  <li><a href="#técnica-3-parquet-el-formato-profesional" id="toc-técnica-3-parquet-el-formato-profesional" class="nav-link" data-scroll-target="#técnica-3-parquet-el-formato-profesional"><span class="header-section-number">11.4</span> Técnica 3: Parquet, el formato profesional</a></li>
+  <li><a href="#técnica-4-muestrear-para-explorar" id="toc-técnica-4-muestrear-para-explorar" class="nav-link" data-scroll-target="#técnica-4-muestrear-para-explorar"><span class="header-section-number">11.5</span> Técnica 4: muestrear para explorar</a></li>
+  <li><a href="#el-siguiente-nivel-pyspark" id="toc-el-siguiente-nivel-pyspark" class="nav-link" data-scroll-target="#el-siguiente-nivel-pyspark"><span class="header-section-number">11.6</span> El siguiente nivel: PySpark</a></li>
+  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">11.7</span> Ejercicios</a></li>
+  <li><a href="#resumen-y-cierre-del-libro" id="toc-resumen-y-cierre-del-libro" class="nav-link" data-scroll-target="#resumen-y-cierre-del-libro"><span class="header-section-number">11.8</span> Resumen (y cierre del libro)</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -218,9 +266,194 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>En construcción.</p>
+<p>En el capítulo anterior viste que un millón de filas caben cómodas en pandas. Ahora subamos la apuesta: trabajarás con datos que <strong>no conviene cargar completos en memoria</strong>. Aprenderás cuatro técnicas profesionales que funcionan en Colab (y en cualquier portátil): <strong>lectura por chunks</strong>, <strong>optimización de memoria</strong>, el formato <strong>Parquet</strong>, y un primer vistazo a <strong>PySpark</strong>.</p>
+<section id="primero-crear-el-dataset-grande" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="primero-crear-el-dataset-grande"><span class="header-section-number">11.1</span> Primero: crear el dataset grande</h2>
+<p>Para practicar necesitamos un archivo pesado. Generemos uno sintético: 2 millones de registros de ventas de una cadena agroindustrial:</p>
+<div id="dea79901" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">0</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">2_000_000</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"fecha"</span>:   pd.date_range(<span class="st">"2024-01-01"</span>, periods<span class="op">=</span>n, freq<span class="op">=</span><span class="st">"min"</span>),</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"tienda"</span>:  rng.integers(<span class="dv">1</span>, <span class="dv">120</span>, n),</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"producto"</span>: rng.choice([<span class="st">"café"</span>, <span class="st">"cacao"</span>, <span class="st">"banano"</span>, <span class="st">"panela"</span>, <span class="st">"aguacate"</span>], n),</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cantidad"</span>: rng.integers(<span class="dv">1</span>, <span class="dv">50</span>, n),</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"precio"</span>:  rng.normal(<span class="dv">8000</span>, <span class="dv">1500</span>, n).<span class="bu">round</span>(<span class="dv">0</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>df.to_csv(<span class="st">"ventas_grandes.csv"</span>, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Archivo creado con </span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">:,}</span><span class="ss"> filas"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Archivo creado con 2,000,000 filas</code></pre>
+</div>
+</div>
+<div id="5bb0ad05" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Tamaño en disco: </span><span class="sc">{</span>os<span class="sc">.</span>path<span class="sc">.</span>getsize(<span class="st">'ventas_grandes.csv'</span>) <span class="op">/</span> <span class="fl">1e6</span><span class="sc">:.1f}</span><span class="ss"> MB"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Tamaño en disco: 80.0 MB</code></pre>
+</div>
+</div>
+<p>Un CSV de ~100 MB. No es gigante, pero sí suficiente para sentir las técnicas. (En Colab puedes subir <code>n</code> a 10 o 20 millones; en tu portátil, con calma).</p>
+</section>
+<section id="técnica-1-optimizar-la-memoria-con-tipos-de-datos" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="técnica-1-optimizar-la-memoria-con-tipos-de-datos"><span class="header-section-number">11.2</span> Técnica 1: optimizar la memoria con tipos de datos</h2>
+<p>Carguemos el archivo completo y miremos cuánta memoria gasta:</p>
+<div id="c17eee81" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"ventas_grandes.csv"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df.info(memory_usage<span class="op">=</span><span class="st">"deep"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 2000000 entries, 0 to 1999999
+Data columns (total 5 columns):
+ #   Column    Dtype  
+---  ------    -----  
+ 0   fecha     object 
+ 1   tienda    int64  
+ 2   producto  object 
+ 3   cantidad  int64  
+ 4   precio    float64
+dtypes: float64(1), int64(2), object(2)
+memory usage: 286.1 MB</code></pre>
+</div>
+</div>
+<p>Fíjate en la última línea: el total en memoria. Ahora el truco: pandas usa por defecto <code>int64</code> y <code>float64</code> (8 bytes por número), pero muchos datos no necesitan tanta precisión. Y las columnas de texto repetido (como <code>producto</code>) se pueden convertir a <strong>category</strong>:</p>
+<div id="b41e1eaf" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"tienda"</span>] <span class="op">=</span> df[<span class="st">"tienda"</span>].astype(<span class="st">"int16"</span>)       <span class="co"># 120 tiendas caben en int16</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"cantidad"</span>] <span class="op">=</span> df[<span class="st">"cantidad"</span>].astype(<span class="st">"int8"</span>)    <span class="co"># valores 1-50</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"precio"</span>] <span class="op">=</span> df[<span class="st">"precio"</span>].astype(<span class="st">"float32"</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"producto"</span>] <span class="op">=</span> df[<span class="st">"producto"</span>].astype(<span class="st">"category"</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>df.info(memory_usage<span class="op">=</span><span class="st">"deep"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 2000000 entries, 0 to 1999999
+Data columns (total 5 columns):
+ #   Column    Dtype   
+---  ------    -----   
+ 0   fecha     object  
+ 1   tienda    int16   
+ 2   producto  category
+ 3   cantidad  int8    
+ 4   precio    float32 
+dtypes: category(1), float32(1), int16(1), int8(1), object(1)
+memory usage: 145.0 MB</code></pre>
+</div>
+</div>
+<p>Compara los dos totales: típicamente la memoria baja al <strong>30-50 %</strong> sin perder un solo dato. Regla: <code>int64</code> es como pagar estacionamiento de camión para una moto.</p>
+</section>
+<section id="técnica-2-leer-por-chunks-nunca-cargar-todo" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="técnica-2-leer-por-chunks-nunca-cargar-todo"><span class="header-section-number">11.3</span> Técnica 2: leer por chunks (nunca cargar todo)</h2>
+<p>Cuando el archivo no cabe en memoria, se procesa <strong>por pedazos</strong>: <code>chunksize</code> convierte <code>read_csv</code> en un iterador que entrega el archivo por bloques:</p>
+<div id="a0df4f22" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ventas_por_producto <span class="op">=</span> {}</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> chunk <span class="kw">in</span> pd.read_csv(<span class="st">"ventas_grandes.csv"</span>, chunksize<span class="op">=</span><span class="dv">300_000</span>):</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    chunk[<span class="st">"monto"</span>] <span class="op">=</span> chunk[<span class="st">"cantidad"</span>] <span class="op">*</span> chunk[<span class="st">"precio"</span>]</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    parcial <span class="op">=</span> chunk.groupby(<span class="st">"producto"</span>)[<span class="st">"monto"</span>].<span class="bu">sum</span>()</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> producto, monto <span class="kw">in</span> parcial.items():</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        ventas_por_producto[producto] <span class="op">=</span> ventas_por_producto.get(producto, <span class="dv">0</span>) <span class="op">+</span> monto</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> producto, monto <span class="kw">in</span> <span class="bu">sorted</span>(ventas_por_producto.items(), key<span class="op">=</span><span class="kw">lambda</span> x: <span class="op">-</span>x[<span class="dv">1</span>]):</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>producto<span class="sc">:&gt;10}</span><span class="ss">: $</span><span class="sc">{</span>monto<span class="sc">:,.0f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      café: $80,056,671,094
+  aguacate: $80,012,806,430
+    banano: $79,977,269,056
+    panela: $79,955,467,167
+     cacao: $79,935,111,459</code></pre>
+</div>
+</div>
+<p>La idea clave: <strong>nunca hubo 2 millones de filas en memoria a la vez</strong> — solo 300 mil por turno. El acumulador <code>ventas_por_producto</code> guarda la suma parcial entre chunks. Este patrón procesa archivos de cualquier tamaño, incluso mayores que tu RAM.</p>
+</section>
+<section id="técnica-3-parquet-el-formato-profesional" class="level2" data-number="11.4">
+<h2 data-number="11.4" class="anchored" data-anchor-id="técnica-3-parquet-el-formato-profesional"><span class="header-section-number">11.4</span> Técnica 3: Parquet, el formato profesional</h2>
+<p>El CSV es universal pero ineficiente: texto plano, pesado y lento de leer. <strong>Parquet</strong> guarda los datos en binario, por columnas y comprimidos. Comparémoslos:</p>
+<div id="f7598042" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df.to_parquet(<span class="st">"ventas_grandes.parquet"</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>csv_mb  <span class="op">=</span> os.path.getsize(<span class="st">"ventas_grandes.csv"</span>) <span class="op">/</span> <span class="fl">1e6</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>pq_mb   <span class="op">=</span> os.path.getsize(<span class="st">"ventas_grandes.parquet"</span>) <span class="op">/</span> <span class="fl">1e6</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"CSV:     </span><span class="sc">{</span>csv_mb<span class="sc">:.1f}</span><span class="ss"> MB"</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Parquet: </span><span class="sc">{</span>pq_mb<span class="sc">:.1f}</span><span class="ss"> MB  (</span><span class="sc">{</span>pq_mb<span class="op">/</span>csv_mb<span class="sc">:.0%}</span><span class="ss"> del tamaño)"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>CSV:     80.0 MB
+Parquet: 16.3 MB  (20% del tamaño)</code></pre>
+</div>
+</div>
+<div id="7850dbab" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>t0 <span class="op">=</span> time.time()<span class="op">;</span> pd.read_csv(<span class="st">"ventas_grandes.csv"</span>)<span class="op">;</span>     t_csv <span class="op">=</span> time.time() <span class="op">-</span> t0</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>t0 <span class="op">=</span> time.time()<span class="op">;</span> pd.read_parquet(<span class="st">"ventas_grandes.parquet"</span>)<span class="op">;</span> t_pq <span class="op">=</span> time.time() <span class="op">-</span> t0</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Leer CSV:     </span><span class="sc">{</span>t_csv<span class="sc">:.2f}</span><span class="ss"> s"</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Leer Parquet: </span><span class="sc">{</span>t_pq<span class="sc">:.2f}</span><span class="ss"> s"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Leer CSV:     1.23 s
+Leer Parquet: 0.67 s</code></pre>
+</div>
+</div>
+<p>Mismo contenido, una fracción del tamaño y mucho más rápido. Además, Parquet recuerda los tipos de datos (no hay que convertir fechas ni categorías de nuevo). <strong>Regla profesional: CSV para intercambiar con humanos, Parquet para trabajar.</strong></p>
+</section>
+<section id="técnica-4-muestrear-para-explorar" class="level2" data-number="11.5">
+<h2 data-number="11.5" class="anchored" data-anchor-id="técnica-4-muestrear-para-explorar"><span class="header-section-number">11.5</span> Técnica 4: muestrear para explorar</h2>
+<p>Para explorar no necesitas todos los datos: una <strong>muestra aleatoria</strong> de 1 % suele mostrar las mismas distribuciones y patrones, en segundos:</p>
+<div id="773187e3" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>muestra <span class="op">=</span> df.sample(frac<span class="op">=</span><span class="fl">0.01</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Muestra: </span><span class="sc">{</span><span class="bu">len</span>(muestra)<span class="sc">:,}</span><span class="ss"> filas"</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Precio medio — completo: </span><span class="sc">{</span>df[<span class="st">'precio'</span>]<span class="sc">.</span>mean()<span class="sc">:,.0f}</span><span class="ss"> | muestra: </span><span class="sc">{</span>muestra[<span class="st">'precio'</span>]<span class="sc">.</span>mean()<span class="sc">:,.0f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Muestra: 20,000 filas
+Precio medio — completo: 8,000 | muestra: 7,969</code></pre>
+</div>
+</div>
+<p>Explora con la muestra; cuando tu análisis esté listo, lo corres sobre el dataset completo (por chunks si hace falta).</p>
+</section>
+<section id="el-siguiente-nivel-pyspark" class="level2" data-number="11.6">
+<h2 data-number="11.6" class="anchored" data-anchor-id="el-siguiente-nivel-pyspark"><span class="header-section-number">11.6</span> El siguiente nivel: PySpark</h2>
+<p>Cuando ni estas técnicas alcanzan, entra <strong>Spark</strong> — el motor de procesamiento en cluster del capítulo anterior. Su interfaz Python se llama <strong>PySpark</strong> y, curiosamente, puedes probarlo en Colab. El código de abajo es un adelanto (no lo ejecutes aquí; en Colab requiere <code>!pip install pyspark</code>):</p>
+<div id="19c5debc" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql <span class="im">import</span> SparkSession</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql <span class="im">import</span> functions <span class="im">as</span> F</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>spark <span class="op">=</span> SparkSession.builder.appName(<span class="st">"demo"</span>).getOrCreate()</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>ventas <span class="op">=</span> spark.read.csv(<span class="st">"ventas_grandes.csv"</span>, header<span class="op">=</span><span class="va">True</span>, inferSchema<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>ventas <span class="op">=</span> ventas.withColumn(<span class="st">"monto"</span>, F.col(<span class="st">"cantidad"</span>) <span class="op">*</span> F.col(<span class="st">"precio"</span>))</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>ventas.groupBy(<span class="st">"producto"</span>).<span class="bu">sum</span>(<span class="st">"monto"</span>).orderBy(<span class="st">"sum(monto)"</span>, ascending<span class="op">=</span><span class="va">False</span>).show()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Mira la sintaxis: <code>groupBy</code>, <code>sum</code>, <code>orderBy</code> — es pandas con otro acento. La diferencia invisible es que Spark puede repartir ese cálculo entre 100 máquinas. Todo lo que aprendiste en este libro (filtrar, agrupar, columnas calculadas) se traslada directo.</p>
+</section>
+<section id="ejercicios" class="level2" data-number="11.7">
+<h2 data-number="11.7" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">11.7</span> Ejercicios</h2>
+<ol type="1">
+<li>Regenera el dataset con 3 millones de filas y repite la optimización de tipos. Reporta el porcentaje de memoria ahorrada.</li>
+<li>Procesa por chunks el archivo grande para calcular el <strong>monto total por tienda</strong> (no por producto). ¿Qué tienda vendió más?</li>
+<li>Convierte el dataset a Parquet y verifica: tamaños en disco y tiempos de lectura. ¿Vale la pena en tu equipo?</li>
+<li>Compara la media de <code>cantidad</code> en el dataset completo vs.&nbsp;muestras de 0,1 %, 1 % y 10 %. ¿A partir de qué tamaño la muestra se estabiliza?</li>
+<li><strong>Mini-reto (integrador):</strong> la cadena quiere el <strong>top 5 de combinaciones tienda-producto por monto</strong>. (a) Hazlo cargando todo el CSV optimizando tipos. (b) Hazlo de nuevo procesando por chunks, acumulando en un diccionario con claves <code>(tienda, producto)</code>. (c) Verifica que ambos resultados coinciden. (d) Reporta cuál método usó menos memoria y cuál fue más rápido. Esta comparación — resultado correcto + recursos medidos — es exactamente lo que un ingeniero de datos documenta.</li>
+</ol>
+</section>
+<section id="resumen-y-cierre-del-libro" class="level2" data-number="11.8">
+<h2 data-number="11.8" class="anchored" data-anchor-id="resumen-y-cierre-del-libro"><span class="header-section-number">11.8</span> Resumen (y cierre del libro)</h2>
+<ul>
+<li><strong>Optimiza tipos</strong> (<code>int8</code>, <code>float32</code>, <code>category</code>): misma información, mitad de memoria.</li>
+<li><strong>Chunks</strong>: procesa por pedazos con acumuladores; la memoria deja de ser el límite.</li>
+<li><strong>Parquet</strong>: binario, columnar y comprimido — el formato de trabajo profesional.</li>
+<li><strong>Muestrea</strong> para explorar rápido; procesa completo solo al final.</li>
+<li><strong>PySpark</strong> es el siguiente nivel, y ya conoces su lógica.</li>
+</ul>
+<p>Empezaste escribiendo <code>print("Hola, mundo")</code> y terminas procesando millones de registros con técnicas de nivel profesional. De aquí en adelante, el camino es practicar: toma un dataset de tu disciplina (los proyectos del capítulo 9 son un buen inicio) y resuélvelo completo. Ese es el verdadero último ejercicio del libro.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

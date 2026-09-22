@@ -744,7 +744,7 @@
     "href": "big-data.html#un-experimento-rápido-para-calibrar-tu-intuición",
     "title": "10  Big data: conceptos y ecosistema",
     "section": "10.5 Un experimento rápido para calibrar tu intuición",
-    "text": "10.5 Un experimento rápido para calibrar tu intuición\nMide cuánto tarda pandas con un millón de filas — te sorprenderá lo lejos que llega:\n\nimport numpy as np\nimport pandas as pd\nimport time\n\nrng = np.random.default_rng(0)\ninicio = time.time()\n\ndf = pd.DataFrame({\n    \"finca\": rng.integers(1, 500, 1_000_000),\n    \"produccion\": rng.normal(4.2, 0.8, 1_000_000),\n    \"precio\": rng.normal(9500, 700, 1_000_000)\n})\n\nprint(df.head())\nprint(f\"\\nUn millón de filas cargadas en {time.time() - inicio:.2f} segundos\")\n\n   finca  produccion        precio\n0    425    4.619223   9922.799542\n1    318    2.775156   8540.880600\n2    256    4.611388   9831.802886\n3    135    4.039273   9153.223380\n4    154    4.323608  10398.155333\n\nUn millón de filas cargadas en 0.04 segundos\n\n\n\ninicio = time.time()\nresumen = df.groupby(\"finca\")[\"produccion\"].mean()\nprint(f\"Promedio por finca (500 grupos) calculado en {time.time() - inicio:.3f} segundos\")\nprint(resumen.head())\n\nPromedio por finca (500 grupos) calculado en 0.020 segundos\nfinca\n1    4.189503\n2    4.182327\n3    4.205118\n4    4.193417\n5    4.217686\nName: produccion, dtype: float64\n\n\nUn millón de filas, agrupadas en menos de un segundo. Esa es la lección: la frontera del big data está mucho más arriba de lo que la gente cree. Las técnicas del próximo capítulo te llevan cómodamente a decenas de millones de filas en Colab, sin tocar un cluster.",
+    "text": "10.5 Un experimento rápido para calibrar tu intuición\nMide cuánto tarda pandas con un millón de filas — te sorprenderá lo lejos que llega:\n\nimport numpy as np\nimport pandas as pd\nimport time\n\nrng = np.random.default_rng(0)\ninicio = time.time()\n\ndf = pd.DataFrame({\n    \"finca\": rng.integers(1, 500, 1_000_000),\n    \"produccion\": rng.normal(4.2, 0.8, 1_000_000),\n    \"precio\": rng.normal(9500, 700, 1_000_000)\n})\n\nprint(df.head())\nprint(f\"\\nUn millón de filas cargadas en {time.time() - inicio:.2f} segundos\")\n\n   finca  produccion        precio\n0    425    4.619223   9922.799542\n1    318    2.775156   8540.880600\n2    256    4.611388   9831.802886\n3    135    4.039273   9153.223380\n4    154    4.323608  10398.155333\n\nUn millón de filas cargadas en 0.05 segundos\n\n\n\ninicio = time.time()\nresumen = df.groupby(\"finca\")[\"produccion\"].mean()\nprint(f\"Promedio por finca (500 grupos) calculado en {time.time() - inicio:.3f} segundos\")\nprint(resumen.head())\n\nPromedio por finca (500 grupos) calculado en 0.020 segundos\nfinca\n1    4.189503\n2    4.182327\n3    4.205118\n4    4.193417\n5    4.217686\nName: produccion, dtype: float64\n\n\nUn millón de filas, agrupadas en menos de un segundo. Esa es la lección: la frontera del big data está mucho más arriba de lo que la gente cree. Las técnicas del próximo capítulo te llevan cómodamente a decenas de millones de filas en Colab, sin tocar un cluster.",
     "crumbs": [
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>Big data: conceptos y ecosistema</span>"
     ]
@@ -784,7 +784,77 @@
     "href": "analisis-datos-grandes.html",
     "title": "11  Análisis de datos grandes en la práctica",
     "section": "",
-    "text": "En construcción.",
+    "text": "11.1 Primero: crear el dataset grande\nEn el capítulo anterior viste que un millón de filas caben cómodas en pandas. Ahora subamos la apuesta: trabajarás con datos que no conviene cargar completos en memoria. Aprenderás cuatro técnicas profesionales que funcionan en Colab (y en cualquier portátil): lectura por chunks, optimización de memoria, el formato Parquet, y un primer vistazo a PySpark.\nPara practicar necesitamos un archivo pesado. Generemos uno sintético: 2 millones de registros de ventas de una cadena agroindustrial:\nimport numpy as np\nimport pandas as pd\n\nrng = np.random.default_rng(0)\n\nn = 2_000_000\ndf = pd.DataFrame({\n    \"fecha\":   pd.date_range(\"2024-01-01\", periods=n, freq=\"min\"),\n    \"tienda\":  rng.integers(1, 120, n),\n    \"producto\": rng.choice([\"café\", \"cacao\", \"banano\", \"panela\", \"aguacate\"], n),\n    \"cantidad\": rng.integers(1, 50, n),\n    \"precio\":  rng.normal(8000, 1500, n).round(0)\n})\n\ndf.to_csv(\"ventas_grandes.csv\", index=False)\nprint(f\"Archivo creado con {len(df):,} filas\")\n\nArchivo creado con 2,000,000 filas\nimport os\nprint(f\"Tamaño en disco: {os.path.getsize('ventas_grandes.csv') / 1e6:.1f} MB\")\n\nTamaño en disco: 80.0 MB\nUn CSV de ~100 MB. No es gigante, pero sí suficiente para sentir las técnicas. (En Colab puedes subir n a 10 o 20 millones; en tu portátil, con calma).",
+    "crumbs": [
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Análisis de datos grandes en la práctica</span>"
+    ]
+  },
+  {
+    "objectID": "analisis-datos-grandes.html#técnica-1-optimizar-la-memoria-con-tipos-de-datos",
+    "href": "analisis-datos-grandes.html#técnica-1-optimizar-la-memoria-con-tipos-de-datos",
+    "title": "11  Análisis de datos grandes en la práctica",
+    "section": "11.2 Técnica 1: optimizar la memoria con tipos de datos",
+    "text": "11.2 Técnica 1: optimizar la memoria con tipos de datos\nCarguemos el archivo completo y miremos cuánta memoria gasta:\n\ndf = pd.read_csv(\"ventas_grandes.csv\")\ndf.info(memory_usage=\"deep\")\n\n&lt;class 'pandas.core.frame.DataFrame'&gt;\nRangeIndex: 2000000 entries, 0 to 1999999\nData columns (total 5 columns):\n #   Column    Dtype  \n---  ------    -----  \n 0   fecha     object \n 1   tienda    int64  \n 2   producto  object \n 3   cantidad  int64  \n 4   precio    float64\ndtypes: float64(1), int64(2), object(2)\nmemory usage: 286.1 MB\n\n\nFíjate en la última línea: el total en memoria. Ahora el truco: pandas usa por defecto int64 y float64 (8 bytes por número), pero muchos datos no necesitan tanta precisión. Y las columnas de texto repetido (como producto) se pueden convertir a category:\n\ndf[\"tienda\"] = df[\"tienda\"].astype(\"int16\")       # 120 tiendas caben en int16\ndf[\"cantidad\"] = df[\"cantidad\"].astype(\"int8\")    # valores 1-50\ndf[\"precio\"] = df[\"precio\"].astype(\"float32\")\ndf[\"producto\"] = df[\"producto\"].astype(\"category\")\n\ndf.info(memory_usage=\"deep\")\n\n&lt;class 'pandas.core.frame.DataFrame'&gt;\nRangeIndex: 2000000 entries, 0 to 1999999\nData columns (total 5 columns):\n #   Column    Dtype   \n---  ------    -----   \n 0   fecha     object  \n 1   tienda    int16   \n 2   producto  category\n 3   cantidad  int8    \n 4   precio    float32 \ndtypes: category(1), float32(1), int16(1), int8(1), object(1)\nmemory usage: 145.0 MB\n\n\nCompara los dos totales: típicamente la memoria baja al 30-50 % sin perder un solo dato. Regla: int64 es como pagar estacionamiento de camión para una moto.",
+    "crumbs": [
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Análisis de datos grandes en la práctica</span>"
+    ]
+  },
+  {
+    "objectID": "analisis-datos-grandes.html#técnica-2-leer-por-chunks-nunca-cargar-todo",
+    "href": "analisis-datos-grandes.html#técnica-2-leer-por-chunks-nunca-cargar-todo",
+    "title": "11  Análisis de datos grandes en la práctica",
+    "section": "11.3 Técnica 2: leer por chunks (nunca cargar todo)",
+    "text": "11.3 Técnica 2: leer por chunks (nunca cargar todo)\nCuando el archivo no cabe en memoria, se procesa por pedazos: chunksize convierte read_csv en un iterador que entrega el archivo por bloques:\n\nventas_por_producto = {}\n\nfor chunk in pd.read_csv(\"ventas_grandes.csv\", chunksize=300_000):\n    chunk[\"monto\"] = chunk[\"cantidad\"] * chunk[\"precio\"]\n    parcial = chunk.groupby(\"producto\")[\"monto\"].sum()\n    for producto, monto in parcial.items():\n        ventas_por_producto[producto] = ventas_por_producto.get(producto, 0) + monto\n\nfor producto, monto in sorted(ventas_por_producto.items(), key=lambda x: -x[1]):\n    print(f\"{producto:&gt;10}: ${monto:,.0f}\")\n\n      café: $80,056,671,094\n  aguacate: $80,012,806,430\n    banano: $79,977,269,056\n    panela: $79,955,467,167\n     cacao: $79,935,111,459\n\n\nLa idea clave: nunca hubo 2 millones de filas en memoria a la vez — solo 300 mil por turno. El acumulador ventas_por_producto guarda la suma parcial entre chunks. Este patrón procesa archivos de cualquier tamaño, incluso mayores que tu RAM.",
+    "crumbs": [
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Análisis de datos grandes en la práctica</span>"
+    ]
+  },
+  {
+    "objectID": "analisis-datos-grandes.html#técnica-3-parquet-el-formato-profesional",
+    "href": "analisis-datos-grandes.html#técnica-3-parquet-el-formato-profesional",
+    "title": "11  Análisis de datos grandes en la práctica",
+    "section": "11.4 Técnica 3: Parquet, el formato profesional",
+    "text": "11.4 Técnica 3: Parquet, el formato profesional\nEl CSV es universal pero ineficiente: texto plano, pesado y lento de leer. Parquet guarda los datos en binario, por columnas y comprimidos. Comparémoslos:\n\ndf.to_parquet(\"ventas_grandes.parquet\")\n\ncsv_mb  = os.path.getsize(\"ventas_grandes.csv\") / 1e6\npq_mb   = os.path.getsize(\"ventas_grandes.parquet\") / 1e6\nprint(f\"CSV:     {csv_mb:.1f} MB\")\nprint(f\"Parquet: {pq_mb:.1f} MB  ({pq_mb/csv_mb:.0%} del tamaño)\")\n\nCSV:     80.0 MB\nParquet: 16.3 MB  (20% del tamaño)\n\n\n\nimport time\n\nt0 = time.time(); pd.read_csv(\"ventas_grandes.csv\");     t_csv = time.time() - t0\nt0 = time.time(); pd.read_parquet(\"ventas_grandes.parquet\"); t_pq = time.time() - t0\n\nprint(f\"Leer CSV:     {t_csv:.2f} s\")\nprint(f\"Leer Parquet: {t_pq:.2f} s\")\n\nLeer CSV:     1.23 s\nLeer Parquet: 0.67 s\n\n\nMismo contenido, una fracción del tamaño y mucho más rápido. Además, Parquet recuerda los tipos de datos (no hay que convertir fechas ni categorías de nuevo). Regla profesional: CSV para intercambiar con humanos, Parquet para trabajar.",
+    "crumbs": [
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Análisis de datos grandes en la práctica</span>"
+    ]
+  },
+  {
+    "objectID": "analisis-datos-grandes.html#técnica-4-muestrear-para-explorar",
+    "href": "analisis-datos-grandes.html#técnica-4-muestrear-para-explorar",
+    "title": "11  Análisis de datos grandes en la práctica",
+    "section": "11.5 Técnica 4: muestrear para explorar",
+    "text": "11.5 Técnica 4: muestrear para explorar\nPara explorar no necesitas todos los datos: una muestra aleatoria de 1 % suele mostrar las mismas distribuciones y patrones, en segundos:\n\nmuestra = df.sample(frac=0.01, random_state=42)\n\nprint(f\"Muestra: {len(muestra):,} filas\")\nprint(f\"Precio medio — completo: {df['precio'].mean():,.0f} | muestra: {muestra['precio'].mean():,.0f}\")\n\nMuestra: 20,000 filas\nPrecio medio — completo: 8,000 | muestra: 7,969\n\n\nExplora con la muestra; cuando tu análisis esté listo, lo corres sobre el dataset completo (por chunks si hace falta).",
+    "crumbs": [
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Análisis de datos grandes en la práctica</span>"
+    ]
+  },
+  {
+    "objectID": "analisis-datos-grandes.html#el-siguiente-nivel-pyspark",
+    "href": "analisis-datos-grandes.html#el-siguiente-nivel-pyspark",
+    "title": "11  Análisis de datos grandes en la práctica",
+    "section": "11.6 El siguiente nivel: PySpark",
+    "text": "11.6 El siguiente nivel: PySpark\nCuando ni estas técnicas alcanzan, entra Spark — el motor de procesamiento en cluster del capítulo anterior. Su interfaz Python se llama PySpark y, curiosamente, puedes probarlo en Colab. El código de abajo es un adelanto (no lo ejecutes aquí; en Colab requiere !pip install pyspark):\n\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql import functions as F\n\nspark = SparkSession.builder.appName(\"demo\").getOrCreate()\n\nventas = spark.read.csv(\"ventas_grandes.csv\", header=True, inferSchema=True)\nventas = ventas.withColumn(\"monto\", F.col(\"cantidad\") * F.col(\"precio\"))\n\nventas.groupBy(\"producto\").sum(\"monto\").orderBy(\"sum(monto)\", ascending=False).show()\n\nMira la sintaxis: groupBy, sum, orderBy — es pandas con otro acento. La diferencia invisible es que Spark puede repartir ese cálculo entre 100 máquinas. Todo lo que aprendiste en este libro (filtrar, agrupar, columnas calculadas) se traslada directo.",
+    "crumbs": [
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Análisis de datos grandes en la práctica</span>"
+    ]
+  },
+  {
+    "objectID": "analisis-datos-grandes.html#ejercicios",
+    "href": "analisis-datos-grandes.html#ejercicios",
+    "title": "11  Análisis de datos grandes en la práctica",
+    "section": "11.7 Ejercicios",
+    "text": "11.7 Ejercicios\n\nRegenera el dataset con 3 millones de filas y repite la optimización de tipos. Reporta el porcentaje de memoria ahorrada.\nProcesa por chunks el archivo grande para calcular el monto total por tienda (no por producto). ¿Qué tienda vendió más?\nConvierte el dataset a Parquet y verifica: tamaños en disco y tiempos de lectura. ¿Vale la pena en tu equipo?\nCompara la media de cantidad en el dataset completo vs. muestras de 0,1 %, 1 % y 10 %. ¿A partir de qué tamaño la muestra se estabiliza?\nMini-reto (integrador): la cadena quiere el top 5 de combinaciones tienda-producto por monto. (a) Hazlo cargando todo el CSV optimizando tipos. (b) Hazlo de nuevo procesando por chunks, acumulando en un diccionario con claves (tienda, producto). (c) Verifica que ambos resultados coinciden. (d) Reporta cuál método usó menos memoria y cuál fue más rápido. Esta comparación — resultado correcto + recursos medidos — es exactamente lo que un ingeniero de datos documenta.",
+    "crumbs": [
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Análisis de datos grandes en la práctica</span>"
+    ]
+  },
+  {
+    "objectID": "analisis-datos-grandes.html#resumen-y-cierre-del-libro",
+    "href": "analisis-datos-grandes.html#resumen-y-cierre-del-libro",
+    "title": "11  Análisis de datos grandes en la práctica",
+    "section": "11.8 Resumen (y cierre del libro)",
+    "text": "11.8 Resumen (y cierre del libro)\n\nOptimiza tipos (int8, float32, category): misma información, mitad de memoria.\nChunks: procesa por pedazos con acumuladores; la memoria deja de ser el límite.\nParquet: binario, columnar y comprimido — el formato de trabajo profesional.\nMuestrea para explorar rápido; procesa completo solo al final.\nPySpark es el siguiente nivel, y ya conoces su lógica.\n\nEmpezaste escribiendo print(\"Hola, mundo\") y terminas procesando millones de registros con técnicas de nivel profesional. De aquí en adelante, el camino es practicar: toma un dataset de tu disciplina (los proyectos del capítulo 9 son un buen inicio) y resuélvelo completo. Ese es el verdadero último ejercicio del libro.",
     "crumbs": [
       "<span class='chapter-number'>11</span>  <span class='chapter-title'>Análisis de datos grandes en la práctica</span>"
     ]

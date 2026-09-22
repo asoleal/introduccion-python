@@ -1,3 +1,149 @@
 # Análisis de datos grandes en la práctica
 
-En construcción.
+En el capítulo anterior viste que un millón de filas caben cómodas en pandas. Ahora subamos la apuesta: trabajarás con datos que **no conviene cargar completos en memoria**. Aprenderás cuatro técnicas profesionales que funcionan en Colab (y en cualquier portátil): **lectura por chunks**, **optimización de memoria**, el formato **Parquet**, y un primer vistazo a **PySpark**.
+
+## Primero: crear el dataset grande
+
+Para practicar necesitamos un archivo pesado. Generemos uno sintético: 2 millones de registros de ventas de una cadena agroindustrial:
+
+```{python}
+import numpy as np
+import pandas as pd
+
+rng = np.random.default_rng(0)
+
+n = 2_000_000
+df = pd.DataFrame({
+    "fecha":   pd.date_range("2024-01-01", periods=n, freq="min"),
+    "tienda":  rng.integers(1, 120, n),
+    "producto": rng.choice(["café", "cacao", "banano", "panela", "aguacate"], n),
+    "cantidad": rng.integers(1, 50, n),
+    "precio":  rng.normal(8000, 1500, n).round(0)
+})
+
+df.to_csv("ventas_grandes.csv", index=False)
+print(f"Archivo creado con {len(df):,} filas")
+```
+
+```{python}
+import os
+print(f"Tamaño en disco: {os.path.getsize('ventas_grandes.csv') / 1e6:.1f} MB")
+```
+
+Un CSV de ~100 MB. No es gigante, pero sí suficiente para sentir las técnicas. (En Colab puedes subir `n` a 10 o 20 millones; en tu portátil, con calma).
+
+## Técnica 1: optimizar la memoria con tipos de datos
+
+Carguemos el archivo completo y miremos cuánta memoria gasta:
+
+```{python}
+df = pd.read_csv("ventas_grandes.csv")
+df.info(memory_usage="deep")
+```
+
+Fíjate en la última línea: el total en memoria. Ahora el truco: pandas usa por defecto `int64` y `float64` (8 bytes por número), pero muchos datos no necesitan tanta precisión. Y las columnas de texto repetido (como `producto`) se pueden convertir a **category**:
+
+```{python}
+df["tienda"] = df["tienda"].astype("int16")       # 120 tiendas caben en int16
+df["cantidad"] = df["cantidad"].astype("int8")    # valores 1-50
+df["precio"] = df["precio"].astype("float32")
+df["producto"] = df["producto"].astype("category")
+
+df.info(memory_usage="deep")
+```
+
+Compara los dos totales: típicamente la memoria baja al **30-50 %** sin perder un solo dato. Regla: `int64` es como pagar estacionamiento de camión para una moto.
+
+## Técnica 2: leer por chunks (nunca cargar todo)
+
+Cuando el archivo no cabe en memoria, se procesa **por pedazos**: `chunksize` convierte `read_csv` en un iterador que entrega el archivo por bloques:
+
+```{python}
+ventas_por_producto = {}
+
+for chunk in pd.read_csv("ventas_grandes.csv", chunksize=300_000):
+    chunk["monto"] = chunk["cantidad"] * chunk["precio"]
+    parcial = chunk.groupby("producto")["monto"].sum()
+    for producto, monto in parcial.items():
+        ventas_por_producto[producto] = ventas_por_producto.get(producto, 0) + monto
+
+for producto, monto in sorted(ventas_por_producto.items(), key=lambda x: -x[1]):
+    print(f"{producto:>10}: ${monto:,.0f}")
+```
+
+La idea clave: **nunca hubo 2 millones de filas en memoria a la vez** — solo 300 mil por turno. El acumulador `ventas_por_producto` guarda la suma parcial entre chunks. Este patrón procesa archivos de cualquier tamaño, incluso mayores que tu RAM.
+
+## Técnica 3: Parquet, el formato profesional
+
+El CSV es universal pero ineficiente: texto plano, pesado y lento de leer. **Parquet** guarda los datos en binario, por columnas y comprimidos. Comparémoslos:
+
+```{python}
+df.to_parquet("ventas_grandes.parquet")
+
+csv_mb  = os.path.getsize("ventas_grandes.csv") / 1e6
+pq_mb   = os.path.getsize("ventas_grandes.parquet") / 1e6
+print(f"CSV:     {csv_mb:.1f} MB")
+print(f"Parquet: {pq_mb:.1f} MB  ({pq_mb/csv_mb:.0%} del tamaño)")
+```
+
+```{python}
+import time
+
+t0 = time.time(); pd.read_csv("ventas_grandes.csv");     t_csv = time.time() - t0
+t0 = time.time(); pd.read_parquet("ventas_grandes.parquet"); t_pq = time.time() - t0
+
+print(f"Leer CSV:     {t_csv:.2f} s")
+print(f"Leer Parquet: {t_pq:.2f} s")
+```
+
+Mismo contenido, una fracción del tamaño y mucho más rápido. Además, Parquet recuerda los tipos de datos (no hay que convertir fechas ni categorías de nuevo). **Regla profesional: CSV para intercambiar con humanos, Parquet para trabajar.**
+
+## Técnica 4: muestrear para explorar
+
+Para explorar no necesitas todos los datos: una **muestra aleatoria** de 1 % suele mostrar las mismas distribuciones y patrones, en segundos:
+
+```{python}
+muestra = df.sample(frac=0.01, random_state=42)
+
+print(f"Muestra: {len(muestra):,} filas")
+print(f"Precio medio — completo: {df['precio'].mean():,.0f} | muestra: {muestra['precio'].mean():,.0f}")
+```
+
+Explora con la muestra; cuando tu análisis esté listo, lo corres sobre el dataset completo (por chunks si hace falta).
+
+## El siguiente nivel: PySpark
+
+Cuando ni estas técnicas alcanzan, entra **Spark** — el motor de procesamiento en cluster del capítulo anterior. Su interfaz Python se llama **PySpark** y, curiosamente, puedes probarlo en Colab. El código de abajo es un adelanto (no lo ejecutes aquí; en Colab requiere `!pip install pyspark`):
+
+```{python}
+#| eval: false
+from pyspark.sql import SparkSession
+from pyspark.sql import functions as F
+
+spark = SparkSession.builder.appName("demo").getOrCreate()
+
+ventas = spark.read.csv("ventas_grandes.csv", header=True, inferSchema=True)
+ventas = ventas.withColumn("monto", F.col("cantidad") * F.col("precio"))
+
+ventas.groupBy("producto").sum("monto").orderBy("sum(monto)", ascending=False).show()
+```
+
+Mira la sintaxis: `groupBy`, `sum`, `orderBy` — es pandas con otro acento. La diferencia invisible es que Spark puede repartir ese cálculo entre 100 máquinas. Todo lo que aprendiste en este libro (filtrar, agrupar, columnas calculadas) se traslada directo.
+
+## Ejercicios
+
+1. Regenera el dataset con 3 millones de filas y repite la optimización de tipos. Reporta el porcentaje de memoria ahorrada.
+2. Procesa por chunks el archivo grande para calcular el **monto total por tienda** (no por producto). ¿Qué tienda vendió más?
+3. Convierte el dataset a Parquet y verifica: tamaños en disco y tiempos de lectura. ¿Vale la pena en tu equipo?
+4. Compara la media de `cantidad` en el dataset completo vs. muestras de 0,1 %, 1 % y 10 %. ¿A partir de qué tamaño la muestra se estabiliza?
+5. **Mini-reto (integrador):** la cadena quiere el **top 5 de combinaciones tienda-producto por monto**. (a) Hazlo cargando todo el CSV optimizando tipos. (b) Hazlo de nuevo procesando por chunks, acumulando en un diccionario con claves `(tienda, producto)`. (c) Verifica que ambos resultados coinciden. (d) Reporta cuál método usó menos memoria y cuál fue más rápido. Esta comparación — resultado correcto + recursos medidos — es exactamente lo que un ingeniero de datos documenta.
+
+## Resumen (y cierre del libro)
+
+- **Optimiza tipos** (`int8`, `float32`, `category`): misma información, mitad de memoria.
+- **Chunks**: procesa por pedazos con acumuladores; la memoria deja de ser el límite.
+- **Parquet**: binario, columnar y comprimido — el formato de trabajo profesional.
+- **Muestrea** para explorar rápido; procesa completo solo al final.
+- **PySpark** es el siguiente nivel, y ya conoces su lógica.
+
+Empezaste escribiendo `print("Hola, mundo")` y terminas procesando millones de registros con técnicas de nivel profesional. De aquí en adelante, el camino es practicar: toma un dataset de tu disciplina (los proyectos del capítulo 9 son un buen inicio) y resuélvelo completo. Ese es el verdadero último ejercicio del libro.
