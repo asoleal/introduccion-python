@@ -244,7 +244,13 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./big-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Capítulo 8: Introducción a big data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Big data: conceptos y ecosistema</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./analisis-datos-grandes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Análisis de datos grandes en la práctica</span></span></a>
   </div>
 </li>
     </ul>
@@ -294,7 +300,7 @@ window.Quarto = {
 <p>El riego se programa con un <strong>balance hídrico</strong>: el cultivo pierde agua por evapotranspiración (<span class="math inline">\(ET_c\)</span>) y la lluvia repone parte; la diferencia es la lámina de riego que debes aplicar:</p>
 <p><span class="math display">\[L = ET_c - P_{ef} = K_c \cdot ET_0 - P_{ef}\]</span></p>
 <p>donde <span class="math inline">\(K_c\)</span> es el coeficiente del cultivo y <span class="math inline">\(P_{ef}\)</span> la lluvia efectiva. Un método sencillo para estimar <span class="math inline">\(ET_0\)</span> con datos de temperatura (Hargreaves simplificado):</p>
-<div id="491dab1f" class="cell" data-execution_count="1">
+<div id="23ceb59a" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -319,7 +325,7 @@ Total semanal: 1.4 mm = 14 m³/ha</code></pre>
 </div>
 </div>
 <p><code>np.maximum(..., 0)</code> aplica el límite elemento por elemento: si la lluvia supera la demanda, no se riega. El factor final convierte mm a m³/ha (1 mm sobre 1 ha = 10 m³). Grafiquemos el balance:</p>
-<div id="0d02f690" class="cell" data-execution_count="2">
+<div id="9cc9227a" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dias <span class="op">=</span> np.arange(<span class="dv">1</span>, <span class="dv">8</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>plt.bar(dias, etc, label<span class="op">=</span><span class="st">"Demanda ETc"</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
@@ -342,7 +348,7 @@ Total semanal: 1.4 mm = 14 m³/ha</code></pre>
 <section id="mecatrónica-limpiar-la-señal-de-un-sensor" class="level2" data-number="8.2">
 <h2 data-number="8.2" class="anchored" data-anchor-id="mecatrónica-limpiar-la-señal-de-un-sensor"><span class="header-section-number">8.2</span> Mecatrónica: limpiar la señal de un sensor</h2>
 <p>Los sensores reales entregan señales con <strong>ruido</strong>. Un filtro clásico y simple es la <strong>media móvil</strong>: cada valor se reemplaza por el promedio de sus vecinos, y el ruido se suaviza:</p>
-<div id="871ba823" class="cell" data-execution_count="3">
+<div id="cc953475" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">7</span>)</span>
@@ -370,7 +376,7 @@ Total semanal: 1.4 mm = 14 m³/ha</code></pre>
 </div>
 </div>
 <p><code>rolling(window=7)</code> crea una ventana de 7 puntos; <code>.mean()</code> la promedia. Luego, la lógica de control: detectar cuándo la señal <strong>filtrada</strong> cruza el umbral (con la cruda habría falsas alarmas):</p>
-<div id="f5e15d1a" class="cell" data-execution_count="4">
+<div id="73b4e38d" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>umbral <span class="op">=</span> <span class="fl">27.5</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>alarma <span class="op">=</span> df[<span class="st">"filtrada"</span>] <span class="op">&gt;</span> umbral</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>segundos_en_alarma <span class="op">=</span> alarma.<span class="bu">sum</span>() <span class="op">*</span> <span class="fl">0.5</span>   <span class="co"># 0.5 s por lectura</span></span>
@@ -383,7 +389,7 @@ Total semanal: 1.4 mm = 14 m³/ha</code></pre>
 <section id="veterinaria-dosificación-por-peso-vivo" class="level2" data-number="8.3">
 <h2 data-number="8.3" class="anchored" data-anchor-id="veterinaria-dosificación-por-peso-vivo"><span class="header-section-number">8.3</span> Veterinaria: dosificación por peso vivo</h2>
 <p>La dosis de muchos medicamentos se calcula por kilogramo de peso vivo. Con un lote de animales, la vectorización evita errores de cálculo manual:</p>
-<div id="ce02a0a1" class="cell" data-execution_count="5">
+<div id="91a1a59d" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>animales <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"id"</span>: [<span class="st">"A01"</span>, <span class="st">"A02"</span>, <span class="st">"A03"</span>, <span class="st">"A04"</span>, <span class="st">"A05"</span>],</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"peso_kg"</span>: [<span class="dv">380</span>, <span class="dv">425</span>, <span class="dv">350</span>, <span class="dv">410</span>, <span class="dv">365</span>]</span>
@@ -415,7 +421,7 @@ Total de producto para el lote: 96.5 ml</code></pre>
 <p>El peso de un animal en crecimiento sigue bien el modelo de <strong>Gompertz</strong>:</p>
 <p><span class="math display">\[W(t) = A \, e^{-b\, e^{-k t}}\]</span></p>
 <p>donde <span class="math inline">\(A\)</span> es el peso adulto, <span class="math inline">\(k\)</span> la velocidad de maduración y <span class="math inline">\(b\)</span> un parámetro de forma. Simulemos un lote de pollos de engorde:</p>
-<div id="6b453776" class="cell" data-execution_count="6">
+<div id="ee440f62" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>A, b, k <span class="op">=</span> <span class="dv">4500</span>, <span class="fl">4.5</span>, <span class="fl">0.045</span>     <span class="co"># peso adulto (g), forma, velocidad</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">100</span>, <span class="dv">200</span>)   <span class="co"># días</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -447,7 +453,7 @@ Total de producto para el lote: 96.5 ml</code></pre>
 </div>
 </div>
 <p>Dos novedades: <code>np.gradient</code> calcula la <strong>derivada numérica</strong> (la ganancia diaria sin derivar a mano), y <code>plt.subplots(1, 2)</code> pone dos gráficas lado a lado. El día de máxima ganancia marca el momento económico óptimo de venta:</p>
-<div id="be8acf9c" class="cell" data-execution_count="7">
+<div id="c3e428a8" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>dia_optimo <span class="op">=</span> t[np.argmax(ganancia)]</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Máxima ganancia diaria: </span><span class="sc">{</span>ganancia<span class="sc">.</span><span class="bu">max</span>()<span class="sc">:.1f}</span><span class="ss"> g/día, al día </span><span class="sc">{</span>dia_optimo<span class="sc">:.0f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">

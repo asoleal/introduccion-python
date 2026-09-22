@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>10&nbsp; Capítulo 8: Introducción a big data – Introducción a Python para Ingeniería, Datos y Economía</title>
+<title>10&nbsp; Big data: conceptos y ecosistema – Introducción a Python para Ingeniería, Datos y Economía</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -26,6 +26,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -36,6 +71,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./analisis-datos-grandes.html" rel="next">
 <link href="./proyectos.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -88,7 +124,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./big-data.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Capítulo 8: Introducción a big data</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./big-data.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Big data: conceptos y ecosistema</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -179,7 +215,13 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./big-data.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Capítulo 8: Introducción a big data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Big data: conceptos y ecosistema</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./analisis-datos-grandes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Análisis de datos grandes en la práctica</span></span></a>
   </div>
 </li>
     </ul>
@@ -187,15 +229,28 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#qué-es-big-data-las-3-v" id="toc-qué-es-big-data-las-3-v" class="nav-link active" data-scroll-target="#qué-es-big-data-las-3-v"><span class="header-section-number">10.1</span> ¿Qué es big data? Las 3 V</a></li>
+  <li><a href="#por-qué-no-basta-un-computador-más-grande" id="toc-por-qué-no-basta-un-computador-más-grande" class="nav-link" data-scroll-target="#por-qué-no-basta-un-computador-más-grande"><span class="header-section-number">10.2</span> ¿Por qué no basta un computador más grande?</a></li>
+  <li><a href="#el-ecosistema-nombres-que-escucharás" id="toc-el-ecosistema-nombres-que-escucharás" class="nav-link" data-scroll-target="#el-ecosistema-nombres-que-escucharás"><span class="header-section-number">10.3</span> El ecosistema: nombres que escucharás</a></li>
+  <li><a href="#casos-reales-donde-sí-es-big-data" id="toc-casos-reales-donde-sí-es-big-data" class="nav-link" data-scroll-target="#casos-reales-donde-sí-es-big-data"><span class="header-section-number">10.4</span> Casos reales donde sí es big data</a></li>
+  <li><a href="#un-experimento-rápido-para-calibrar-tu-intuición" id="toc-un-experimento-rápido-para-calibrar-tu-intuición" class="nav-link" data-scroll-target="#un-experimento-rápido-para-calibrar-tu-intuición"><span class="header-section-number">10.5</span> Un experimento rápido para calibrar tu intuición</a></li>
+  <li><a href="#cuándo-sí-dar-el-salto" id="toc-cuándo-sí-dar-el-salto" class="nav-link" data-scroll-target="#cuándo-sí-dar-el-salto"><span class="header-section-number">10.6</span> ¿Cuándo sí dar el salto?</a></li>
+  <li><a href="#ejercicios-de-investigación" id="toc-ejercicios-de-investigación" class="nav-link" data-scroll-target="#ejercicios-de-investigación"><span class="header-section-number">10.7</span> Ejercicios (de investigación)</a></li>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen"><span class="header-section-number">10.8</span> Resumen</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Capítulo 8: Introducción a big data</span></h1>
+<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Big data: conceptos y ecosistema</span></h1>
 </div>
 
 
@@ -212,9 +267,190 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>En construcción.</p>
+<p>Llegaste al último tema del libro, y empiezo con una advertencia honesta: <strong>la mayoría de problemas que enfrentarás no son big data</strong>. Un archivo de 500 MB con ventas de diez años no es big data; es un archivo grande, y pandas lo maneja bien (como verás en el próximo capítulo). Entender la diferencia te ahorrará años de usar herramientas equivocadas. Este capítulo es conceptual: el mapa. El siguiente es el terreno, con código.</p>
+<section id="qué-es-big-data-las-3-v" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="qué-es-big-data-las-3-v"><span class="header-section-number">10.1</span> ¿Qué es big data? Las 3 V</h2>
+<p>No hay una definición de tamaño (“a partir de X GB es big data”). La definición útil es por <strong>características</strong>, las llamadas 3 V:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 31%">
+<col style="width: 60%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>V</th>
+<th>Significado</th>
+<th>Pregunta de diagnóstico</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Volumen</strong></td>
+<td>Tanto dato que no cabe en la memoria de un computador</td>
+<td>¿Mi archivo supera la RAM de mi equipo?</td>
+</tr>
+<tr class="even">
+<td><strong>Velocidad</strong></td>
+<td>Los datos llegan como flujo continuo (sensores, transacciones)</td>
+<td>¿Recibo miles de registros por segundo?</td>
+</tr>
+<tr class="odd">
+<td><strong>Variedad</strong></td>
+<td>Datos mezclados: tablas, texto, imágenes, audio, video</td>
+<td>¿Tengo que combinar formatos incompatibles?</td>
+</tr>
+</tbody>
+</table>
+<p>(A veces se agregan una cuarta y quinta: <strong>veracidad</strong> —qué tan confiables son— y <strong>valor</strong> —para qué sirven—. Las dos importan más que el tamaño).</p>
+<p>La regla práctica: si tus datos caben en la memoria de un portátil normal (8-16 GB), <strong>no necesitas big data</strong>, necesitas buena técnica con pandas. Big data empieza cuando eso ya no es posible o la velocidad lo exige.</p>
+</section>
+<section id="por-qué-no-basta-un-computador-más-grande" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="por-qué-no-basta-un-computador-más-grande"><span class="header-section-number">10.2</span> ¿Por qué no basta un computador más grande?</h2>
+<p>Cuando los datos superan a un solo equipo, la solución cambia de filosofía: en vez de un computador más potente (<em>escalar verticalmente</em>), se usan <strong>muchos computadores trabajando en paralelo</strong> (<em>escalar horizontalmente</em>). Un <strong>cluster</strong> divide el archivo y el trabajo entre decenas o miles de máquinas y luego junta los resultados.</p>
+<p>Esta idea — partir el problema, procesar en paralelo, combinar — tiene un nombre famoso: <strong>MapReduce</strong>. No necesitas programarlo, pero sí entenderlo, porque toda la industria está construida sobre él.</p>
+</section>
+<section id="el-ecosistema-nombres-que-escucharás" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="el-ecosistema-nombres-que-escucharás"><span class="header-section-number">10.3</span> El ecosistema: nombres que escucharás</h2>
+<p>El mundo big data tiene muchas herramientas; aquí el mapa mínimo para no perderte en una conversación técnica:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 39%">
+<col style="width: 30%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Herramienta</th>
+<th>Qué hace</th>
+<th>Analogía</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Hadoop / HDFS</strong></td>
+<td>Almacena archivos gigantes repartidos en un cluster</td>
+<td>La bodega distribuida</td>
+</tr>
+<tr class="even">
+<td><strong>Spark</strong></td>
+<td>Procesa datos en paralelo, en memoria; el estándar actual</td>
+<td>El motor de cálculo</td>
+</tr>
+<tr class="odd">
+<td><strong>Kafka</strong></td>
+<td>Recibe flujos de datos en tiempo real (velocidad)</td>
+<td>La banda transportadora</td>
+</tr>
+<tr class="even">
+<td><strong>Parquet</strong></td>
+<td>Formato de archivo columnar, compacto y rápido</td>
+<td>El empaque eficiente</td>
+</tr>
+<tr class="odd">
+<td><strong>Data lake / warehouse</strong></td>
+<td>Repositorios centralizados de todos los datos de una organización</td>
+<td>La biblioteca central</td>
+</tr>
+<tr class="even">
+<td><strong>Nube (AWS, GCP, Azure)</strong></td>
+<td>Alquila clusters por horas, sin comprar hardware</td>
+<td>La finca arrendada</td>
+</tr>
+</tbody>
+</table>
+<p>En el próximo capítulo usarás <strong>Parquet</strong> directamente (funciona perfecto en Colab) y verás <strong>PySpark</strong>, la interfaz de Spark para Python.</p>
+</section>
+<section id="casos-reales-donde-sí-es-big-data" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="casos-reales-donde-sí-es-big-data"><span class="header-section-number">10.4</span> Casos reales donde sí es big data</h2>
+<ul>
+<li><strong>Agro de precisión a escala:</strong> miles de sensores por región reportando cada minuto + imágenes satelitales diarias → volumen, velocidad y variedad juntos.</li>
+<li><strong>Banca:</strong> millones de transacciones por minuto, detección de fraude en tiempo real.</li>
+<li><strong>Retail:</strong> historial de clicks y compras de millones de usuarios para sistemas de recomendación.</li>
+<li><strong>Salud pública:</strong> registros de millones de pacientes, imágenes médicas, secuenciación genómica.</li>
+</ul>
+<p>Y casos que <strong>parecen</strong> big data pero no lo son: el censo de un municipio, diez años de precios del café, las ventas de una empresa mediana. Todos caben en pandas.</p>
+</section>
+<section id="un-experimento-rápido-para-calibrar-tu-intuición" class="level2" data-number="10.5">
+<h2 data-number="10.5" class="anchored" data-anchor-id="un-experimento-rápido-para-calibrar-tu-intuición"><span class="header-section-number">10.5</span> Un experimento rápido para calibrar tu intuición</h2>
+<p>Mide cuánto tarda pandas con un millón de filas — te sorprenderá lo lejos que llega:</p>
+<div id="795ed8ea" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">0</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>inicio <span class="op">=</span> time.time()</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"finca"</span>: rng.integers(<span class="dv">1</span>, <span class="dv">500</span>, <span class="dv">1_000_000</span>),</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"produccion"</span>: rng.normal(<span class="fl">4.2</span>, <span class="fl">0.8</span>, <span class="dv">1_000_000</span>),</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"precio"</span>: rng.normal(<span class="dv">9500</span>, <span class="dv">700</span>, <span class="dv">1_000_000</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df.head())</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Un millón de filas cargadas en </span><span class="sc">{</span>time<span class="sc">.</span>time() <span class="op">-</span> inicio<span class="sc">:.2f}</span><span class="ss"> segundos"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   finca  produccion        precio
+0    425    4.619223   9922.799542
+1    318    2.775156   8540.880600
+2    256    4.611388   9831.802886
+3    135    4.039273   9153.223380
+4    154    4.323608  10398.155333
+
+Un millón de filas cargadas en 0.04 segundos</code></pre>
+</div>
+</div>
+<div id="bfd2736d" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>inicio <span class="op">=</span> time.time()</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>resumen <span class="op">=</span> df.groupby(<span class="st">"finca"</span>)[<span class="st">"produccion"</span>].mean()</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Promedio por finca (500 grupos) calculado en </span><span class="sc">{</span>time<span class="sc">.</span>time() <span class="op">-</span> inicio<span class="sc">:.3f}</span><span class="ss"> segundos"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(resumen.head())</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Promedio por finca (500 grupos) calculado en 0.020 segundos
+finca
+1    4.189503
+2    4.182327
+3    4.205118
+4    4.193417
+5    4.217686
+Name: produccion, dtype: float64</code></pre>
+</div>
+</div>
+<p>Un millón de filas, agrupadas en menos de un segundo. Esa es la lección: <strong>la frontera del big data está mucho más arriba de lo que la gente cree</strong>. Las técnicas del próximo capítulo te llevan cómodamente a decenas de millones de filas en Colab, sin tocar un cluster.</p>
+</section>
+<section id="cuándo-sí-dar-el-salto" class="level2" data-number="10.6">
+<h2 data-number="10.6" class="anchored" data-anchor-id="cuándo-sí-dar-el-salto"><span class="header-section-number">10.6</span> ¿Cuándo sí dar el salto?</h2>
+<p>Considera herramientas big data (Spark, nube) cuando se cumpla <strong>alguna</strong> de estas:</p>
+<ol type="1">
+<li>Tus datos superan la memoria RAM disponible y las técnicas del próximo capítulo (chunks, parquet) ya no alcanzan.</li>
+<li>Los datos llegan como flujo continuo que hay que procesar al instante (monitoreo en vivo).</li>
+<li>Varios equipos de una organización necesitan los mismos datos centralizados y gobernados.</li>
+</ol>
+<p>Si ninguna se cumple: pandas bien usado es más rápido de desarrollar, más barato y más fácil de mantener. <strong>Usar un cluster para 100 MB es como usar un trailer para llevar una caja de huevos.</strong></p>
+</section>
+<section id="ejercicios-de-investigación" class="level2" data-number="10.7">
+<h2 data-number="10.7" class="anchored" data-anchor-id="ejercicios-de-investigación"><span class="header-section-number">10.7</span> Ejercicios (de investigación)</h2>
+<ol type="1">
+<li>Clasifica estos casos según las 3 V (¿cuáles V aplican?): (a) historial de ventas de un almacén por 5 años, 2 GB; (b) 2.000 sensores de humedad reportando cada 10 segundos; (c) radiografías + historias clínicas en texto de un hospital; (d) nómina mensual de 300 empleados en Excel.</li>
+<li>Investiga qué tamaño de memoria RAM ofrece Colab en su versión gratuita. ¿Hasta qué tamaño de CSV podrías cargar completo allí?</li>
+<li>Busca un caso documentado de big data en el agro colombiano o latinoamericano. ¿Qué herramientas del ecosistema usaron?</li>
+<li>Explica con tus palabras por qué MapReduce divide el trabajo en lugar de usar un solo computador más potente. ¿Qué ventaja tiene cuando una máquina falla?</li>
+<li><strong>Reflexión escrita:</strong> un cliente te pide “una solución big data” para analizar las ventas de su tienda (un Excel de 80 MB). Escribe media página argumentando qué le recomiendas y por qué. (Este ejercicio vale más que cualquier código: te va a pasar en la vida real).</li>
+</ol>
+</section>
+<section id="resumen" class="level2" data-number="10.8">
+<h2 data-number="10.8" class="anchored" data-anchor-id="resumen"><span class="header-section-number">10.8</span> Resumen</h2>
+<ul>
+<li>Big data se define por <strong>volumen, velocidad y variedad</strong>, no por un tamaño mágico.</li>
+<li>Cuando un computador no basta, se escala <strong>horizontalmente</strong>: clusters y procesamiento en paralelo (MapReduce).</li>
+<li>El ecosistema clave: Hadoop (almacenar), Spark (procesar), Kafka (flujos), Parquet (formato), nube (infraestructura).</li>
+<li>Un millón de filas se procesan en pandas en menos de un segundo: la frontera real está mucho más arriba de lo que crees.</li>
+<li>La pregunta correcta no es “¿cómo uso big data?” sino “¿lo necesito?”.</li>
+</ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -624,6 +860,9 @@ ul.task-list li input[type="checkbox"] {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./analisis-datos-grandes.html" class="pagination-link" aria-label="Análisis de datos grandes en la práctica">
+        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Análisis de datos grandes en la práctica</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

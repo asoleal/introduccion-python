@@ -692,11 +692,101 @@
   {
     "objectID": "big-data.html",
     "href": "big-data.html",
-    "title": "10  Capítulo 8: Introducción a big data",
+    "title": "10  Big data: conceptos y ecosistema",
+    "section": "",
+    "text": "10.1 ¿Qué es big data? Las 3 V\nLlegaste al último tema del libro, y empiezo con una advertencia honesta: la mayoría de problemas que enfrentarás no son big data. Un archivo de 500 MB con ventas de diez años no es big data; es un archivo grande, y pandas lo maneja bien (como verás en el próximo capítulo). Entender la diferencia te ahorrará años de usar herramientas equivocadas. Este capítulo es conceptual: el mapa. El siguiente es el terreno, con código.\nNo hay una definición de tamaño (“a partir de X GB es big data”). La definición útil es por características, las llamadas 3 V:\n(A veces se agregan una cuarta y quinta: veracidad —qué tan confiables son— y valor —para qué sirven—. Las dos importan más que el tamaño).\nLa regla práctica: si tus datos caben en la memoria de un portátil normal (8-16 GB), no necesitas big data, necesitas buena técnica con pandas. Big data empieza cuando eso ya no es posible o la velocidad lo exige.",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Big data: conceptos y ecosistema</span>"
+    ]
+  },
+  {
+    "objectID": "big-data.html#qué-es-big-data-las-3-v",
+    "href": "big-data.html#qué-es-big-data-las-3-v",
+    "title": "10  Big data: conceptos y ecosistema",
+    "section": "",
+    "text": "V\nSignificado\nPregunta de diagnóstico\n\n\n\n\nVolumen\nTanto dato que no cabe en la memoria de un computador\n¿Mi archivo supera la RAM de mi equipo?\n\n\nVelocidad\nLos datos llegan como flujo continuo (sensores, transacciones)\n¿Recibo miles de registros por segundo?\n\n\nVariedad\nDatos mezclados: tablas, texto, imágenes, audio, video\n¿Tengo que combinar formatos incompatibles?",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Big data: conceptos y ecosistema</span>"
+    ]
+  },
+  {
+    "objectID": "big-data.html#por-qué-no-basta-un-computador-más-grande",
+    "href": "big-data.html#por-qué-no-basta-un-computador-más-grande",
+    "title": "10  Big data: conceptos y ecosistema",
+    "section": "10.2 ¿Por qué no basta un computador más grande?",
+    "text": "10.2 ¿Por qué no basta un computador más grande?\nCuando los datos superan a un solo equipo, la solución cambia de filosofía: en vez de un computador más potente (escalar verticalmente), se usan muchos computadores trabajando en paralelo (escalar horizontalmente). Un cluster divide el archivo y el trabajo entre decenas o miles de máquinas y luego junta los resultados.\nEsta idea — partir el problema, procesar en paralelo, combinar — tiene un nombre famoso: MapReduce. No necesitas programarlo, pero sí entenderlo, porque toda la industria está construida sobre él.",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Big data: conceptos y ecosistema</span>"
+    ]
+  },
+  {
+    "objectID": "big-data.html#el-ecosistema-nombres-que-escucharás",
+    "href": "big-data.html#el-ecosistema-nombres-que-escucharás",
+    "title": "10  Big data: conceptos y ecosistema",
+    "section": "10.3 El ecosistema: nombres que escucharás",
+    "text": "10.3 El ecosistema: nombres que escucharás\nEl mundo big data tiene muchas herramientas; aquí el mapa mínimo para no perderte en una conversación técnica:\n\n\n\n\n\n\n\n\nHerramienta\nQué hace\nAnalogía\n\n\n\n\nHadoop / HDFS\nAlmacena archivos gigantes repartidos en un cluster\nLa bodega distribuida\n\n\nSpark\nProcesa datos en paralelo, en memoria; el estándar actual\nEl motor de cálculo\n\n\nKafka\nRecibe flujos de datos en tiempo real (velocidad)\nLa banda transportadora\n\n\nParquet\nFormato de archivo columnar, compacto y rápido\nEl empaque eficiente\n\n\nData lake / warehouse\nRepositorios centralizados de todos los datos de una organización\nLa biblioteca central\n\n\nNube (AWS, GCP, Azure)\nAlquila clusters por horas, sin comprar hardware\nLa finca arrendada\n\n\n\nEn el próximo capítulo usarás Parquet directamente (funciona perfecto en Colab) y verás PySpark, la interfaz de Spark para Python.",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Big data: conceptos y ecosistema</span>"
+    ]
+  },
+  {
+    "objectID": "big-data.html#casos-reales-donde-sí-es-big-data",
+    "href": "big-data.html#casos-reales-donde-sí-es-big-data",
+    "title": "10  Big data: conceptos y ecosistema",
+    "section": "10.4 Casos reales donde sí es big data",
+    "text": "10.4 Casos reales donde sí es big data\n\nAgro de precisión a escala: miles de sensores por región reportando cada minuto + imágenes satelitales diarias → volumen, velocidad y variedad juntos.\nBanca: millones de transacciones por minuto, detección de fraude en tiempo real.\nRetail: historial de clicks y compras de millones de usuarios para sistemas de recomendación.\nSalud pública: registros de millones de pacientes, imágenes médicas, secuenciación genómica.\n\nY casos que parecen big data pero no lo son: el censo de un municipio, diez años de precios del café, las ventas de una empresa mediana. Todos caben en pandas.",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Big data: conceptos y ecosistema</span>"
+    ]
+  },
+  {
+    "objectID": "big-data.html#un-experimento-rápido-para-calibrar-tu-intuición",
+    "href": "big-data.html#un-experimento-rápido-para-calibrar-tu-intuición",
+    "title": "10  Big data: conceptos y ecosistema",
+    "section": "10.5 Un experimento rápido para calibrar tu intuición",
+    "text": "10.5 Un experimento rápido para calibrar tu intuición\nMide cuánto tarda pandas con un millón de filas — te sorprenderá lo lejos que llega:\n\nimport numpy as np\nimport pandas as pd\nimport time\n\nrng = np.random.default_rng(0)\ninicio = time.time()\n\ndf = pd.DataFrame({\n    \"finca\": rng.integers(1, 500, 1_000_000),\n    \"produccion\": rng.normal(4.2, 0.8, 1_000_000),\n    \"precio\": rng.normal(9500, 700, 1_000_000)\n})\n\nprint(df.head())\nprint(f\"\\nUn millón de filas cargadas en {time.time() - inicio:.2f} segundos\")\n\n   finca  produccion        precio\n0    425    4.619223   9922.799542\n1    318    2.775156   8540.880600\n2    256    4.611388   9831.802886\n3    135    4.039273   9153.223380\n4    154    4.323608  10398.155333\n\nUn millón de filas cargadas en 0.04 segundos\n\n\n\ninicio = time.time()\nresumen = df.groupby(\"finca\")[\"produccion\"].mean()\nprint(f\"Promedio por finca (500 grupos) calculado en {time.time() - inicio:.3f} segundos\")\nprint(resumen.head())\n\nPromedio por finca (500 grupos) calculado en 0.020 segundos\nfinca\n1    4.189503\n2    4.182327\n3    4.205118\n4    4.193417\n5    4.217686\nName: produccion, dtype: float64\n\n\nUn millón de filas, agrupadas en menos de un segundo. Esa es la lección: la frontera del big data está mucho más arriba de lo que la gente cree. Las técnicas del próximo capítulo te llevan cómodamente a decenas de millones de filas en Colab, sin tocar un cluster.",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Big data: conceptos y ecosistema</span>"
+    ]
+  },
+  {
+    "objectID": "big-data.html#cuándo-sí-dar-el-salto",
+    "href": "big-data.html#cuándo-sí-dar-el-salto",
+    "title": "10  Big data: conceptos y ecosistema",
+    "section": "10.6 ¿Cuándo sí dar el salto?",
+    "text": "10.6 ¿Cuándo sí dar el salto?\nConsidera herramientas big data (Spark, nube) cuando se cumpla alguna de estas:\n\nTus datos superan la memoria RAM disponible y las técnicas del próximo capítulo (chunks, parquet) ya no alcanzan.\nLos datos llegan como flujo continuo que hay que procesar al instante (monitoreo en vivo).\nVarios equipos de una organización necesitan los mismos datos centralizados y gobernados.\n\nSi ninguna se cumple: pandas bien usado es más rápido de desarrollar, más barato y más fácil de mantener. Usar un cluster para 100 MB es como usar un trailer para llevar una caja de huevos.",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Big data: conceptos y ecosistema</span>"
+    ]
+  },
+  {
+    "objectID": "big-data.html#ejercicios-de-investigación",
+    "href": "big-data.html#ejercicios-de-investigación",
+    "title": "10  Big data: conceptos y ecosistema",
+    "section": "10.7 Ejercicios (de investigación)",
+    "text": "10.7 Ejercicios (de investigación)\n\nClasifica estos casos según las 3 V (¿cuáles V aplican?): (a) historial de ventas de un almacén por 5 años, 2 GB; (b) 2.000 sensores de humedad reportando cada 10 segundos; (c) radiografías + historias clínicas en texto de un hospital; (d) nómina mensual de 300 empleados en Excel.\nInvestiga qué tamaño de memoria RAM ofrece Colab en su versión gratuita. ¿Hasta qué tamaño de CSV podrías cargar completo allí?\nBusca un caso documentado de big data en el agro colombiano o latinoamericano. ¿Qué herramientas del ecosistema usaron?\nExplica con tus palabras por qué MapReduce divide el trabajo en lugar de usar un solo computador más potente. ¿Qué ventaja tiene cuando una máquina falla?\nReflexión escrita: un cliente te pide “una solución big data” para analizar las ventas de su tienda (un Excel de 80 MB). Escribe media página argumentando qué le recomiendas y por qué. (Este ejercicio vale más que cualquier código: te va a pasar en la vida real).",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Big data: conceptos y ecosistema</span>"
+    ]
+  },
+  {
+    "objectID": "big-data.html#resumen",
+    "href": "big-data.html#resumen",
+    "title": "10  Big data: conceptos y ecosistema",
+    "section": "10.8 Resumen",
+    "text": "10.8 Resumen\n\nBig data se define por volumen, velocidad y variedad, no por un tamaño mágico.\nCuando un computador no basta, se escala horizontalmente: clusters y procesamiento en paralelo (MapReduce).\nEl ecosistema clave: Hadoop (almacenar), Spark (procesar), Kafka (flujos), Parquet (formato), nube (infraestructura).\nUn millón de filas se procesan en pandas en menos de un segundo: la frontera real está mucho más arriba de lo que crees.\nLa pregunta correcta no es “¿cómo uso big data?” sino “¿lo necesito?”.",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Big data: conceptos y ecosistema</span>"
+    ]
+  },
+  {
+    "objectID": "analisis-datos-grandes.html",
+    "href": "analisis-datos-grandes.html",
+    "title": "11  Análisis de datos grandes en la práctica",
     "section": "",
     "text": "En construcción.",
     "crumbs": [
-      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Capítulo 8: Introducción a big data</span>"
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Análisis de datos grandes en la práctica</span>"
     ]
   }
 ]

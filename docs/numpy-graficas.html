@@ -244,7 +244,13 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./big-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Capítulo 8: Introducción a big data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Big data: conceptos y ecosistema</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./analisis-datos-grandes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Análisis de datos grandes en la práctica</span></span></a>
   </div>
 </li>
     </ul>
@@ -297,7 +303,7 @@ window.Quarto = {
 <section id="librerías-código-que-otros-escribieron-por-ti" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="librerías-código-que-otros-escribieron-por-ti"><span class="header-section-number">5.1</span> Librerías: código que otros escribieron por ti</h2>
 <p>Una <strong>librería</strong> es un paquete de funciones listas para usar. Se carga con <code>import</code>:</p>
-<div id="4819d202" class="cell" data-execution_count="1">
+<div id="6ede6af8" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>La convención <code>as np</code> le pone un apodo corto: en vez de escribir <code>numpy.array</code> escribes <code>np.array</code>. En Colab, NumPy y Matplotlib ya vienen instaladas; solo hay que importarlas.</p>
@@ -305,7 +311,7 @@ window.Quarto = {
 <section id="el-array-una-lista-con-superpoderes" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="el-array-una-lista-con-superpoderes"><span class="header-section-number">5.2</span> El array: una lista con superpoderes</h2>
 <p>El objeto central de NumPy es el <strong>array</strong>. Se parece a una lista, pero permite operar sobre <strong>todos sus elementos a la vez</strong>:</p>
-<div id="7c9b6a78" class="cell" data-execution_count="2">
+<div id="86027f89" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>rendimientos <span class="op">=</span> np.array([<span class="fl">4.2</span>, <span class="fl">3.8</span>, <span class="fl">5.1</span>, <span class="fl">4.6</span>, <span class="fl">3.9</span>])  <span class="co"># toneladas por hectárea</span></span>
@@ -319,7 +325,7 @@ window.Quarto = {
 </div>
 <p>Con una lista normal, <code>lista * 1000</code> daría error (o algo raro). Con un array, la operación se aplica elemento por elemento. Esto se llama <strong>vectorización</strong> y es la idea más importante del capítulo.</p>
 <p>Otro ejemplo típico de mecatrónica: un sensor entrega temperaturas en Celsius y el sistema las necesita en Fahrenheit:</p>
-<div id="d0053f2d" class="cell" data-execution_count="3">
+<div id="987cf715" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>celsius <span class="op">=</span> np.array([<span class="fl">20.0</span>, <span class="fl">22.5</span>, <span class="fl">25.1</span>, <span class="fl">31.8</span>, <span class="fl">28.4</span>])</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>fahrenheit <span class="op">=</span> celsius <span class="op">*</span> <span class="dv">9</span> <span class="op">/</span> <span class="dv">5</span> <span class="op">+</span> <span class="dv">32</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(fahrenheit)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
@@ -332,7 +338,7 @@ window.Quarto = {
 <section id="crear-secuencias-de-datos" class="level2" data-number="5.3">
 <h2 data-number="5.3" class="anchored" data-anchor-id="crear-secuencias-de-datos"><span class="header-section-number">5.3</span> Crear secuencias de datos</h2>
 <p>NumPy tiene funciones para generar arrays sin escribir los valores a mano:</p>
-<div id="b43ae9cb" class="cell" data-execution_count="4">
+<div id="2c8ea65a" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.arange(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">2</span>))     <span class="co"># de 0 a 10 (sin incluir), de 2 en 2</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">5</span>))    <span class="co"># 5 valores igualmente espaciados entre 0 y 1</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.zeros(<span class="dv">4</span>))             <span class="co"># cuatro ceros</span></span>
@@ -349,7 +355,7 @@ window.Quarto = {
 <section id="estadística-instantánea" class="level2" data-number="5.4">
 <h2 data-number="5.4" class="anchored" data-anchor-id="estadística-instantánea"><span class="header-section-number">5.4</span> Estadística instantánea</h2>
 <p>Los arrays traen métodos estadísticos incorporados:</p>
-<div id="23177acc" class="cell" data-execution_count="5">
+<div id="d0212a81" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>produccion <span class="op">=</span> np.array([<span class="fl">4.2</span>, <span class="fl">3.8</span>, <span class="fl">5.1</span>, <span class="fl">4.6</span>, <span class="fl">3.9</span>, <span class="fl">4.8</span>, <span class="fl">2.9</span>, <span class="fl">5.0</span>])</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Promedio:        </span><span class="sc">{</span>produccion<span class="sc">.</span>mean()<span class="sc">:.2f}</span><span class="ss"> ton/ha"</span>)</span>
@@ -368,11 +374,11 @@ Parcela del máximo: 2</code></pre>
 <section id="gráficas-con-matplotlib" class="level2" data-number="5.5">
 <h2 data-number="5.5" class="anchored" data-anchor-id="gráficas-con-matplotlib"><span class="header-section-number">5.5</span> Gráficas con Matplotlib</h2>
 <p>Un número dice poco; una gráfica lo dice todo. Matplotlib se importa así:</p>
-<div id="6b535550" class="cell" data-execution_count="6">
+<div id="ab47d693" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>La gráfica mínima tiene cuatro ingredientes: datos, <code>plot</code>, etiquetas y <code>show</code>:</p>
-<div id="83d2caf6" class="cell" data-execution_count="7">
+<div id="9fd57b5a" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -396,7 +402,7 @@ Parcela del máximo: 2</code></pre>
 <section id="otros-tipos-de-gráfica-útiles" class="level3" data-number="5.5.1">
 <h3 data-number="5.5.1" class="anchored" data-anchor-id="otros-tipos-de-gráfica-útiles"><span class="header-section-number">5.5.1</span> Otros tipos de gráfica útiles</h3>
 <p><strong>Dispersión (scatter)</strong>: para ver relación entre dos variables, por ejemplo inversión en riego vs.&nbsp;producción:</p>
-<div id="3d1b4623" class="cell" data-execution_count="8">
+<div id="546bc263" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>riego <span class="op">=</span> np.array([<span class="dv">100</span>, <span class="dv">150</span>, <span class="dv">200</span>, <span class="dv">250</span>, <span class="dv">300</span>, <span class="dv">350</span>])        <span class="co"># mm de agua</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>produccion <span class="op">=</span> np.array([<span class="fl">3.1</span>, <span class="fl">3.8</span>, <span class="fl">4.5</span>, <span class="fl">4.9</span>, <span class="fl">5.0</span>, <span class="fl">5.1</span>])   <span class="co"># ton/ha</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -415,7 +421,7 @@ Parcela del máximo: 2</code></pre>
 </div>
 </div>
 <p><strong>Barras (bar)</strong>: para comparar categorías:</p>
-<div id="a0342875" class="cell" data-execution_count="9">
+<div id="819fab2c" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>productos <span class="op">=</span> [<span class="st">"Café"</span>, <span class="st">"Cacao"</span>, <span class="st">"Banano"</span>, <span class="st">"Panela"</span>]</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>ventas <span class="op">=</span> [<span class="dv">52</span>, <span class="dv">38</span>, <span class="dv">61</span>, <span class="dv">27</span>]   <span class="co"># millones</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -432,7 +438,7 @@ Parcela del máximo: 2</code></pre>
 </div>
 </div>
 <p><strong>Histograma (hist)</strong>: para ver cómo se distribuyen los datos:</p>
-<div id="17af6a94" class="cell" data-execution_count="10">
+<div id="18d3e2bc" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">42</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>salarios <span class="op">=</span> rng.normal(<span class="dv">2800000</span>, <span class="dv">500000</span>, <span class="dv">200</span>)   <span class="co"># 200 salarios simulados</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -456,7 +462,7 @@ Parcela del máximo: 2</code></pre>
 <p>El flujo de trabajo ingenieril completo: <strong>modelo matemático → array de tiempo → simulación → gráfica</strong>. Ejemplo: la altura de una planta de maíz sigue aproximadamente una curva logística</p>
 <p><span class="math display">\[h(t) = \frac{H}{1 + e^{-k(t - t_0)}}\]</span></p>
 <p>donde <span class="math inline">\(H\)</span> es la altura máxima, <span class="math inline">\(k\)</span> la velocidad de crecimiento y <span class="math inline">\(t_0\)</span> el día de crecimiento más rápido:</p>
-<div id="fa9c7706" class="cell" data-execution_count="11">
+<div id="17438dd4" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>H <span class="op">=</span> <span class="fl">2.5</span>     <span class="co"># altura máxima (m)</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="fl">0.15</span>    <span class="co"># velocidad de crecimiento</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>t0 <span class="op">=</span> <span class="dv">40</span>     <span class="co"># día de máximo crecimiento</span></span>
