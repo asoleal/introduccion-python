@@ -6,7 +6,7 @@ lang: es
 
 book:
   title: "Introducción a Python para Ingeniería, Datos y Economía"
-  author: "A. Soleal"
+  author: "John Leal"
   date: today
   downloads: [pdf]
   chapters:
