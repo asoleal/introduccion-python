@@ -1,0 +1,23 @@
+# Capítulo 1: Introducción
+
+## ¿Qué es Python y por qué lo usaremos en Google Colab?
+
+Python es un lenguaje de programación de alto nivel, interpretado y de propósito general, creado por Guido van Rossum a principios de los años noventa. Su filosofía prioriza la legibilidad: su sintaxis se parece al lenguaje natural y utiliza sangrías en lugar de símbolos complejos, lo que lo convierte en una excelente opción como primer lenguaje. Aunque es sencillo de aprender, es lo bastante potente para construir desde pequeños scripts hasta aplicaciones completas.
+
+Python es hoy el lenguaje más usado en ciencia de datos, machine learning e ingeniería gracias a la fuerza de su ecosistema: bibliotecas como NumPy y pandas para el cálculo y el análisis de datos, Matplotlib y Seaborn para la visualización, y Scikit-learn, TensorFlow o PyTorch para el aprendizaje automático. A eso se suman una comunidad enorme, abundante documentación y su adopción como estándar tanto en empresas como en universidades; aprender Python abre directamente la puerta al trabajo con datos.
+
+Google Colab (abreviatura de Colaboratory) es un entorno gratuito de notebooks de Jupyter que Google hospeda en la nube y que se ejecuta en el navegador. No hay que instalar nada: con una cuenta de Google dispones de un editor donde escribes y ejecutas código Python, redactas texto con formato e incorporas gráficas y resultados en un mismo documento. Además, Colab ofrece acceso gratuito ocasional a unidades de procesamiento gráfico (GPU), lo que lo convierte en la herramienta ideal para aprender y para proyectos de análisis de datos.
+
+### Actividad guiada: tu primer programa en Colab
+
+1. Abre en tu navegador la dirección [colab.research.google.com](https://colab.research.google.com) e inicia sesión con tu cuenta de Google.
+2. Haz clic en **Nuevo notebook** para crear un documento en blanco.
+3. En la celda de código que aparece, escribe (o copia y pega) lo siguiente:
+
+```python
+print("Hola, mundo")
+```
+
+4. Pulsa el botón de reproducción situado a la izquierda de la celda (o `Ctrl + Enter`).
+
+Debajo de la celda aparecerá el texto `Hola, mundo`. Acabas de ejecutar tu primer programa: `print()` es una función que muestra en pantalla lo que le pasas entre paréntesis, y `"Hola, mundo"` es una cadena de texto, es decir, una secuencia de caracteres encerrada entre comillas. Ese ritmo —escribir una instrucción en una celda y ejecutarla para ver su resultado de inmediato— será la base del trabajo durante todo el libro.

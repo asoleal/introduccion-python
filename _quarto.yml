@@ -1,0 +1,27 @@
+project:
+  type: book
+
+lang: es
+
+book:
+  title: "Introducción a Python para Ingeniería, Datos y Economía"
+  author: "A. Soleal"
+  date: today
+  chapters:
+    - index.qmd
+    - introduccion.qmd
+    - fundamentos.qmd
+    - control-flujo.qmd
+    - estructuras-datos.qmd
+    - numpy-graficas.qmd
+    - pandas.qmd
+    - economia-administracion.qmd
+    - big-data.qmd
+
+format:
+  html:
+    theme: cosmo
+  pdf:
+    pdf-engine: xelatex
+    documentclass: scrreprt
+    latex-auto-install: false

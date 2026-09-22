@@ -1,0 +1,17 @@
+# Introducción a Python para Ingeniería, Datos y Economía {.unnumbered}
+
+**A. Soleal**
+
+## Prólogo {.unnumbered}
+
+Este libro está pensado para estudiantes y profesionales de ingeniería, análisis de datos y economía que desean aprender a programar en Python desde cero. No se asume ninguna experiencia previa en programación: los conceptos se introducen de forma progresiva, con ejemplos cercanos a la ingeniería, la estadística y la economía, para que cada tema tenga un contexto claro y aplicable.
+
+Todo el código está diseñado para ejecutarse en Google Colab, el entorno gratuito de notebooks de Google. No necesitas instalar nada en tu computadora: basta un navegador y una cuenta de Google. Cada capítulo contiene bloques de código listos para copiar y pegar en una celda de Colab, de modo que puedes leer, ejecutar y experimentar en el mismo momento.
+
+Al terminar este libro habrás aprendido los fundamentos del lenguaje Python —variables, tipos de datos, operadores y control de flujo—, las estructuras de datos esenciales, el cálculo numérico con NumPy, la visualización de gráficas, el análisis de datos con pandas, y una introducción a las aplicaciones en economía, administración y big data.
+
+## Cómo usar este libro {.unnumbered}
+
+Cada bloque de código de este libro se copia y se pega tal cual en una celda de Google Colab. Para ello, abre [colab.research.google.com](https://colab.research.google.com), crea un notebook nuevo y copia los bloques de cada capítulo en orden, ejecutándolos con el botón de reproducción (o con `Ctrl + Enter`).
+
+Te recomendamos crear un notebook por capítulo, ejecutar cada bloque paso a paso y modificar los valores de los ejemplos para comprobar qué ocurre: aprender a programar se logra escribiendo y ejecutando código, no solo leyéndolo.
