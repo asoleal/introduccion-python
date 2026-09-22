@@ -1,5 +1,6 @@
 project:
   type: book
+  output-dir: docs
 
 lang: es
 
@@ -7,6 +8,7 @@ book:
   title: "Introducción a Python para Ingeniería, Datos y Economía"
   author: "A. Soleal"
   date: today
+  downloads: [pdf]
   chapters:
     - index.qmd
     - introduccion.qmd
