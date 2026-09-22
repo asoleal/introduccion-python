@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>5&nbsp; Capítulo 5: NumPy y gráficas – Introducción a Python para Ingeniería, Datos y Economía</title>
+<title>5&nbsp; NumPy y gráficas: cómputo científico – Introducción a Python para Ingeniería, Datos y Economía</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -25,6 +25,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -76,6 +111,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -89,7 +153,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./numpy-graficas.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Capítulo 5: NumPy y gráficas</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./numpy-graficas.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">NumPy y gráficas: cómputo científico</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -150,25 +214,37 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./numpy-graficas.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Capítulo 5: NumPy y gráficas</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">NumPy y gráficas: cómputo científico</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pandas.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Capítulo 6: pandas</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">pandas: manejo de datos</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./economia-administracion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Capítulo 7: Economía y administración</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Aplicaciones en administración y economía</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./aplicaciones-ingenieria.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Aplicaciones en ingeniería: agro, mecatrónica, veterinaria y zootecnia</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./proyectos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Proyectos integradores</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./big-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Capítulo 8: Introducción a big data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Capítulo 8: Introducción a big data</span></span></a>
   </div>
 </li>
     </ul>
@@ -176,15 +252,31 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#librerías-código-que-otros-escribieron-por-ti" id="toc-librerías-código-que-otros-escribieron-por-ti" class="nav-link active" data-scroll-target="#librerías-código-que-otros-escribieron-por-ti"><span class="header-section-number">5.1</span> Librerías: código que otros escribieron por ti</a></li>
+  <li><a href="#el-array-una-lista-con-superpoderes" id="toc-el-array-una-lista-con-superpoderes" class="nav-link" data-scroll-target="#el-array-una-lista-con-superpoderes"><span class="header-section-number">5.2</span> El array: una lista con superpoderes</a></li>
+  <li><a href="#crear-secuencias-de-datos" id="toc-crear-secuencias-de-datos" class="nav-link" data-scroll-target="#crear-secuencias-de-datos"><span class="header-section-number">5.3</span> Crear secuencias de datos</a></li>
+  <li><a href="#estadística-instantánea" id="toc-estadística-instantánea" class="nav-link" data-scroll-target="#estadística-instantánea"><span class="header-section-number">5.4</span> Estadística instantánea</a></li>
+  <li><a href="#gráficas-con-matplotlib" id="toc-gráficas-con-matplotlib" class="nav-link" data-scroll-target="#gráficas-con-matplotlib"><span class="header-section-number">5.5</span> Gráficas con Matplotlib</a>
+  <ul class="collapse">
+  <li><a href="#otros-tipos-de-gráfica-útiles" id="toc-otros-tipos-de-gráfica-útiles" class="nav-link" data-scroll-target="#otros-tipos-de-gráfica-útiles"><span class="header-section-number">5.5.1</span> Otros tipos de gráfica útiles</a></li>
+  </ul></li>
+  <li><a href="#aplicación-de-ingeniería-simular-y-graficar-un-fenómeno" id="toc-aplicación-de-ingeniería-simular-y-graficar-un-fenómeno" class="nav-link" data-scroll-target="#aplicación-de-ingeniería-simular-y-graficar-un-fenómeno"><span class="header-section-number">5.6</span> Aplicación de ingeniería: simular y graficar un fenómeno</a></li>
+  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">5.7</span> Ejercicios</a></li>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen"><span class="header-section-number">5.8</span> Resumen</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Capítulo 5: NumPy y gráficas</span></h1>
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">NumPy y gráficas: cómputo científico</span></h1>
 </div>
 
 
@@ -201,9 +293,215 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>En construcción.</p>
+<p>Hasta aquí trabajaste con valores sueltos y listas. La ingeniería y la economía manejan otra cosa: <strong>miles de datos</strong> a la vez — todas las lecturas de un sensor, los precios de un año, la producción de 500 parcelas. Hacer eso con listas y ciclos <code>for</code> es lento y enredado. La solución es <strong>NumPy</strong>: la librería que convierte a Python en una máquina de cálculo numérico. Y para ver los resultados, <strong>Matplotlib</strong>: la librería de gráficas.</p>
+<section id="librerías-código-que-otros-escribieron-por-ti" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="librerías-código-que-otros-escribieron-por-ti"><span class="header-section-number">5.1</span> Librerías: código que otros escribieron por ti</h2>
+<p>Una <strong>librería</strong> es un paquete de funciones listas para usar. Se carga con <code>import</code>:</p>
+<div id="4819d202" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>La convención <code>as np</code> le pone un apodo corto: en vez de escribir <code>numpy.array</code> escribes <code>np.array</code>. En Colab, NumPy y Matplotlib ya vienen instaladas; solo hay que importarlas.</p>
+</section>
+<section id="el-array-una-lista-con-superpoderes" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="el-array-una-lista-con-superpoderes"><span class="header-section-number">5.2</span> El array: una lista con superpoderes</h2>
+<p>El objeto central de NumPy es el <strong>array</strong>. Se parece a una lista, pero permite operar sobre <strong>todos sus elementos a la vez</strong>:</p>
+<div id="7c9b6a78" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>rendimientos <span class="op">=</span> np.array([<span class="fl">4.2</span>, <span class="fl">3.8</span>, <span class="fl">5.1</span>, <span class="fl">4.6</span>, <span class="fl">3.9</span>])  <span class="co"># toneladas por hectárea</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Convertir todo a kg/ha de una sola vez:</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>rendimientos_kg <span class="op">=</span> rendimientos <span class="op">*</span> <span class="dv">1000</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(rendimientos_kg)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[4200. 3800. 5100. 4600. 3900.]</code></pre>
+</div>
+</div>
+<p>Con una lista normal, <code>lista * 1000</code> daría error (o algo raro). Con un array, la operación se aplica elemento por elemento. Esto se llama <strong>vectorización</strong> y es la idea más importante del capítulo.</p>
+<p>Otro ejemplo típico de mecatrónica: un sensor entrega temperaturas en Celsius y el sistema las necesita en Fahrenheit:</p>
+<div id="d0053f2d" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>celsius <span class="op">=</span> np.array([<span class="fl">20.0</span>, <span class="fl">22.5</span>, <span class="fl">25.1</span>, <span class="fl">31.8</span>, <span class="fl">28.4</span>])</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>fahrenheit <span class="op">=</span> celsius <span class="op">*</span> <span class="dv">9</span> <span class="op">/</span> <span class="dv">5</span> <span class="op">+</span> <span class="dv">32</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(fahrenheit)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[68.   72.5  77.18 89.24 83.12]</code></pre>
+</div>
+</div>
+<p>Ni un solo ciclo. La fórmula se escribe como en álgebra y se aplica a todo el arreglo.</p>
+</section>
+<section id="crear-secuencias-de-datos" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="crear-secuencias-de-datos"><span class="header-section-number">5.3</span> Crear secuencias de datos</h2>
+<p>NumPy tiene funciones para generar arrays sin escribir los valores a mano:</p>
+<div id="b43ae9cb" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.arange(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">2</span>))     <span class="co"># de 0 a 10 (sin incluir), de 2 en 2</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">5</span>))    <span class="co"># 5 valores igualmente espaciados entre 0 y 1</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.zeros(<span class="dv">4</span>))             <span class="co"># cuatro ceros</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.ones(<span class="dv">3</span>))              <span class="co"># tres unos</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[0 2 4 6 8]
+[0.   0.25 0.5  0.75 1.  ]
+[0. 0. 0. 0.]
+[1. 1. 1.]</code></pre>
+</div>
+</div>
+<p><code>linspace</code> es el favorito para graficar funciones: genera los puntos del eje x.</p>
+</section>
+<section id="estadística-instantánea" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="estadística-instantánea"><span class="header-section-number">5.4</span> Estadística instantánea</h2>
+<p>Los arrays traen métodos estadísticos incorporados:</p>
+<div id="23177acc" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>produccion <span class="op">=</span> np.array([<span class="fl">4.2</span>, <span class="fl">3.8</span>, <span class="fl">5.1</span>, <span class="fl">4.6</span>, <span class="fl">3.9</span>, <span class="fl">4.8</span>, <span class="fl">2.9</span>, <span class="fl">5.0</span>])</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Promedio:        </span><span class="sc">{</span>produccion<span class="sc">.</span>mean()<span class="sc">:.2f}</span><span class="ss"> ton/ha"</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Desviación:      </span><span class="sc">{</span>produccion<span class="sc">.</span>std()<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Máximo:          </span><span class="sc">{</span>produccion<span class="sc">.</span><span class="bu">max</span>()<span class="sc">}</span><span class="ss"> ton/ha"</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Parcela del máximo: </span><span class="sc">{</span>produccion<span class="sc">.</span>argmax()<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Promedio:        4.29 ton/ha
+Desviación:      0.69
+Máximo:          5.1 ton/ha
+Parcela del máximo: 2</code></pre>
+</div>
+</div>
+<p><code>argmax()</code> no devuelve el valor máximo sino su <strong>posición</strong>: útil para saber <em>cuál</em> parcela fue la mejor.</p>
+</section>
+<section id="gráficas-con-matplotlib" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="gráficas-con-matplotlib"><span class="header-section-number">5.5</span> Gráficas con Matplotlib</h2>
+<p>Un número dice poco; una gráfica lo dice todo. Matplotlib se importa así:</p>
+<div id="6b535550" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>La gráfica mínima tiene cuatro ingredientes: datos, <code>plot</code>, etiquetas y <code>show</code>:</p>
+<div id="83d2caf6" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>horas <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">24</span>)                       <span class="co"># 0 a 23</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>temperatura <span class="op">=</span> <span class="dv">22</span> <span class="op">+</span> <span class="dv">6</span> <span class="op">*</span> np.sin((horas <span class="op">-</span> <span class="dv">9</span>) <span class="op">*</span> np.pi <span class="op">/</span> <span class="dv">12</span>)  <span class="co"># modelo simple de un día</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>plt.plot(horas, temperatura, marker<span class="op">=</span><span class="st">"o"</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Hora del día"</span>)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Temperatura (°C)"</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Temperatura del invernadero"</span>)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="numpy-graficas_files/figure-html/cell-8-output-1.png" width="585" height="451" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="otros-tipos-de-gráfica-útiles" class="level3" data-number="5.5.1">
+<h3 data-number="5.5.1" class="anchored" data-anchor-id="otros-tipos-de-gráfica-útiles"><span class="header-section-number">5.5.1</span> Otros tipos de gráfica útiles</h3>
+<p><strong>Dispersión (scatter)</strong>: para ver relación entre dos variables, por ejemplo inversión en riego vs.&nbsp;producción:</p>
+<div id="3d1b4623" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>riego <span class="op">=</span> np.array([<span class="dv">100</span>, <span class="dv">150</span>, <span class="dv">200</span>, <span class="dv">250</span>, <span class="dv">300</span>, <span class="dv">350</span>])        <span class="co"># mm de agua</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>produccion <span class="op">=</span> np.array([<span class="fl">3.1</span>, <span class="fl">3.8</span>, <span class="fl">4.5</span>, <span class="fl">4.9</span>, <span class="fl">5.0</span>, <span class="fl">5.1</span>])   <span class="co"># ton/ha</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>plt.scatter(riego, produccion)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Lámina de riego (mm)"</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Producción (ton/ha)"</span>)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Respuesta del cultivo al riego"</span>)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="numpy-graficas_files/figure-html/cell-9-output-1.png" width="599" height="451" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Barras (bar)</strong>: para comparar categorías:</p>
+<div id="a0342875" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>productos <span class="op">=</span> [<span class="st">"Café"</span>, <span class="st">"Cacao"</span>, <span class="st">"Banano"</span>, <span class="st">"Panela"</span>]</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>ventas <span class="op">=</span> [<span class="dv">52</span>, <span class="dv">38</span>, <span class="dv">61</span>, <span class="dv">27</span>]   <span class="co"># millones</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>plt.bar(productos, ventas)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Ventas (millones $)"</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Ventas por producto"</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="numpy-graficas_files/figure-html/cell-10-output-1.png" width="585" height="432" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Histograma (hist)</strong>: para ver cómo se distribuyen los datos:</p>
+<div id="17af6a94" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">42</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>salarios <span class="op">=</span> rng.normal(<span class="dv">2800000</span>, <span class="dv">500000</span>, <span class="dv">200</span>)   <span class="co"># 200 salarios simulados</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>plt.hist(salarios, bins<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Salario mensual ($)"</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Número de empleados"</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Distribución de salarios"</span>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="numpy-graficas_files/figure-html/cell-11-output-1.png" width="586" height="452" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="aplicación-de-ingeniería-simular-y-graficar-un-fenómeno" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="aplicación-de-ingeniería-simular-y-graficar-un-fenómeno"><span class="header-section-number">5.6</span> Aplicación de ingeniería: simular y graficar un fenómeno</h2>
+<p>El flujo de trabajo ingenieril completo: <strong>modelo matemático → array de tiempo → simulación → gráfica</strong>. Ejemplo: la altura de una planta de maíz sigue aproximadamente una curva logística</p>
+<p><span class="math display">\[h(t) = \frac{H}{1 + e^{-k(t - t_0)}}\]</span></p>
+<p>donde <span class="math inline">\(H\)</span> es la altura máxima, <span class="math inline">\(k\)</span> la velocidad de crecimiento y <span class="math inline">\(t_0\)</span> el día de crecimiento más rápido:</p>
+<div id="fa9c7706" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>H <span class="op">=</span> <span class="fl">2.5</span>     <span class="co"># altura máxima (m)</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="fl">0.15</span>    <span class="co"># velocidad de crecimiento</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>t0 <span class="op">=</span> <span class="dv">40</span>     <span class="co"># día de máximo crecimiento</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">100</span>, <span class="dv">200</span>)          <span class="co"># 100 días, 200 puntos</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>h <span class="op">=</span> H <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> np.exp(<span class="op">-</span>k <span class="op">*</span> (t <span class="op">-</span> t0)))</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>plt.plot(t, h)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Días después de la siembra"</span>)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Altura (m)"</span>)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Crecimiento logístico del maíz"</span>)</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="numpy-graficas_files/figure-html/cell-12-output-1.png" width="590" height="452" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Cambia <code>k</code> a <code>0.25</code> y vuelve a ejecutar: verás cómo el modelo responde. Este ciclo <em>modelo → simulación → gráfica</em> es exactamente el que usarás en proyectos reales de ingeniería.</p>
+</section>
+<section id="ejercicios" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">5.7</span> Ejercicios</h2>
+<ol type="1">
+<li>Convierte un array de precios en dólares a pesos colombianos (tasa: 1 USD = 4200 COP) usando vectorización: <code>precios_usd = np.array([10, 25, 7.5, 100])</code>.</li>
+<li>Genera 50 puntos entre 0 y <span class="math inline">\(2\pi\)</span> con <code>linspace</code> y grafica <span class="math inline">\(\sin(x)\)</span> con etiquetas y grilla.</li>
+<li>Simula la temperatura de un motor que se calienta según <span class="math inline">\(T(t) = 25 + 65(1 - e^{-t/10})\)</span> °C, para <span class="math inline">\(t\)</span> entre 0 y 60 minutos. Grafica y determina a qué valor tiende la temperatura.</li>
+<li>Con el array <code>costos = np.array([4.5, 2.1, 8.3, 1.9, 6.7, 3.2])</code> (millones), encuentra con <code>argmax()</code> el índice del costo mayor y su valor.</li>
+<li>Grafica con barras las ventas de 6 meses que tú inventes, con título y etiquetas.</li>
+<li><strong>Mini-reto (mecatrónica + administración):</strong> un sensor de humedad da lecturas crudas en voltios: <code>v = np.array([0.8, 1.2, 1.7, 2.1, 2.9, 3.3])</code>. La calibración del fabricante es <span class="math inline">\(\text{humedad} = 18 \cdot v - 5\)</span> (%). (a) Convierte el array completo a humedad. (b) Grafica voltaje vs.&nbsp;humedad. (c) La empresa solo vende el sensor si la humedad máxima medida supera el 50 %; imprime con un <code>if</code> si pasa o no la prueba.</li>
+</ol>
+</section>
+<section id="resumen" class="level2" data-number="5.8">
+<h2 data-number="5.8" class="anchored" data-anchor-id="resumen"><span class="header-section-number">5.8</span> Resumen</h2>
+<ul>
+<li><strong>NumPy</strong> trabaja con <strong>arrays</strong>: operaciones sobre todos los datos a la vez (<strong>vectorización</strong>), sin ciclos.</li>
+<li><code>arange</code>, <code>linspace</code>, <code>zeros</code>, <code>ones</code> generan datos; <code>.mean()</code>, <code>.std()</code>, <code>.max()</code>, <code>.argmax()</code> los resumen.</li>
+<li><strong>Matplotlib</strong> grafica: <code>plot</code> (líneas), <code>scatter</code> (dispersión), <code>bar</code> (barras), <code>hist</code> (histogramas), siempre con <code>xlabel</code>, <code>ylabel</code>, <code>title</code>, <code>grid</code>.</li>
+<li>El flujo <strong>modelo → array de tiempo → simulación → gráfica</strong> es la base del cómputo en ingeniería.</li>
+</ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -613,8 +911,8 @@ ul.task-list li input[type="checkbox"] {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./pandas.html" class="pagination-link" aria-label="Capítulo 6: pandas">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Capítulo 6: pandas</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./pandas.html" class="pagination-link" aria-label="pandas: manejo de datos">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">pandas: manejo de datos</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

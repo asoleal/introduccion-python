@@ -1,3 +1,152 @@
-# Capítulo 6: pandas
+# pandas: manejo de datos
 
-En construcción.
+NumPy maneja números en arreglos. Pero los datos reales vienen en **tablas**: filas y columnas con nombres, como una hoja de Excel — ventas por mes, lecturas de sensores, fichas de empleados. La librería que domina las tablas en Python es **pandas**. Este capítulo es el corazón del análisis de datos.
+
+```{python}
+import pandas as pd
+```
+
+La convención universal es el apodo `pd`. En Colab ya viene instalada.
+
+## El DataFrame: una tabla con superpoderes
+
+El objeto central de pandas es el **DataFrame**. Puedes crearlo desde un diccionario (¿recuerdas las fichas del capítulo 4?):
+
+```{python}
+import pandas as pd
+
+ventas = pd.DataFrame({
+    "producto": ["café", "cacao", "banano", "café", "cacao", "banano"],
+    "mes":      ["enero", "enero", "enero", "febrero", "febrero", "febrero"],
+    "cantidad": [120, 80, 200, 135, 75, 220],
+    "precio":   [9500, 8200, 7600, 9600, 8200, 7400]
+})
+
+print(ventas)
+```
+
+Cada columna es una **Serie** (como un array con nombre). Cada fila es un registro. Fíjate que pandas imprime la tabla con su índice a la izquierda.
+
+## Inspeccionar los datos
+
+Lo primero que hace un analista con una tabla nueva: mirarla por encima.
+
+```{python}
+print(ventas.head(3))      # primeras 3 filas
+```
+
+```{python}
+print(ventas.describe())   # estadísticas de las columnas numéricas
+```
+
+```{python}
+print(ventas.info())       # tipos de datos y valores faltantes
+```
+
+## Seleccionar y filtrar
+
+Seleccionar una columna (el resultado es una Serie):
+
+```{python}
+print(ventas["producto"])
+```
+
+Filtrar filas con una condición — esto se llama **indexación booleana** y es de lo más usado en pandas:
+
+```{python}
+ventas_grandes = ventas[ventas["cantidad"] > 150]
+print(ventas_grandes)
+```
+
+Se lee así: "de la tabla `ventas`, dame las filas donde `cantidad > 150`". La condición produce un `True`/`False` por fila, y pandas se queda con las verdaderas.
+
+## Columnas calculadas
+
+Como en NumPy, las operaciones son vectorizadas: se aplican a toda la columna de una vez. Crear una columna nueva es asignarla:
+
+```{python}
+ventas["ingreso"] = ventas["cantidad"] * ventas["precio"]
+print(ventas)
+```
+
+## Agrupar: la pregunta de negocio típica
+
+"¿Cuánto vendimos por producto?" es la pregunta clásica de administración. Con `groupby` se responde en una línea:
+
+```{python}
+por_producto = ventas.groupby("producto")["ingreso"].sum()
+print(por_producto)
+```
+
+`groupby("producto")` junta las filas del mismo producto; `["ingreso"].sum()` suma el ingreso dentro de cada grupo. También puedes usar `.mean()`, `.count()`, `.max()`.
+
+Y ordenar para ver al ganador primero:
+
+```{python}
+print(por_producto.sort_values(ascending=False))
+```
+
+## Leer datos reales: `read_csv`
+
+Los datos rara vez se escriben a mano: vienen en archivos **CSV** (valores separados por comas). pandas los lee con una línea — incluso desde una URL, ideal para Colab:
+
+```{python}
+url = "https://raw.githubusercontent.com/plotly/datasets/master/iris.csv"
+iris = pd.read_csv(url)
+print(iris.head())
+```
+
+Ese dataset contiene medidas de flores *iris* (largo y ancho de sépalo y pétalo). Ya tienes datos reales en tu programa. En Colab también puedes subir un archivo y leerlo con `pd.read_csv("archivo.csv")`.
+
+Con pandas, la gráfica de un DataFrame es inmediata:
+
+```{python}
+import matplotlib.pyplot as plt
+
+iris.plot(kind="scatter", x="SepalLength", y="PetalLength")
+plt.title("Sépalo vs. pétalo en flores iris")
+plt.grid(True)
+plt.show()
+```
+
+## Series de tiempo (primera mirada)
+
+Las fechas son datos especiales. pandas las entiende si se las presentas bien:
+
+```{python}
+fechas = pd.to_datetime(["2026-01-15", "2026-02-15", "2026-03-15",
+                         "2026-04-15", "2026-05-15", "2026-06-15"])
+precio_cafe = pd.Series([9500, 9650, 9800, 10100, 9950, 10200], index=fechas)
+
+print(precio_cafe)
+```
+
+Con la fecha como índice, graficar la serie es trivial:
+
+```{python}
+precio_cafe.plot(marker="o")
+plt.ylabel("Precio ($/kg)")
+plt.title("Precio del café, primer semestre 2026")
+plt.grid(True)
+plt.show()
+```
+
+En el capítulo 7 usaremos esto para análisis económicos más elaborados.
+
+## Ejercicios
+
+1. Crea un DataFrame con 5 empleados (nombre, cargo, salario) y calcula la columna `salario_anual`.
+2. Del DataFrame `ventas` de este capítulo, filtra las filas donde el ingreso supere \$1.500.000.
+3. Agrupa `ventas` por `mes` y calcula el ingreso total de cada mes. ¿Cuál mes fue mejor?
+4. Lee el dataset iris desde la URL y calcula el promedio de `PetalLength` con `.mean()`.
+5. Del dataset iris, filtra las flores con `SepalLength` mayor a 6.5 y cuenta cuántas son con `len()`.
+6. **Mini-reto (agro):** construye un DataFrame con las lecturas horarias simuladas de un sensor: columnas `hora` (0 a 23), `temperatura` (valores entre 18 y 34) y `humedad` (valores entre 40 y 90). (a) Filtra las horas con temperatura mayor a 30. (b) Calcula el promedio de humedad. (c) Crea la columna `alerta` que valga `True` cuando temperatura > 30 **y** humedad < 50 (pista: `(df["temperatura"] > 30) & (df["humedad"] < 50)`). (d) Grafica temperatura vs. hora.
+
+## Resumen
+
+- **pandas** maneja tablas: el **DataFrame** (tabla) y la **Serie** (columna).
+- `head()`, `describe()`, `info()` inspeccionan; `df["col"]` selecciona; `df[condicion]` filtra.
+- Las columnas calculadas son vectorizadas: `df["nueva"] = df["a"] * df["b"]`.
+- `groupby("col").sum()` responde preguntas de negocio por categorías.
+- `pd.read_csv()` trae datos reales desde archivos o URLs.
+- Con fechas como índice, las series de tiempo se grafican directo.

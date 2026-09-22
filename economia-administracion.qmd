@@ -1,3 +1,159 @@
-# Capítulo 7: Economía y administración
+# Aplicaciones en administración y economía
 
-En construcción.
+Llegó el momento de poner todo a trabajar: variables, funciones, ciclos, NumPy, pandas y gráficas. En este capítulo resolverás cuatro problemas clásicos de administración y economía: **interés compuesto**, **valor actual neto (VAN)**, **tasa interna de retorno (TIR)** y **simulación Monte Carlo** para decisiones bajo incertidumbre.
+
+## Valor futuro y valor presente
+
+El dinero tiene fecha: \$1.000.000 hoy no valen lo mismo que \$1.000.000 en cinco años. El **valor futuro** ya lo conoces:
+
+```{python}
+def valor_futuro(capital, tasa, años):
+    return capital * (1 + tasa) ** años
+
+vf = valor_futuro(1000000, 0.12, 5)
+print(f"Valor futuro: ${vf:,.0f}")
+```
+
+La operación inversa es el **valor presente**: ¿cuánto vale hoy un pago futuro?
+
+```{python}
+def valor_presente(pago_futuro, tasa, años):
+    return pago_futuro / (1 + tasa) ** años
+
+vp = valor_presente(1762342, 0.12, 5)
+print(f"Valor presente: ${vp:,.0f}")
+```
+
+## Valor Actual Neto (VAN): ¿vale la pena el proyecto?
+
+Un proyecto es una secuencia de **flujos de caja**: primero inviertes (flujo negativo) y luego recibes ingresos año a año. El VAN trae todos esos flujos a valor presente y los suma:
+
+$$VAN = \sum_{t=0}^{n} \frac{F_t}{(1 + r)^t}$$
+
+Regla de decisión: **VAN > 0** → el proyecto crea valor; **VAN < 0** → lo destruye.
+
+```{python}
+def van(tasa, flujos):
+    return sum(f / (1 + tasa) ** t for t, f in enumerate(flujos))
+
+# Proyecto: invertir 10 millones hoy, recibir 3 millones por 5 años
+flujos = [-10000000, 3000000, 3000000, 3000000, 3000000, 3000000]
+tasa_descuento = 0.12
+
+resultado = van(tasa_descuento, flujos)
+print(f"VAN al 12%: ${resultado:,.0f}")
+
+if resultado > 0:
+    print("El proyecto crea valor: adelante")
+else:
+    print("El proyecto destruye valor: no invertir")
+```
+
+La función usa dos cosas nuevas que vale la pena mirar: `enumerate(flujos)` entrega cada flujo **con su posición** `t` (el año), y la construcción `sum(... for ... in ...)` es una **expresión generadora**: suma sin necesidad de crear una lista intermedia.
+
+## Tasa Interna de Retorno (TIR)
+
+La TIR es la tasa que hace el VAN exactamente cero: la rentabilidad "verdadera" del proyecto. No tiene fórmula directa; se encuentra por **búsqueda numérica**. El método de **bisección** parte el intervalo a la mitad en cada paso:
+
+```{python}
+def tir(flujos):
+    bajo, alto = 0.0, 1.0          # la TIR está entre 0% y 100%
+    for _ in range(100):           # 100 iteraciones son de sobra
+        medio = (bajo + alto) / 2
+        if van(medio, flujos) > 0: # si el VAN es positivo, la TIR está arriba
+            bajo = medio
+        else:
+            alto = medio
+    return medio
+
+tasa_interna = tir(flujos)
+print(f"TIR del proyecto: {tasa_interna:.2%}")
+```
+
+Observa el formato `{tasa_interna:.2%}`: convierte el decimal a porcentaje con dos cifras. Como la TIR (15,24 %) supera la tasa de descuento (12 %), el proyecto es atractivo — la misma conclusión del VAN, vista desde la rentabilidad.
+
+## Regresión lineal: aprender de los datos
+
+La regresión encuentra la recta que mejor describe la relación entre dos variables: $y = mx + b$. Con NumPy se calcula en una línea:
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+
+publicidad = np.array([1, 2, 3, 4, 5, 6])            # millones invertidos
+ventas = np.array([52, 58, 65, 71, 79, 85])          # millones vendidos
+
+m, b = np.polyfit(publicidad, ventas, 1)   # pendiente y corte
+print(f"Modelo: ventas = {m:.1f} × publicidad + {b:.1f}")
+```
+
+Cada millón adicional en publicidad se asocia con `m` millones adicionales en ventas. Visualicemos datos y modelo:
+
+```{python}
+x = np.linspace(0, 7, 100)
+
+plt.scatter(publicidad, ventas, label="Datos reales")
+plt.plot(x, m * x + b, color="red", label=f"y = {m:.1f}x + {b:.1f}")
+plt.xlabel("Publicidad (millones $)")
+plt.ylabel("Ventas (millones $)")
+plt.title("Ventas vs. inversión en publicidad")
+plt.legend()
+plt.grid(True)
+plt.show()
+```
+
+Con el modelo puedes **predecir**: si inviertes 8 millones, esperas `m * 8 + b` millones en ventas. (Ojo: predecir dentro del rango observado es razonable; extrapolar muy lejos es peligroso).
+
+## Simulación Monte Carlo: decidir con incertidumbre
+
+La vida real no tiene un solo futuro, tiene miles. La simulación Monte Carlo genera muchos escenarios aleatorios y mira qué pasa "en promedio" y "en el peor caso".
+
+Ejemplo: la utilidad de una cosecha depende del precio y del rendimiento, ambos inciertos. Supón que el precio sigue una distribución normal con media \$9.500/kg y desviación \$800, y el rendimiento es normal con media 4,2 ton/ha y desviación 0,6:
+
+```{python}
+rng = np.random.default_rng(42)
+
+escenarios = 10000
+precios = rng.normal(9500, 800, escenarios)        # $/kg
+rendimientos = rng.normal(4.2, 0.6, escenarios)    # ton/ha
+
+hectareas = 10
+costos = 28000000
+
+utilidad = precios * rendimientos * 1000 * hectareas - costos
+
+print(f"Utilidad esperada: ${utilidad.mean():,.0f}")
+print(f"Peor 5% de escenarios: ${np.percentile(utilidad, 5):,.0f}")
+print(f"Probabilidad de pérdida: {(utilidad < 0).mean():.1%}")
+```
+
+Y la gráfica que resume todo el riesgo:
+
+```{python}
+plt.hist(utilidad / 1e6, bins=50)
+plt.axvline(0, color="red", linestyle="--", label="Punto de equilibrio")
+plt.xlabel("Utilidad (millones $)")
+plt.ylabel("Frecuencia")
+plt.title("Distribución de la utilidad (10.000 escenarios)")
+plt.legend()
+plt.show()
+```
+
+En vez de un solo número, ahora tienes la **distribución completa**: la utilidad más probable, el peor escenario razonable (percentil 5) y la probabilidad exacta de perder plata. Así deciden los analistas modernos.
+
+## Ejercicios
+
+1. Calcula el valor presente de recibir \$20.000.000 en 3 años con tasa del 10 %.
+2. Evalúa con VAN (tasa 15 %) este proyecto: inversión de \$50 millones hoy, flujos de \$15, \$18, \$20, \$22 y \$25 millones en los años 1 a 5. ¿Se acepta?
+3. Calcula la TIR del proyecto del ejercicio 2 con la función `tir()` de este capítulo.
+4. Ajusta una regresión entre estos datos de fertilizante (kg/ha) y rendimiento (ton/ha): `fert = np.array([50, 80, 110, 140, 170])`, `rend = np.array([3.1, 3.9, 4.6, 5.0, 5.2])`. Predice el rendimiento para 120 kg/ha y grafica datos y recta.
+5. Replica la simulación Monte Carlo de la cosecha pero con 20 hectáreas y costos de \$55 millones. ¿Sube o baja la probabilidad de pérdida?
+6. **Mini-reto (decisión de inversión completa):** una empresa evalúa comprar una planta empacadora por \$80 millones. Los flujos esperados son \$20 millones anuales por 6 años, la tasa de descuento es 14 %. (a) Calcula el VAN y decide. (b) Calcula la TIR. (c) Los flujos son inciertos: simula 10.000 escenarios donde cada flujo anual es normal con media 20 y desviación 4 (millones), calcula el VAN de cada escenario (usa un `for` sobre escenarios) y reporta la probabilidad de que el proyecto destruya valor. (d) Grafica el histograma de los VAN simulados.
+
+## Resumen
+
+- **Valor futuro/presente**: el dinero se mueve en el tiempo con $(1+r)^n$.
+- **VAN**: suma de flujos descontados; positivo → invertir. Se implementa con `sum` y `enumerate`.
+- **TIR**: la tasa que hace VAN = 0; se encuentra por búsqueda (bisección).
+- **Regresión lineal** con `np.polyfit`: convierte datos en un modelo predictivo $y = mx + b$.
+- **Monte Carlo**: miles de escenarios aleatorios revelan la utilidad esperada, el peor caso y la probabilidad de pérdida.

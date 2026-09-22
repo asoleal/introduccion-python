@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>10&nbsp; Capítulo 8: Introducción a big data – Introducción a Python para Ingeniería, Datos y Economía</title>
+<title>9&nbsp; Proyectos integradores – Introducción a Python para Ingeniería, Datos y Economía</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -36,7 +36,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./proyectos.html" rel="prev">
+<link href="./big-data.html" rel="next">
+<link href="./aplicaciones-ingenieria.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -75,6 +76,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -88,7 +118,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./big-data.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Capítulo 8: Introducción a big data</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./proyectos.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Proyectos integradores</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -172,13 +202,13 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./proyectos.html" class="sidebar-item-text sidebar-link">
+  <a href="./proyectos.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Proyectos integradores</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./big-data.html" class="sidebar-item-text sidebar-link active">
+  <a href="./big-data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Capítulo 8: Introducción a big data</span></span></a>
   </div>
 </li>
@@ -187,15 +217,26 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#proyecto-a-ingeniería-agrícola-cuándo-y-cuánto-regar" id="toc-proyecto-a-ingeniería-agrícola-cuándo-y-cuánto-regar" class="nav-link active" data-scroll-target="#proyecto-a-ingeniería-agrícola-cuándo-y-cuánto-regar"><span class="header-section-number">9.1</span> Proyecto A — Ingeniería agrícola: ¿cuándo y cuánto regar?</a></li>
+  <li><a href="#proyecto-b-mecatrónica-confiabilidad-de-un-sensor-de-bajo-costo" id="toc-proyecto-b-mecatrónica-confiabilidad-de-un-sensor-de-bajo-costo" class="nav-link" data-scroll-target="#proyecto-b-mecatrónica-confiabilidad-de-un-sensor-de-bajo-costo"><span class="header-section-number">9.2</span> Proyecto B — Mecatrónica: confiabilidad de un sensor de bajo costo</a></li>
+  <li><a href="#proyecto-c-administración-y-economía-evaluación-completa-de-un-proyecto-productivo" id="toc-proyecto-c-administración-y-economía-evaluación-completa-de-un-proyecto-productivo" class="nav-link" data-scroll-target="#proyecto-c-administración-y-economía-evaluación-completa-de-un-proyecto-productivo"><span class="header-section-number">9.3</span> Proyecto C — Administración y economía: evaluación completa de un proyecto productivo</a></li>
+  <li><a href="#proyecto-d-veterinaria-y-zootecnia-plan-de-ceba-de-un-lote" id="toc-proyecto-d-veterinaria-y-zootecnia-plan-de-ceba-de-un-lote" class="nav-link" data-scroll-target="#proyecto-d-veterinaria-y-zootecnia-plan-de-ceba-de-un-lote"><span class="header-section-number">9.4</span> Proyecto D — Veterinaria y zootecnia: plan de ceba de un lote</a></li>
+  <li><a href="#proyecto-e-ciencia-de-datos-general-auditoría-de-un-dataset-real" id="toc-proyecto-e-ciencia-de-datos-general-auditoría-de-un-dataset-real" class="nav-link" data-scroll-target="#proyecto-e-ciencia-de-datos-general-auditoría-de-un-dataset-real"><span class="header-section-number">9.5</span> Proyecto E — Ciencia de datos general: auditoría de un dataset real</a></li>
+  <li><a href="#rúbrica-sugerida-para-docentes" id="toc-rúbrica-sugerida-para-docentes" class="nav-link" data-scroll-target="#rúbrica-sugerida-para-docentes"><span class="header-section-number">9.6</span> Rúbrica sugerida (para docentes)</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Capítulo 8: Introducción a big data</span></h1>
+<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Proyectos integradores</span></h1>
 </div>
 
 
@@ -212,9 +253,161 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>En construcción.</p>
+<p>Cada capítulo terminó con ejercicios guiados. Ahora es distinto: aquí hay <strong>cinco proyectos abiertos</strong>, uno por disciplina. En todos ellos pasa lo mismo que en la vida real: el enunciado no trae los datos ni todas las fórmulas — <strong>tendrás que investigar</strong> (fuentes oficiales, fichas técnicas, literatura) — y las preguntas son imposibles de responder a mano: <strong>la computación es indispensable</strong>.</p>
+<p><strong>Reglas del juego para todos los proyectos:</strong></p>
+<ul>
+<li>Todo el análisis en un notebook de Colab, con celdas de texto que expliquen lo que haces (usa Markdown).</li>
+<li>Documenta las fuentes de cada dato o fórmula que investigues (enlace + fecha de consulta).</li>
+<li>Toda conclusión debe apoyarse en una tabla, una gráfica o un número calculado — no en intuiciones.</li>
+<li>Estructura mínima del notebook: <em>Contexto → Datos y fuentes → Análisis → Gráficas → Conclusiones</em>.</li>
+</ul>
+<section id="proyecto-a-ingeniería-agrícola-cuándo-y-cuánto-regar" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="proyecto-a-ingeniería-agrícola-cuándo-y-cuánto-regar"><span class="header-section-number">9.1</span> Proyecto A — Ingeniería agrícola: ¿cuándo y cuánto regar?</h2>
+<p><strong>Contexto.</strong> Eres el asistente técnico de una finca con 5 ha de maíz en el Valle del Cauca. Debes proponer un calendario de riego para un mes completo.</p>
+<p><strong>Lo que debes investigar:</strong></p>
+<ol type="1">
+<li>Los coeficientes de cultivo <span class="math inline">\(K_c\)</span> del maíz por etapa fenológica (fuente sugerida: FAO, documento <em>Crop Evapotranspiration</em>, FAO-56).</li>
+<li>La precipitación y temperaturas históricas de tu municipio (IDEAM o NASA POWER, que tiene datos gratuitos por coordenada).</li>
+<li>El método de Hargreaves completo para <span class="math inline">\(ET_0\)</span> (en el capítulo 8 usamos una versión simplificada — encuentra la original y compara).</li>
+</ol>
+<p><strong>Lo que debes computar:</strong></p>
+<ul>
+<li>Una serie diaria de 30 días de <span class="math inline">\(ET_c\)</span>, lluvia efectiva y lámina neta de riego (puedes usar datos reales o una simulación justificada con la climatología investigada).</li>
+<li>El volumen total de agua del mes en m³/ha y su comparación contra el caudal disponible de la finca (dato que definirás e investigarás: caudal típico de un pozo o bocatoma pequeña).</li>
+<li>Gráficas del balance hídrico y una tabla-resumen por semana.</li>
+<li>Una recomendación final: calendario de riego (qué días, cuánta lámina) y qué pasaría con dos semanas sin lluvia.</li>
+</ul>
+</section>
+<section id="proyecto-b-mecatrónica-confiabilidad-de-un-sensor-de-bajo-costo" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="proyecto-b-mecatrónica-confiabilidad-de-un-sensor-de-bajo-costo"><span class="header-section-number">9.2</span> Proyecto B — Mecatrónica: confiabilidad de un sensor de bajo costo</h2>
+<p><strong>Contexto.</strong> Tu empresa quiere usar sensores de humedad de suelo de $15.000 en vez de los de $1.500.000. Antes de venderlos, debes caracterizar su comportamiento.</p>
+<p><strong>Lo que debes investigar:</strong></p>
+<ol type="1">
+<li>La curva de calibración de un sensor capacitivo real (busca la ficha técnica del sensor <em>Capacitive Soil Moisture Sensor v1.2</em> o similar).</li>
+<li>Qué es la deriva (<em>drift</em>) y el histéresis en sensores, y por qué importan en agricultura de precisión.</li>
+<li>Fórmulas del filtro de media móvil exponencial (EMA) y su diferencia con la media móvil simple del capítulo 8.</li>
+</ol>
+<p><strong>Lo que debes computar:</strong></p>
+<ul>
+<li>Simula 48 horas de lecturas (cada 5 min) de un sensor con ruido, deriva lenta y una calibración no lineal (define los parámetros con lo investigado).</li>
+<li>Implementa y compara media móvil simple vs.&nbsp;EMA; cuantifica el error de cada una respecto a la señal verdadera (RMSE — investiga su fórmula).</li>
+<li>Diseña una lógica de alarma con histéresis (enciende riego bajo 30 %, apaga sobre 38 %) y cuenta cuántas falsas activaciones evita respecto a un umbral simple.</li>
+<li>Conclusión de ingeniería: ¿el sensor barato es usable? ¿Bajo qué condiciones?</li>
+</ul>
+</section>
+<section id="proyecto-c-administración-y-economía-evaluación-completa-de-un-proyecto-productivo" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="proyecto-c-administración-y-economía-evaluación-completa-de-un-proyecto-productivo"><span class="header-section-number">9.3</span> Proyecto C — Administración y economía: evaluación completa de un proyecto productivo</h2>
+<p><strong>Contexto.</strong> Una asociación de productores evalúa montar una planta de beneficio de café. Debes entregar el análisis de viabilidad financiera.</p>
+<p><strong>Lo que debes investigar:</strong></p>
+<ol type="1">
+<li>Precios históricos del café (Federación Nacional de Cafeteras publica el precio interno diario).</li>
+<li>La tasa de descuento apropiada para proyectos rurales en Colombia (investiga qué es la tasa social de descuento del DNP).</li>
+<li>Costos típicos de una planta de beneficio pequeña (literatura de extensión rural, Cenicafé).</li>
+</ol>
+<p><strong>Lo que debes computar:</strong></p>
+<ul>
+<li>Flujo de caja a 10 años con tus supuestos documentados (inversión, capacidad, costos variables y fijos).</li>
+<li>VAN y TIR con las funciones del capítulo 7.</li>
+<li>Análisis de sensibilidad: tabla de VAN para 5 precios de café × 5 niveles de producción (usa doble ciclo <code>for</code> y un DataFrame).</li>
+<li>Monte Carlo con 10.000 escenarios (precio y producción aleatorios con distribuciones justificadas) y probabilidad de pérdida.</li>
+<li>Dictamen final de una página: se monta o no se monta, y por qué.</li>
+</ul>
+</section>
+<section id="proyecto-d-veterinaria-y-zootecnia-plan-de-ceba-de-un-lote" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="proyecto-d-veterinaria-y-zootecnia-plan-de-ceba-de-un-lote"><span class="header-section-number">9.4</span> Proyecto D — Veterinaria y zootecnia: plan de ceba de un lote</h2>
+<p><strong>Contexto.</strong> Una finca compra 40 terneros de 200 kg y quiere venderlos cuando el margen sea máximo. Los costos de alimentación suben con el peso; el precio por kg en pie es fijo.</p>
+<p><strong>Lo que debes investigar:</strong></p>
+<ol type="1">
+<li>Parámetros reales del modelo Gompertz (o logístico) para la raza de interés (literatura zootécnica: artículos de crecimiento en <em>Bos indicus</em> o la raza local).</li>
+<li>Requerimientos nutricionales y conversión alimenticia por etapa (tablas NRC o equivalentes).</li>
+<li>Precios actuales del ganado en pie y del concentrado en tu región.</li>
+</ol>
+<p><strong>Lo que debes computar:</strong></p>
+<ul>
+<li>Curva de crecimiento del lote a 700 días con los parámetros investigados.</li>
+<li>Costo diario de alimentación (función del peso) e ingreso potencial por venta en cada día.</li>
+<li>El margen por animal en función del día de venta: gráfica y día óptimo con <code>np.argmax</code>.</li>
+<li>Dosificación de un tratamiento para todo el lote en el día 180 (mg/kg → ml por animal, como en el capítulo 8).</li>
+<li>Sensibilidad: ¿cómo cambia el día óptimo si el alimento sube 20 %?</li>
+</ul>
+</section>
+<section id="proyecto-e-ciencia-de-datos-general-auditoría-de-un-dataset-real" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="proyecto-e-ciencia-de-datos-general-auditoría-de-un-dataset-real"><span class="header-section-number">9.5</span> Proyecto E — Ciencia de datos general: auditoría de un dataset real</h2>
+<p><strong>Contexto.</strong> Te entregan (o tú descargas) un dataset real de tu interés — producción agrícola municipal (Datos Abiertos Colombia), precios de alimentos (DANE/SIPSA), calidad del agua — y debes auditarlo y extraerle una historia.</p>
+<p><strong>Lo que debes investigar:</strong></p>
+<ol type="1">
+<li>Descargar un dataset real de <a href="https://www.datos.gov.co">datos.gov.co</a> en formato CSV.</li>
+<li>El diccionario de datos: qué significa cada columna.</li>
+<li>Buenas prácticas de calidad de datos (valores faltantes, duplicados, outliers).</li>
+</ol>
+<p><strong>Lo que debes computar:</strong></p>
+<ul>
+<li>Carga con <code>pd.read_csv</code> y diagnóstico: dimensiones, tipos, <code>describe()</code>, conteo de faltantes y duplicados.</li>
+<li>Limpieza justificada: decide qué hacer con cada problema encontrado y documéntalo.</li>
+<li>Tres preguntas de negocio que tú formules, respondidas con <code>groupby</code>, filtros y gráficas.</li>
+<li>Un hallazgo final: algo que solo se veía después del análisis.</li>
+</ul>
+</section>
+<section id="rúbrica-sugerida-para-docentes" class="level2" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="rúbrica-sugerida-para-docentes"><span class="header-section-number">9.6</span> Rúbrica sugerida (para docentes)</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 11%">
+<col style="width: 29%">
+<col style="width: 39%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Criterio</th>
+<th style="text-align: center;">Peso</th>
+<th style="text-align: left;">Excelente (5)</th>
+<th style="text-align: left;">Insuficiente (&lt; 3)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Investigación y fuentes</td>
+<td style="text-align: center;">20 %</td>
+<td style="text-align: left;">Fuentes oficiales citadas y usadas correctamente</td>
+<td style="text-align: left;">Sin fuentes o datos inventados sin justificar</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Corrección computacional</td>
+<td style="text-align: center;">30 %</td>
+<td style="text-align: left;">El código corre de principio a fin sin errores en Colab</td>
+<td style="text-align: left;">El notebook no corre</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Análisis y gráficas</td>
+<td style="text-align: center;">30 %</td>
+<td style="text-align: left;">Gráficas con etiquetas, tablas claras, interpretación correcta</td>
+<td style="text-align: left;">Gráficas sin contexto o mal interpretadas</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Conclusiones</td>
+<td style="text-align: center;">20 %</td>
+<td style="text-align: left;">Decisión clara apoyada en los resultados</td>
+<td style="text-align: left;">Conclusiones desconectadas del análisis</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Para el estudiante:</strong> el objetivo no es que te salga perfecto a la primera. Es que enfrentes el ciclo completo — investigar, programar, equivocarte, corregir, concluir — que es exactamente lo que harás como profesional.</p>
+</div>
+</div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -619,11 +812,14 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./proyectos.html" class="pagination-link" aria-label="Proyectos integradores">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Proyectos integradores</span></span>
+      <a href="./aplicaciones-ingenieria.html" class="pagination-link" aria-label="Aplicaciones en ingeniería: agro, mecatrónica, veterinaria y zootecnia">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Aplicaciones en ingeniería: agro, mecatrónica, veterinaria y zootecnia</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./big-data.html" class="pagination-link" aria-label="Capítulo 8: Introducción a big data">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Capítulo 8: Introducción a big data</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

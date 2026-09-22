@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>6&nbsp; Capítulo 6: pandas – Introducción a Python para Ingeniería, Datos y Economía</title>
+<title>6&nbsp; pandas: manejo de datos – Introducción a Python para Ingeniería, Datos y Economía</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -25,6 +25,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -89,7 +124,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pandas.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Capítulo 6: pandas</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pandas.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">pandas: manejo de datos</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -150,25 +185,37 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./numpy-graficas.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Capítulo 5: NumPy y gráficas</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">NumPy y gráficas: cómputo científico</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pandas.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Capítulo 6: pandas</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">pandas: manejo de datos</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./economia-administracion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Capítulo 7: Economía y administración</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Aplicaciones en administración y economía</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./aplicaciones-ingenieria.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Aplicaciones en ingeniería: agro, mecatrónica, veterinaria y zootecnia</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./proyectos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Proyectos integradores</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./big-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Capítulo 8: Introducción a big data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Capítulo 8: Introducción a big data</span></span></a>
   </div>
 </li>
     </ul>
@@ -176,15 +223,29 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#el-dataframe-una-tabla-con-superpoderes" id="toc-el-dataframe-una-tabla-con-superpoderes" class="nav-link active" data-scroll-target="#el-dataframe-una-tabla-con-superpoderes"><span class="header-section-number">6.1</span> El DataFrame: una tabla con superpoderes</a></li>
+  <li><a href="#inspeccionar-los-datos" id="toc-inspeccionar-los-datos" class="nav-link" data-scroll-target="#inspeccionar-los-datos"><span class="header-section-number">6.2</span> Inspeccionar los datos</a></li>
+  <li><a href="#seleccionar-y-filtrar" id="toc-seleccionar-y-filtrar" class="nav-link" data-scroll-target="#seleccionar-y-filtrar"><span class="header-section-number">6.3</span> Seleccionar y filtrar</a></li>
+  <li><a href="#columnas-calculadas" id="toc-columnas-calculadas" class="nav-link" data-scroll-target="#columnas-calculadas"><span class="header-section-number">6.4</span> Columnas calculadas</a></li>
+  <li><a href="#agrupar-la-pregunta-de-negocio-típica" id="toc-agrupar-la-pregunta-de-negocio-típica" class="nav-link" data-scroll-target="#agrupar-la-pregunta-de-negocio-típica"><span class="header-section-number">6.5</span> Agrupar: la pregunta de negocio típica</a></li>
+  <li><a href="#leer-datos-reales-read_csv" id="toc-leer-datos-reales-read_csv" class="nav-link" data-scroll-target="#leer-datos-reales-read_csv"><span class="header-section-number">6.6</span> Leer datos reales: <code>read_csv</code></a></li>
+  <li><a href="#series-de-tiempo-primera-mirada" id="toc-series-de-tiempo-primera-mirada" class="nav-link" data-scroll-target="#series-de-tiempo-primera-mirada"><span class="header-section-number">6.7</span> Series de tiempo (primera mirada)</a></li>
+  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">6.8</span> Ejercicios</a></li>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen"><span class="header-section-number">6.9</span> Resumen</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Capítulo 6: pandas</span></h1>
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">pandas: manejo de datos</span></h1>
 </div>
 
 
@@ -201,9 +262,246 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>En construcción.</p>
+<p>NumPy maneja números en arreglos. Pero los datos reales vienen en <strong>tablas</strong>: filas y columnas con nombres, como una hoja de Excel — ventas por mes, lecturas de sensores, fichas de empleados. La librería que domina las tablas en Python es <strong>pandas</strong>. Este capítulo es el corazón del análisis de datos.</p>
+<div id="e2189afd" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>La convención universal es el apodo <code>pd</code>. En Colab ya viene instalada.</p>
+<section id="el-dataframe-una-tabla-con-superpoderes" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="el-dataframe-una-tabla-con-superpoderes"><span class="header-section-number">6.1</span> El DataFrame: una tabla con superpoderes</h2>
+<p>El objeto central de pandas es el <strong>DataFrame</strong>. Puedes crearlo desde un diccionario (¿recuerdas las fichas del capítulo 4?):</p>
+<div id="73a7eeae" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>ventas <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"producto"</span>: [<span class="st">"café"</span>, <span class="st">"cacao"</span>, <span class="st">"banano"</span>, <span class="st">"café"</span>, <span class="st">"cacao"</span>, <span class="st">"banano"</span>],</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"mes"</span>:      [<span class="st">"enero"</span>, <span class="st">"enero"</span>, <span class="st">"enero"</span>, <span class="st">"febrero"</span>, <span class="st">"febrero"</span>, <span class="st">"febrero"</span>],</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cantidad"</span>: [<span class="dv">120</span>, <span class="dv">80</span>, <span class="dv">200</span>, <span class="dv">135</span>, <span class="dv">75</span>, <span class="dv">220</span>],</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"precio"</span>:   [<span class="dv">9500</span>, <span class="dv">8200</span>, <span class="dv">7600</span>, <span class="dv">9600</span>, <span class="dv">8200</span>, <span class="dv">7400</span>]</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ventas)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  producto      mes  cantidad  precio
+0     café    enero       120    9500
+1    cacao    enero        80    8200
+2   banano    enero       200    7600
+3     café  febrero       135    9600
+4    cacao  febrero        75    8200
+5   banano  febrero       220    7400</code></pre>
+</div>
+</div>
+<p>Cada columna es una <strong>Serie</strong> (como un array con nombre). Cada fila es un registro. Fíjate que pandas imprime la tabla con su índice a la izquierda.</p>
+</section>
+<section id="inspeccionar-los-datos" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="inspeccionar-los-datos"><span class="header-section-number">6.2</span> Inspeccionar los datos</h2>
+<p>Lo primero que hace un analista con una tabla nueva: mirarla por encima.</p>
+<div id="de9678ab" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ventas.head(<span class="dv">3</span>))      <span class="co"># primeras 3 filas</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  producto    mes  cantidad  precio
+0     café  enero       120    9500
+1    cacao  enero        80    8200
+2   banano  enero       200    7600</code></pre>
+</div>
+</div>
+<div id="7482ccbb" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ventas.describe())   <span class="co"># estadísticas de las columnas numéricas</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         cantidad       precio
+count    6.000000     6.000000
+mean   138.333333  8416.666667
+std     60.387637   934.701378
+min     75.000000  7400.000000
+25%     90.000000  7750.000000
+50%    127.500000  8200.000000
+75%    183.750000  9175.000000
+max    220.000000  9600.000000</code></pre>
+</div>
+</div>
+<div id="cd1300a6" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ventas.info())       <span class="co"># tipos de datos y valores faltantes</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 6 entries, 0 to 5
+Data columns (total 4 columns):
+ #   Column    Non-Null Count  Dtype 
+---  ------    --------------  ----- 
+ 0   producto  6 non-null      object
+ 1   mes       6 non-null      object
+ 2   cantidad  6 non-null      int64 
+ 3   precio    6 non-null      int64 
+dtypes: int64(2), object(2)
+memory usage: 324.0+ bytes
+None</code></pre>
+</div>
+</div>
+</section>
+<section id="seleccionar-y-filtrar" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="seleccionar-y-filtrar"><span class="header-section-number">6.3</span> Seleccionar y filtrar</h2>
+<p>Seleccionar una columna (el resultado es una Serie):</p>
+<div id="1ceae170" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ventas[<span class="st">"producto"</span>])</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0      café
+1     cacao
+2    banano
+3      café
+4     cacao
+5    banano
+Name: producto, dtype: object</code></pre>
+</div>
+</div>
+<p>Filtrar filas con una condición — esto se llama <strong>indexación booleana</strong> y es de lo más usado en pandas:</p>
+<div id="0106d02a" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>ventas_grandes <span class="op">=</span> ventas[ventas[<span class="st">"cantidad"</span>] <span class="op">&gt;</span> <span class="dv">150</span>]</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ventas_grandes)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  producto      mes  cantidad  precio
+2   banano    enero       200    7600
+5   banano  febrero       220    7400</code></pre>
+</div>
+</div>
+<p>Se lee así: “de la tabla <code>ventas</code>, dame las filas donde <code>cantidad &gt; 150</code>”. La condición produce un <code>True</code>/<code>False</code> por fila, y pandas se queda con las verdaderas.</p>
+</section>
+<section id="columnas-calculadas" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="columnas-calculadas"><span class="header-section-number">6.4</span> Columnas calculadas</h2>
+<p>Como en NumPy, las operaciones son vectorizadas: se aplican a toda la columna de una vez. Crear una columna nueva es asignarla:</p>
+<div id="88b780dd" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>ventas[<span class="st">"ingreso"</span>] <span class="op">=</span> ventas[<span class="st">"cantidad"</span>] <span class="op">*</span> ventas[<span class="st">"precio"</span>]</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ventas)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  producto      mes  cantidad  precio  ingreso
+0     café    enero       120    9500  1140000
+1    cacao    enero        80    8200   656000
+2   banano    enero       200    7600  1520000
+3     café  febrero       135    9600  1296000
+4    cacao  febrero        75    8200   615000
+5   banano  febrero       220    7400  1628000</code></pre>
+</div>
+</div>
+</section>
+<section id="agrupar-la-pregunta-de-negocio-típica" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="agrupar-la-pregunta-de-negocio-típica"><span class="header-section-number">6.5</span> Agrupar: la pregunta de negocio típica</h2>
+<p>“¿Cuánto vendimos por producto?” es la pregunta clásica de administración. Con <code>groupby</code> se responde en una línea:</p>
+<div id="2a5a2d03" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>por_producto <span class="op">=</span> ventas.groupby(<span class="st">"producto"</span>)[<span class="st">"ingreso"</span>].<span class="bu">sum</span>()</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(por_producto)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>producto
+banano    3148000
+cacao     1271000
+café      2436000
+Name: ingreso, dtype: int64</code></pre>
+</div>
+</div>
+<p><code>groupby("producto")</code> junta las filas del mismo producto; <code>["ingreso"].sum()</code> suma el ingreso dentro de cada grupo. También puedes usar <code>.mean()</code>, <code>.count()</code>, <code>.max()</code>.</p>
+<p>Y ordenar para ver al ganador primero:</p>
+<div id="b9415e31" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(por_producto.sort_values(ascending<span class="op">=</span><span class="va">False</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>producto
+banano    3148000
+café      2436000
+cacao     1271000
+Name: ingreso, dtype: int64</code></pre>
+</div>
+</div>
+</section>
+<section id="leer-datos-reales-read_csv" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="leer-datos-reales-read_csv"><span class="header-section-number">6.6</span> Leer datos reales: <code>read_csv</code></h2>
+<p>Los datos rara vez se escriben a mano: vienen en archivos <strong>CSV</strong> (valores separados por comas). pandas los lee con una línea — incluso desde una URL, ideal para Colab:</p>
+<div id="218df7b2" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://raw.githubusercontent.com/plotly/datasets/master/iris.csv"</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>iris <span class="op">=</span> pd.read_csv(url)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(iris.head())</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   SepalLength  SepalWidth  PetalLength  PetalWidth         Name
+0          5.1         3.5          1.4         0.2  Iris-setosa
+1          4.9         3.0          1.4         0.2  Iris-setosa
+2          4.7         3.2          1.3         0.2  Iris-setosa
+3          4.6         3.1          1.5         0.2  Iris-setosa
+4          5.0         3.6          1.4         0.2  Iris-setosa</code></pre>
+</div>
+</div>
+<p>Ese dataset contiene medidas de flores <em>iris</em> (largo y ancho de sépalo y pétalo). Ya tienes datos reales en tu programa. En Colab también puedes subir un archivo y leerlo con <code>pd.read_csv("archivo.csv")</code>.</p>
+<p>Con pandas, la gráfica de un DataFrame es inmediata:</p>
+<div id="ad6e9301" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>iris.plot(kind<span class="op">=</span><span class="st">"scatter"</span>, x<span class="op">=</span><span class="st">"SepalLength"</span>, y<span class="op">=</span><span class="st">"PetalLength"</span>)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Sépalo vs. pétalo en flores iris"</span>)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="pandas_files/figure-html/cell-13-output-1.png" width="577" height="452" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="series-de-tiempo-primera-mirada" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="series-de-tiempo-primera-mirada"><span class="header-section-number">6.7</span> Series de tiempo (primera mirada)</h2>
+<p>Las fechas son datos especiales. pandas las entiende si se las presentas bien:</p>
+<div id="fe32ec8a" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>fechas <span class="op">=</span> pd.to_datetime([<span class="st">"2026-01-15"</span>, <span class="st">"2026-02-15"</span>, <span class="st">"2026-03-15"</span>,</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"2026-04-15"</span>, <span class="st">"2026-05-15"</span>, <span class="st">"2026-06-15"</span>])</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>precio_cafe <span class="op">=</span> pd.Series([<span class="dv">9500</span>, <span class="dv">9650</span>, <span class="dv">9800</span>, <span class="dv">10100</span>, <span class="dv">9950</span>, <span class="dv">10200</span>], index<span class="op">=</span>fechas)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(precio_cafe)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>2026-01-15     9500
+2026-02-15     9650
+2026-03-15     9800
+2026-04-15    10100
+2026-05-15     9950
+2026-06-15    10200
+dtype: int64</code></pre>
+</div>
+</div>
+<p>Con la fecha como índice, graficar la serie es trivial:</p>
+<div id="5dae20f5" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>precio_cafe.plot(marker<span class="op">=</span><span class="st">"o"</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Precio ($/kg)"</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Precio del café, primer semestre 2026"</span>)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="pandas_files/figure-html/cell-15-output-1.png" width="611" height="415" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>En el capítulo 7 usaremos esto para análisis económicos más elaborados.</p>
+</section>
+<section id="ejercicios" class="level2" data-number="6.8">
+<h2 data-number="6.8" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">6.8</span> Ejercicios</h2>
+<ol type="1">
+<li>Crea un DataFrame con 5 empleados (nombre, cargo, salario) y calcula la columna <code>salario_anual</code>.</li>
+<li>Del DataFrame <code>ventas</code> de este capítulo, filtra las filas donde el ingreso supere $1.500.000.</li>
+<li>Agrupa <code>ventas</code> por <code>mes</code> y calcula el ingreso total de cada mes. ¿Cuál mes fue mejor?</li>
+<li>Lee el dataset iris desde la URL y calcula el promedio de <code>PetalLength</code> con <code>.mean()</code>.</li>
+<li>Del dataset iris, filtra las flores con <code>SepalLength</code> mayor a 6.5 y cuenta cuántas son con <code>len()</code>.</li>
+<li><strong>Mini-reto (agro):</strong> construye un DataFrame con las lecturas horarias simuladas de un sensor: columnas <code>hora</code> (0 a 23), <code>temperatura</code> (valores entre 18 y 34) y <code>humedad</code> (valores entre 40 y 90). (a) Filtra las horas con temperatura mayor a 30. (b) Calcula el promedio de humedad. (c) Crea la columna <code>alerta</code> que valga <code>True</code> cuando temperatura &gt; 30 <strong>y</strong> humedad &lt; 50 (pista: <code>(df["temperatura"] &gt; 30) &amp; (df["humedad"] &lt; 50)</code>). (d) Grafica temperatura vs.&nbsp;hora.</li>
+</ol>
+</section>
+<section id="resumen" class="level2" data-number="6.9">
+<h2 data-number="6.9" class="anchored" data-anchor-id="resumen"><span class="header-section-number">6.9</span> Resumen</h2>
+<ul>
+<li><strong>pandas</strong> maneja tablas: el <strong>DataFrame</strong> (tabla) y la <strong>Serie</strong> (columna).</li>
+<li><code>head()</code>, <code>describe()</code>, <code>info()</code> inspeccionan; <code>df["col"]</code> selecciona; <code>df[condicion]</code> filtra.</li>
+<li>Las columnas calculadas son vectorizadas: <code>df["nueva"] = df["a"] * df["b"]</code>.</li>
+<li><code>groupby("col").sum()</code> responde preguntas de negocio por categorías.</li>
+<li><code>pd.read_csv()</code> trae datos reales desde archivos o URLs.</li>
+<li>Con fechas como índice, las series de tiempo se grafican directo.</li>
+</ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -608,13 +906,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./numpy-graficas.html" class="pagination-link" aria-label="Capítulo 5: NumPy y gráficas">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Capítulo 5: NumPy y gráficas</span></span>
+      <a href="./numpy-graficas.html" class="pagination-link" aria-label="NumPy y gráficas: cómputo científico">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">NumPy y gráficas: cómputo científico</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./economia-administracion.html" class="pagination-link" aria-label="Capítulo 7: Economía y administración">
-        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Capítulo 7: Economía y administración</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./economia-administracion.html" class="pagination-link" aria-label="Aplicaciones en administración y economía">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Aplicaciones en administración y economía</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

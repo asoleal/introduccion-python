@@ -322,41 +322,381 @@
   {
     "objectID": "numpy-graficas.html",
     "href": "numpy-graficas.html",
-    "title": "5  Capítulo 5: NumPy y gráficas",
+    "title": "5  NumPy y gráficas: cómputo científico",
     "section": "",
-    "text": "En construcción.",
+    "text": "5.1 Librerías: código que otros escribieron por ti\nHasta aquí trabajaste con valores sueltos y listas. La ingeniería y la economía manejan otra cosa: miles de datos a la vez — todas las lecturas de un sensor, los precios de un año, la producción de 500 parcelas. Hacer eso con listas y ciclos for es lento y enredado. La solución es NumPy: la librería que convierte a Python en una máquina de cálculo numérico. Y para ver los resultados, Matplotlib: la librería de gráficas.\nUna librería es un paquete de funciones listas para usar. Se carga con import:\nimport numpy as np\nLa convención as np le pone un apodo corto: en vez de escribir numpy.array escribes np.array. En Colab, NumPy y Matplotlib ya vienen instaladas; solo hay que importarlas.",
     "crumbs": [
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Capítulo 5: NumPy y gráficas</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>NumPy y gráficas: cómputo científico</span>"
+    ]
+  },
+  {
+    "objectID": "numpy-graficas.html#el-array-una-lista-con-superpoderes",
+    "href": "numpy-graficas.html#el-array-una-lista-con-superpoderes",
+    "title": "5  NumPy y gráficas: cómputo científico",
+    "section": "5.2 El array: una lista con superpoderes",
+    "text": "5.2 El array: una lista con superpoderes\nEl objeto central de NumPy es el array. Se parece a una lista, pero permite operar sobre todos sus elementos a la vez:\n\nimport numpy as np\n\nrendimientos = np.array([4.2, 3.8, 5.1, 4.6, 3.9])  # toneladas por hectárea\n\n# Convertir todo a kg/ha de una sola vez:\nrendimientos_kg = rendimientos * 1000\nprint(rendimientos_kg)\n\n[4200. 3800. 5100. 4600. 3900.]\n\n\nCon una lista normal, lista * 1000 daría error (o algo raro). Con un array, la operación se aplica elemento por elemento. Esto se llama vectorización y es la idea más importante del capítulo.\nOtro ejemplo típico de mecatrónica: un sensor entrega temperaturas en Celsius y el sistema las necesita en Fahrenheit:\n\ncelsius = np.array([20.0, 22.5, 25.1, 31.8, 28.4])\nfahrenheit = celsius * 9 / 5 + 32\nprint(fahrenheit)\n\n[68.   72.5  77.18 89.24 83.12]\n\n\nNi un solo ciclo. La fórmula se escribe como en álgebra y se aplica a todo el arreglo.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>NumPy y gráficas: cómputo científico</span>"
+    ]
+  },
+  {
+    "objectID": "numpy-graficas.html#crear-secuencias-de-datos",
+    "href": "numpy-graficas.html#crear-secuencias-de-datos",
+    "title": "5  NumPy y gráficas: cómputo científico",
+    "section": "5.3 Crear secuencias de datos",
+    "text": "5.3 Crear secuencias de datos\nNumPy tiene funciones para generar arrays sin escribir los valores a mano:\n\nprint(np.arange(0, 10, 2))     # de 0 a 10 (sin incluir), de 2 en 2\nprint(np.linspace(0, 1, 5))    # 5 valores igualmente espaciados entre 0 y 1\nprint(np.zeros(4))             # cuatro ceros\nprint(np.ones(3))              # tres unos\n\n[0 2 4 6 8]\n[0.   0.25 0.5  0.75 1.  ]\n[0. 0. 0. 0.]\n[1. 1. 1.]\n\n\nlinspace es el favorito para graficar funciones: genera los puntos del eje x.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>NumPy y gráficas: cómputo científico</span>"
+    ]
+  },
+  {
+    "objectID": "numpy-graficas.html#estadística-instantánea",
+    "href": "numpy-graficas.html#estadística-instantánea",
+    "title": "5  NumPy y gráficas: cómputo científico",
+    "section": "5.4 Estadística instantánea",
+    "text": "5.4 Estadística instantánea\nLos arrays traen métodos estadísticos incorporados:\n\nproduccion = np.array([4.2, 3.8, 5.1, 4.6, 3.9, 4.8, 2.9, 5.0])\n\nprint(f\"Promedio:        {produccion.mean():.2f} ton/ha\")\nprint(f\"Desviación:      {produccion.std():.2f}\")\nprint(f\"Máximo:          {produccion.max()} ton/ha\")\nprint(f\"Parcela del máximo: {produccion.argmax()}\")\n\nPromedio:        4.29 ton/ha\nDesviación:      0.69\nMáximo:          5.1 ton/ha\nParcela del máximo: 2\n\n\nargmax() no devuelve el valor máximo sino su posición: útil para saber cuál parcela fue la mejor.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>NumPy y gráficas: cómputo científico</span>"
+    ]
+  },
+  {
+    "objectID": "numpy-graficas.html#gráficas-con-matplotlib",
+    "href": "numpy-graficas.html#gráficas-con-matplotlib",
+    "title": "5  NumPy y gráficas: cómputo científico",
+    "section": "5.5 Gráficas con Matplotlib",
+    "text": "5.5 Gráficas con Matplotlib\nUn número dice poco; una gráfica lo dice todo. Matplotlib se importa así:\n\nimport matplotlib.pyplot as plt\n\nLa gráfica mínima tiene cuatro ingredientes: datos, plot, etiquetas y show:\n\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nhoras = np.arange(0, 24)                       # 0 a 23\ntemperatura = 22 + 6 * np.sin((horas - 9) * np.pi / 12)  # modelo simple de un día\n\nplt.plot(horas, temperatura, marker=\"o\")\nplt.xlabel(\"Hora del día\")\nplt.ylabel(\"Temperatura (°C)\")\nplt.title(\"Temperatura del invernadero\")\nplt.grid(True)\nplt.show()\n\n\n\n\n\n\n\n\n\n5.5.1 Otros tipos de gráfica útiles\nDispersión (scatter): para ver relación entre dos variables, por ejemplo inversión en riego vs. producción:\n\nriego = np.array([100, 150, 200, 250, 300, 350])        # mm de agua\nproduccion = np.array([3.1, 3.8, 4.5, 4.9, 5.0, 5.1])   # ton/ha\n\nplt.scatter(riego, produccion)\nplt.xlabel(\"Lámina de riego (mm)\")\nplt.ylabel(\"Producción (ton/ha)\")\nplt.title(\"Respuesta del cultivo al riego\")\nplt.grid(True)\nplt.show()\n\n\n\n\n\n\n\n\nBarras (bar): para comparar categorías:\n\nproductos = [\"Café\", \"Cacao\", \"Banano\", \"Panela\"]\nventas = [52, 38, 61, 27]   # millones\n\nplt.bar(productos, ventas)\nplt.ylabel(\"Ventas (millones $)\")\nplt.title(\"Ventas por producto\")\nplt.show()\n\n\n\n\n\n\n\n\nHistograma (hist): para ver cómo se distribuyen los datos:\n\nrng = np.random.default_rng(42)\nsalarios = rng.normal(2800000, 500000, 200)   # 200 salarios simulados\n\nplt.hist(salarios, bins=20)\nplt.xlabel(\"Salario mensual ($)\")\nplt.ylabel(\"Número de empleados\")\nplt.title(\"Distribución de salarios\")\nplt.show()",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>NumPy y gráficas: cómputo científico</span>"
+    ]
+  },
+  {
+    "objectID": "numpy-graficas.html#aplicación-de-ingeniería-simular-y-graficar-un-fenómeno",
+    "href": "numpy-graficas.html#aplicación-de-ingeniería-simular-y-graficar-un-fenómeno",
+    "title": "5  NumPy y gráficas: cómputo científico",
+    "section": "5.6 Aplicación de ingeniería: simular y graficar un fenómeno",
+    "text": "5.6 Aplicación de ingeniería: simular y graficar un fenómeno\nEl flujo de trabajo ingenieril completo: modelo matemático → array de tiempo → simulación → gráfica. Ejemplo: la altura de una planta de maíz sigue aproximadamente una curva logística\n\\[h(t) = \\frac{H}{1 + e^{-k(t - t_0)}}\\]\ndonde \\(H\\) es la altura máxima, \\(k\\) la velocidad de crecimiento y \\(t_0\\) el día de crecimiento más rápido:\n\nH = 2.5     # altura máxima (m)\nk = 0.15    # velocidad de crecimiento\nt0 = 40     # día de máximo crecimiento\n\nt = np.linspace(0, 100, 200)          # 100 días, 200 puntos\nh = H / (1 + np.exp(-k * (t - t0)))\n\nplt.plot(t, h)\nplt.xlabel(\"Días después de la siembra\")\nplt.ylabel(\"Altura (m)\")\nplt.title(\"Crecimiento logístico del maíz\")\nplt.grid(True)\nplt.show()\n\n\n\n\n\n\n\n\nCambia k a 0.25 y vuelve a ejecutar: verás cómo el modelo responde. Este ciclo modelo → simulación → gráfica es exactamente el que usarás en proyectos reales de ingeniería.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>NumPy y gráficas: cómputo científico</span>"
+    ]
+  },
+  {
+    "objectID": "numpy-graficas.html#ejercicios",
+    "href": "numpy-graficas.html#ejercicios",
+    "title": "5  NumPy y gráficas: cómputo científico",
+    "section": "5.7 Ejercicios",
+    "text": "5.7 Ejercicios\n\nConvierte un array de precios en dólares a pesos colombianos (tasa: 1 USD = 4200 COP) usando vectorización: precios_usd = np.array([10, 25, 7.5, 100]).\nGenera 50 puntos entre 0 y \\(2\\pi\\) con linspace y grafica \\(\\sin(x)\\) con etiquetas y grilla.\nSimula la temperatura de un motor que se calienta según \\(T(t) = 25 + 65(1 - e^{-t/10})\\) °C, para \\(t\\) entre 0 y 60 minutos. Grafica y determina a qué valor tiende la temperatura.\nCon el array costos = np.array([4.5, 2.1, 8.3, 1.9, 6.7, 3.2]) (millones), encuentra con argmax() el índice del costo mayor y su valor.\nGrafica con barras las ventas de 6 meses que tú inventes, con título y etiquetas.\nMini-reto (mecatrónica + administración): un sensor de humedad da lecturas crudas en voltios: v = np.array([0.8, 1.2, 1.7, 2.1, 2.9, 3.3]). La calibración del fabricante es \\(\\text{humedad} = 18 \\cdot v - 5\\) (%). (a) Convierte el array completo a humedad. (b) Grafica voltaje vs. humedad. (c) La empresa solo vende el sensor si la humedad máxima medida supera el 50 %; imprime con un if si pasa o no la prueba.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>NumPy y gráficas: cómputo científico</span>"
+    ]
+  },
+  {
+    "objectID": "numpy-graficas.html#resumen",
+    "href": "numpy-graficas.html#resumen",
+    "title": "5  NumPy y gráficas: cómputo científico",
+    "section": "5.8 Resumen",
+    "text": "5.8 Resumen\n\nNumPy trabaja con arrays: operaciones sobre todos los datos a la vez (vectorización), sin ciclos.\narange, linspace, zeros, ones generan datos; .mean(), .std(), .max(), .argmax() los resumen.\nMatplotlib grafica: plot (líneas), scatter (dispersión), bar (barras), hist (histogramas), siempre con xlabel, ylabel, title, grid.\nEl flujo modelo → array de tiempo → simulación → gráfica es la base del cómputo en ingeniería.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>NumPy y gráficas: cómputo científico</span>"
     ]
   },
   {
     "objectID": "pandas.html",
     "href": "pandas.html",
-    "title": "6  Capítulo 6: pandas",
+    "title": "6  pandas: manejo de datos",
     "section": "",
-    "text": "En construcción.",
+    "text": "6.1 El DataFrame: una tabla con superpoderes\nNumPy maneja números en arreglos. Pero los datos reales vienen en tablas: filas y columnas con nombres, como una hoja de Excel — ventas por mes, lecturas de sensores, fichas de empleados. La librería que domina las tablas en Python es pandas. Este capítulo es el corazón del análisis de datos.\nLa convención universal es el apodo pd. En Colab ya viene instalada.\nEl objeto central de pandas es el DataFrame. Puedes crearlo desde un diccionario (¿recuerdas las fichas del capítulo 4?):\nimport pandas as pd\n\nventas = pd.DataFrame({\n    \"producto\": [\"café\", \"cacao\", \"banano\", \"café\", \"cacao\", \"banano\"],\n    \"mes\":      [\"enero\", \"enero\", \"enero\", \"febrero\", \"febrero\", \"febrero\"],\n    \"cantidad\": [120, 80, 200, 135, 75, 220],\n    \"precio\":   [9500, 8200, 7600, 9600, 8200, 7400]\n})\n\nprint(ventas)\n\n  producto      mes  cantidad  precio\n0     café    enero       120    9500\n1    cacao    enero        80    8200\n2   banano    enero       200    7600\n3     café  febrero       135    9600\n4    cacao  febrero        75    8200\n5   banano  febrero       220    7400\nCada columna es una Serie (como un array con nombre). Cada fila es un registro. Fíjate que pandas imprime la tabla con su índice a la izquierda.",
     "crumbs": [
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Capítulo 6: pandas</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>pandas: manejo de datos</span>"
+    ]
+  },
+  {
+    "objectID": "pandas.html#inspeccionar-los-datos",
+    "href": "pandas.html#inspeccionar-los-datos",
+    "title": "6  pandas: manejo de datos",
+    "section": "6.2 Inspeccionar los datos",
+    "text": "6.2 Inspeccionar los datos\nLo primero que hace un analista con una tabla nueva: mirarla por encima.\n\nprint(ventas.head(3))      # primeras 3 filas\n\n  producto    mes  cantidad  precio\n0     café  enero       120    9500\n1    cacao  enero        80    8200\n2   banano  enero       200    7600\n\n\n\nprint(ventas.describe())   # estadísticas de las columnas numéricas\n\n         cantidad       precio\ncount    6.000000     6.000000\nmean   138.333333  8416.666667\nstd     60.387637   934.701378\nmin     75.000000  7400.000000\n25%     90.000000  7750.000000\n50%    127.500000  8200.000000\n75%    183.750000  9175.000000\nmax    220.000000  9600.000000\n\n\n\nprint(ventas.info())       # tipos de datos y valores faltantes\n\n&lt;class 'pandas.core.frame.DataFrame'&gt;\nRangeIndex: 6 entries, 0 to 5\nData columns (total 4 columns):\n #   Column    Non-Null Count  Dtype \n---  ------    --------------  ----- \n 0   producto  6 non-null      object\n 1   mes       6 non-null      object\n 2   cantidad  6 non-null      int64 \n 3   precio    6 non-null      int64 \ndtypes: int64(2), object(2)\nmemory usage: 324.0+ bytes\nNone",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>pandas: manejo de datos</span>"
+    ]
+  },
+  {
+    "objectID": "pandas.html#seleccionar-y-filtrar",
+    "href": "pandas.html#seleccionar-y-filtrar",
+    "title": "6  pandas: manejo de datos",
+    "section": "6.3 Seleccionar y filtrar",
+    "text": "6.3 Seleccionar y filtrar\nSeleccionar una columna (el resultado es una Serie):\n\nprint(ventas[\"producto\"])\n\n0      café\n1     cacao\n2    banano\n3      café\n4     cacao\n5    banano\nName: producto, dtype: object\n\n\nFiltrar filas con una condición — esto se llama indexación booleana y es de lo más usado en pandas:\n\nventas_grandes = ventas[ventas[\"cantidad\"] &gt; 150]\nprint(ventas_grandes)\n\n  producto      mes  cantidad  precio\n2   banano    enero       200    7600\n5   banano  febrero       220    7400\n\n\nSe lee así: “de la tabla ventas, dame las filas donde cantidad &gt; 150”. La condición produce un True/False por fila, y pandas se queda con las verdaderas.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>pandas: manejo de datos</span>"
+    ]
+  },
+  {
+    "objectID": "pandas.html#columnas-calculadas",
+    "href": "pandas.html#columnas-calculadas",
+    "title": "6  pandas: manejo de datos",
+    "section": "6.4 Columnas calculadas",
+    "text": "6.4 Columnas calculadas\nComo en NumPy, las operaciones son vectorizadas: se aplican a toda la columna de una vez. Crear una columna nueva es asignarla:\n\nventas[\"ingreso\"] = ventas[\"cantidad\"] * ventas[\"precio\"]\nprint(ventas)\n\n  producto      mes  cantidad  precio  ingreso\n0     café    enero       120    9500  1140000\n1    cacao    enero        80    8200   656000\n2   banano    enero       200    7600  1520000\n3     café  febrero       135    9600  1296000\n4    cacao  febrero        75    8200   615000\n5   banano  febrero       220    7400  1628000",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>pandas: manejo de datos</span>"
+    ]
+  },
+  {
+    "objectID": "pandas.html#agrupar-la-pregunta-de-negocio-típica",
+    "href": "pandas.html#agrupar-la-pregunta-de-negocio-típica",
+    "title": "6  pandas: manejo de datos",
+    "section": "6.5 Agrupar: la pregunta de negocio típica",
+    "text": "6.5 Agrupar: la pregunta de negocio típica\n“¿Cuánto vendimos por producto?” es la pregunta clásica de administración. Con groupby se responde en una línea:\n\npor_producto = ventas.groupby(\"producto\")[\"ingreso\"].sum()\nprint(por_producto)\n\nproducto\nbanano    3148000\ncacao     1271000\ncafé      2436000\nName: ingreso, dtype: int64\n\n\ngroupby(\"producto\") junta las filas del mismo producto; [\"ingreso\"].sum() suma el ingreso dentro de cada grupo. También puedes usar .mean(), .count(), .max().\nY ordenar para ver al ganador primero:\n\nprint(por_producto.sort_values(ascending=False))\n\nproducto\nbanano    3148000\ncafé      2436000\ncacao     1271000\nName: ingreso, dtype: int64",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>pandas: manejo de datos</span>"
+    ]
+  },
+  {
+    "objectID": "pandas.html#leer-datos-reales-read_csv",
+    "href": "pandas.html#leer-datos-reales-read_csv",
+    "title": "6  pandas: manejo de datos",
+    "section": "6.6 Leer datos reales: read_csv",
+    "text": "6.6 Leer datos reales: read_csv\nLos datos rara vez se escriben a mano: vienen en archivos CSV (valores separados por comas). pandas los lee con una línea — incluso desde una URL, ideal para Colab:\n\nurl = \"https://raw.githubusercontent.com/plotly/datasets/master/iris.csv\"\niris = pd.read_csv(url)\nprint(iris.head())\n\n   SepalLength  SepalWidth  PetalLength  PetalWidth         Name\n0          5.1         3.5          1.4         0.2  Iris-setosa\n1          4.9         3.0          1.4         0.2  Iris-setosa\n2          4.7         3.2          1.3         0.2  Iris-setosa\n3          4.6         3.1          1.5         0.2  Iris-setosa\n4          5.0         3.6          1.4         0.2  Iris-setosa\n\n\nEse dataset contiene medidas de flores iris (largo y ancho de sépalo y pétalo). Ya tienes datos reales en tu programa. En Colab también puedes subir un archivo y leerlo con pd.read_csv(\"archivo.csv\").\nCon pandas, la gráfica de un DataFrame es inmediata:\n\nimport matplotlib.pyplot as plt\n\niris.plot(kind=\"scatter\", x=\"SepalLength\", y=\"PetalLength\")\nplt.title(\"Sépalo vs. pétalo en flores iris\")\nplt.grid(True)\nplt.show()",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>pandas: manejo de datos</span>"
+    ]
+  },
+  {
+    "objectID": "pandas.html#series-de-tiempo-primera-mirada",
+    "href": "pandas.html#series-de-tiempo-primera-mirada",
+    "title": "6  pandas: manejo de datos",
+    "section": "6.7 Series de tiempo (primera mirada)",
+    "text": "6.7 Series de tiempo (primera mirada)\nLas fechas son datos especiales. pandas las entiende si se las presentas bien:\n\nfechas = pd.to_datetime([\"2026-01-15\", \"2026-02-15\", \"2026-03-15\",\n                         \"2026-04-15\", \"2026-05-15\", \"2026-06-15\"])\nprecio_cafe = pd.Series([9500, 9650, 9800, 10100, 9950, 10200], index=fechas)\n\nprint(precio_cafe)\n\n2026-01-15     9500\n2026-02-15     9650\n2026-03-15     9800\n2026-04-15    10100\n2026-05-15     9950\n2026-06-15    10200\ndtype: int64\n\n\nCon la fecha como índice, graficar la serie es trivial:\n\nprecio_cafe.plot(marker=\"o\")\nplt.ylabel(\"Precio ($/kg)\")\nplt.title(\"Precio del café, primer semestre 2026\")\nplt.grid(True)\nplt.show()\n\n\n\n\n\n\n\n\nEn el capítulo 7 usaremos esto para análisis económicos más elaborados.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>pandas: manejo de datos</span>"
+    ]
+  },
+  {
+    "objectID": "pandas.html#ejercicios",
+    "href": "pandas.html#ejercicios",
+    "title": "6  pandas: manejo de datos",
+    "section": "6.8 Ejercicios",
+    "text": "6.8 Ejercicios\n\nCrea un DataFrame con 5 empleados (nombre, cargo, salario) y calcula la columna salario_anual.\nDel DataFrame ventas de este capítulo, filtra las filas donde el ingreso supere $1.500.000.\nAgrupa ventas por mes y calcula el ingreso total de cada mes. ¿Cuál mes fue mejor?\nLee el dataset iris desde la URL y calcula el promedio de PetalLength con .mean().\nDel dataset iris, filtra las flores con SepalLength mayor a 6.5 y cuenta cuántas son con len().\nMini-reto (agro): construye un DataFrame con las lecturas horarias simuladas de un sensor: columnas hora (0 a 23), temperatura (valores entre 18 y 34) y humedad (valores entre 40 y 90). (a) Filtra las horas con temperatura mayor a 30. (b) Calcula el promedio de humedad. (c) Crea la columna alerta que valga True cuando temperatura &gt; 30 y humedad &lt; 50 (pista: (df[\"temperatura\"] &gt; 30) & (df[\"humedad\"] &lt; 50)). (d) Grafica temperatura vs. hora.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>pandas: manejo de datos</span>"
+    ]
+  },
+  {
+    "objectID": "pandas.html#resumen",
+    "href": "pandas.html#resumen",
+    "title": "6  pandas: manejo de datos",
+    "section": "6.9 Resumen",
+    "text": "6.9 Resumen\n\npandas maneja tablas: el DataFrame (tabla) y la Serie (columna).\nhead(), describe(), info() inspeccionan; df[\"col\"] selecciona; df[condicion] filtra.\nLas columnas calculadas son vectorizadas: df[\"nueva\"] = df[\"a\"] * df[\"b\"].\ngroupby(\"col\").sum() responde preguntas de negocio por categorías.\npd.read_csv() trae datos reales desde archivos o URLs.\nCon fechas como índice, las series de tiempo se grafican directo.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>pandas: manejo de datos</span>"
     ]
   },
   {
     "objectID": "economia-administracion.html",
     "href": "economia-administracion.html",
-    "title": "7  Capítulo 7: Economía y administración",
+    "title": "7  Aplicaciones en administración y economía",
     "section": "",
-    "text": "En construcción.",
+    "text": "7.1 Valor futuro y valor presente\nLlegó el momento de poner todo a trabajar: variables, funciones, ciclos, NumPy, pandas y gráficas. En este capítulo resolverás cuatro problemas clásicos de administración y economía: interés compuesto, valor actual neto (VAN), tasa interna de retorno (TIR) y simulación Monte Carlo para decisiones bajo incertidumbre.\nEl dinero tiene fecha: $1.000.000 hoy no valen lo mismo que $1.000.000 en cinco años. El valor futuro ya lo conoces:\ndef valor_futuro(capital, tasa, años):\n    return capital * (1 + tasa) ** años\n\nvf = valor_futuro(1000000, 0.12, 5)\nprint(f\"Valor futuro: ${vf:,.0f}\")\n\nValor futuro: $1,762,342\nLa operación inversa es el valor presente: ¿cuánto vale hoy un pago futuro?\ndef valor_presente(pago_futuro, tasa, años):\n    return pago_futuro / (1 + tasa) ** años\n\nvp = valor_presente(1762342, 0.12, 5)\nprint(f\"Valor presente: ${vp:,.0f}\")\n\nValor presente: $1,000,000",
     "crumbs": [
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Capítulo 7: Economía y administración</span>"
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Aplicaciones en administración y economía</span>"
+    ]
+  },
+  {
+    "objectID": "economia-administracion.html#valor-actual-neto-van-vale-la-pena-el-proyecto",
+    "href": "economia-administracion.html#valor-actual-neto-van-vale-la-pena-el-proyecto",
+    "title": "7  Aplicaciones en administración y economía",
+    "section": "7.2 Valor Actual Neto (VAN): ¿vale la pena el proyecto?",
+    "text": "7.2 Valor Actual Neto (VAN): ¿vale la pena el proyecto?\nUn proyecto es una secuencia de flujos de caja: primero inviertes (flujo negativo) y luego recibes ingresos año a año. El VAN trae todos esos flujos a valor presente y los suma:\n\\[VAN = \\sum_{t=0}^{n} \\frac{F_t}{(1 + r)^t}\\]\nRegla de decisión: VAN &gt; 0 → el proyecto crea valor; VAN &lt; 0 → lo destruye.\n\ndef van(tasa, flujos):\n    return sum(f / (1 + tasa) ** t for t, f in enumerate(flujos))\n\n# Proyecto: invertir 10 millones hoy, recibir 3 millones por 5 años\nflujos = [-10000000, 3000000, 3000000, 3000000, 3000000, 3000000]\ntasa_descuento = 0.12\n\nresultado = van(tasa_descuento, flujos)\nprint(f\"VAN al 12%: ${resultado:,.0f}\")\n\nif resultado &gt; 0:\n    print(\"El proyecto crea valor: adelante\")\nelse:\n    print(\"El proyecto destruye valor: no invertir\")\n\nVAN al 12%: $814,329\nEl proyecto crea valor: adelante\n\n\nLa función usa dos cosas nuevas que vale la pena mirar: enumerate(flujos) entrega cada flujo con su posición t (el año), y la construcción sum(... for ... in ...) es una expresión generadora: suma sin necesidad de crear una lista intermedia.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Aplicaciones en administración y economía</span>"
+    ]
+  },
+  {
+    "objectID": "economia-administracion.html#tasa-interna-de-retorno-tir",
+    "href": "economia-administracion.html#tasa-interna-de-retorno-tir",
+    "title": "7  Aplicaciones en administración y economía",
+    "section": "7.3 Tasa Interna de Retorno (TIR)",
+    "text": "7.3 Tasa Interna de Retorno (TIR)\nLa TIR es la tasa que hace el VAN exactamente cero: la rentabilidad “verdadera” del proyecto. No tiene fórmula directa; se encuentra por búsqueda numérica. El método de bisección parte el intervalo a la mitad en cada paso:\n\ndef tir(flujos):\n    bajo, alto = 0.0, 1.0          # la TIR está entre 0% y 100%\n    for _ in range(100):           # 100 iteraciones son de sobra\n        medio = (bajo + alto) / 2\n        if van(medio, flujos) &gt; 0: # si el VAN es positivo, la TIR está arriba\n            bajo = medio\n        else:\n            alto = medio\n    return medio\n\ntasa_interna = tir(flujos)\nprint(f\"TIR del proyecto: {tasa_interna:.2%}\")\n\nTIR del proyecto: 15.24%\n\n\nObserva el formato {tasa_interna:.2%}: convierte el decimal a porcentaje con dos cifras. Como la TIR (15,24 %) supera la tasa de descuento (12 %), el proyecto es atractivo — la misma conclusión del VAN, vista desde la rentabilidad.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Aplicaciones en administración y economía</span>"
+    ]
+  },
+  {
+    "objectID": "economia-administracion.html#regresión-lineal-aprender-de-los-datos",
+    "href": "economia-administracion.html#regresión-lineal-aprender-de-los-datos",
+    "title": "7  Aplicaciones en administración y economía",
+    "section": "7.4 Regresión lineal: aprender de los datos",
+    "text": "7.4 Regresión lineal: aprender de los datos\nLa regresión encuentra la recta que mejor describe la relación entre dos variables: \\(y = mx + b\\). Con NumPy se calcula en una línea:\n\nimport numpy as np\nimport matplotlib.pyplot as plt\n\npublicidad = np.array([1, 2, 3, 4, 5, 6])            # millones invertidos\nventas = np.array([52, 58, 65, 71, 79, 85])          # millones vendidos\n\nm, b = np.polyfit(publicidad, ventas, 1)   # pendiente y corte\nprint(f\"Modelo: ventas = {m:.1f} × publicidad + {b:.1f}\")\n\nModelo: ventas = 6.7 × publicidad + 44.9\n\n\nCada millón adicional en publicidad se asocia con m millones adicionales en ventas. Visualicemos datos y modelo:\n\nx = np.linspace(0, 7, 100)\n\nplt.scatter(publicidad, ventas, label=\"Datos reales\")\nplt.plot(x, m * x + b, color=\"red\", label=f\"y = {m:.1f}x + {b:.1f}\")\nplt.xlabel(\"Publicidad (millones $)\")\nplt.ylabel(\"Ventas (millones $)\")\nplt.title(\"Ventas vs. inversión en publicidad\")\nplt.legend()\nplt.grid(True)\nplt.show()\n\n\n\n\n\n\n\n\nCon el modelo puedes predecir: si inviertes 8 millones, esperas m * 8 + b millones en ventas. (Ojo: predecir dentro del rango observado es razonable; extrapolar muy lejos es peligroso).",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Aplicaciones en administración y economía</span>"
+    ]
+  },
+  {
+    "objectID": "economia-administracion.html#simulación-monte-carlo-decidir-con-incertidumbre",
+    "href": "economia-administracion.html#simulación-monte-carlo-decidir-con-incertidumbre",
+    "title": "7  Aplicaciones en administración y economía",
+    "section": "7.5 Simulación Monte Carlo: decidir con incertidumbre",
+    "text": "7.5 Simulación Monte Carlo: decidir con incertidumbre\nLa vida real no tiene un solo futuro, tiene miles. La simulación Monte Carlo genera muchos escenarios aleatorios y mira qué pasa “en promedio” y “en el peor caso”.\nEjemplo: la utilidad de una cosecha depende del precio y del rendimiento, ambos inciertos. Supón que el precio sigue una distribución normal con media $9.500/kg y desviación $800, y el rendimiento es normal con media 4,2 ton/ha y desviación 0,6:\n\nrng = np.random.default_rng(42)\n\nescenarios = 10000\nprecios = rng.normal(9500, 800, escenarios)        # $/kg\nrendimientos = rng.normal(4.2, 0.6, escenarios)    # ton/ha\n\nhectareas = 10\ncostos = 28000000\n\nutilidad = precios * rendimientos * 1000 * hectareas - costos\n\nprint(f\"Utilidad esperada: ${utilidad.mean():,.0f}\")\nprint(f\"Peor 5% de escenarios: ${np.percentile(utilidad, 5):,.0f}\")\nprint(f\"Probabilidad de pérdida: {(utilidad &lt; 0).mean():.1%}\")\n\nUtilidad esperada: $371,754,211\nPeor 5% de escenarios: $267,681,774\nProbabilidad de pérdida: 0.0%\n\n\nY la gráfica que resume todo el riesgo:\n\nplt.hist(utilidad / 1e6, bins=50)\nplt.axvline(0, color=\"red\", linestyle=\"--\", label=\"Punto de equilibrio\")\nplt.xlabel(\"Utilidad (millones $)\")\nplt.ylabel(\"Frecuencia\")\nplt.title(\"Distribución de la utilidad (10.000 escenarios)\")\nplt.legend()\nplt.show()\n\n\n\n\n\n\n\n\nEn vez de un solo número, ahora tienes la distribución completa: la utilidad más probable, el peor escenario razonable (percentil 5) y la probabilidad exacta de perder plata. Así deciden los analistas modernos.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Aplicaciones en administración y economía</span>"
+    ]
+  },
+  {
+    "objectID": "economia-administracion.html#ejercicios",
+    "href": "economia-administracion.html#ejercicios",
+    "title": "7  Aplicaciones en administración y economía",
+    "section": "7.6 Ejercicios",
+    "text": "7.6 Ejercicios\n\nCalcula el valor presente de recibir $20.000.000 en 3 años con tasa del 10 %.\nEvalúa con VAN (tasa 15 %) este proyecto: inversión de $50 millones hoy, flujos de $15, $18, $20, $22 y $25 millones en los años 1 a 5. ¿Se acepta?\nCalcula la TIR del proyecto del ejercicio 2 con la función tir() de este capítulo.\nAjusta una regresión entre estos datos de fertilizante (kg/ha) y rendimiento (ton/ha): fert = np.array([50, 80, 110, 140, 170]), rend = np.array([3.1, 3.9, 4.6, 5.0, 5.2]). Predice el rendimiento para 120 kg/ha y grafica datos y recta.\nReplica la simulación Monte Carlo de la cosecha pero con 20 hectáreas y costos de $55 millones. ¿Sube o baja la probabilidad de pérdida?\nMini-reto (decisión de inversión completa): una empresa evalúa comprar una planta empacadora por $80 millones. Los flujos esperados son $20 millones anuales por 6 años, la tasa de descuento es 14 %. (a) Calcula el VAN y decide. (b) Calcula la TIR. (c) Los flujos son inciertos: simula 10.000 escenarios donde cada flujo anual es normal con media 20 y desviación 4 (millones), calcula el VAN de cada escenario (usa un for sobre escenarios) y reporta la probabilidad de que el proyecto destruya valor. (d) Grafica el histograma de los VAN simulados.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Aplicaciones en administración y economía</span>"
+    ]
+  },
+  {
+    "objectID": "economia-administracion.html#resumen",
+    "href": "economia-administracion.html#resumen",
+    "title": "7  Aplicaciones en administración y economía",
+    "section": "7.7 Resumen",
+    "text": "7.7 Resumen\n\nValor futuro/presente: el dinero se mueve en el tiempo con \\((1+r)^n\\).\nVAN: suma de flujos descontados; positivo → invertir. Se implementa con sum y enumerate.\nTIR: la tasa que hace VAN = 0; se encuentra por búsqueda (bisección).\nRegresión lineal con np.polyfit: convierte datos en un modelo predictivo \\(y = mx + b\\).\nMonte Carlo: miles de escenarios aleatorios revelan la utilidad esperada, el peor caso y la probabilidad de pérdida.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Aplicaciones en administración y economía</span>"
+    ]
+  },
+  {
+    "objectID": "aplicaciones-ingenieria.html",
+    "href": "aplicaciones-ingenieria.html",
+    "title": "8  Aplicaciones en ingeniería: agro, mecatrónica, veterinaria y zootecnia",
+    "section": "",
+    "text": "8.1 Ingeniería agrícola: ¿cuánta agua necesita el cultivo?\nPython es hoy una herramienta de trabajo diaria en las ingenierías. En este capítulo aplicarás lo aprendido a cuatro problemas reales: balance hídrico para riego (ingeniería agrícola), filtrado de señales de sensores (mecatrónica), dosificación de medicamentos (veterinaria) y crecimiento animal (zootecnia). El patrón siempre es el mismo: modelo matemático → código vectorizado → gráfica → decisión.\nEl riego se programa con un balance hídrico: el cultivo pierde agua por evapotranspiración (\\(ET_c\\)) y la lluvia repone parte; la diferencia es la lámina de riego que debes aplicar:\n\\[L = ET_c - P_{ef} = K_c \\cdot ET_0 - P_{ef}\\]\ndonde \\(K_c\\) es el coeficiente del cultivo y \\(P_{ef}\\) la lluvia efectiva. Un método sencillo para estimar \\(ET_0\\) con datos de temperatura (Hargreaves simplificado):\nimport numpy as np\nimport matplotlib.pyplot as plt\n\n# Semana típica: temperaturas máximas y mínimas (°C) y lluvia (mm)\nt_max = np.array([32, 33, 31, 34, 33, 32, 31])\nt_min = np.array([20, 21, 19, 22, 21, 20, 19])\nlluvia = np.array([0, 5, 0, 12, 0, 0, 2])\n\net0 = 0.0135 * ((t_max + t_min) / 2 + 17.8) * np.sqrt(t_max - t_min) * 0.16\n\nkc = 1.05           # maíz en etapa media\netc = kc * et0\nlamina = np.maximum(etc - lluvia, 0)   # nunca negativa\n\nprint(\"ET0 diaria (mm):\", np.round(et0, 2))\nprint(\"Lámina de riego diaria (mm):\", np.round(lamina, 2))\nprint(f\"Total semanal: {lamina.sum():.1f} mm = {lamina.sum() * 10:.0f} m³/ha\")\n\nET0 diaria (mm): [0.33 0.34 0.32 0.34 0.34 0.33 0.32]\nLámina de riego diaria (mm): [0.34 0.   0.34 0.   0.35 0.34 0.  ]\nTotal semanal: 1.4 mm = 14 m³/ha\nnp.maximum(..., 0) aplica el límite elemento por elemento: si la lluvia supera la demanda, no se riega. El factor final convierte mm a m³/ha (1 mm sobre 1 ha = 10 m³). Grafiquemos el balance:\ndias = np.arange(1, 8)\n\nplt.bar(dias, etc, label=\"Demanda ETc\", alpha=0.7)\nplt.bar(dias, lluvia, label=\"Lluvia\", alpha=0.7)\nplt.plot(dias, lamina, \"ro-\", label=\"Riego necesario\")\nplt.xlabel(\"Día\")\nplt.ylabel(\"Lámina (mm)\")\nplt.title(\"Balance hídrico semanal del cultivo\")\nplt.legend()\nplt.show()",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Aplicaciones en ingeniería: agro, mecatrónica, veterinaria y zootecnia</span>"
+    ]
+  },
+  {
+    "objectID": "aplicaciones-ingenieria.html#mecatrónica-limpiar-la-señal-de-un-sensor",
+    "href": "aplicaciones-ingenieria.html#mecatrónica-limpiar-la-señal-de-un-sensor",
+    "title": "8  Aplicaciones en ingeniería: agro, mecatrónica, veterinaria y zootecnia",
+    "section": "8.2 Mecatrónica: limpiar la señal de un sensor",
+    "text": "8.2 Mecatrónica: limpiar la señal de un sensor\nLos sensores reales entregan señales con ruido. Un filtro clásico y simple es la media móvil: cada valor se reemplaza por el promedio de sus vecinos, y el ruido se suaviza:\n\nimport pandas as pd\n\nrng = np.random.default_rng(7)\ntiempo = np.arange(0, 60, 0.5)                        # 2 lecturas por segundo\nsenal_real = 25 + 3 * np.sin(tiempo / 8)              # temperatura verdadera\nlectura = senal_real + rng.normal(0, 1.2, len(tiempo)) # + ruido del sensor\n\ndf = pd.DataFrame({\"tiempo\": tiempo, \"lectura\": lectura})\ndf[\"filtrada\"] = df[\"lectura\"].rolling(window=7, center=True).mean()\n\nplt.plot(df[\"tiempo\"], df[\"lectura\"], alpha=0.4, label=\"Lectura cruda\")\nplt.plot(df[\"tiempo\"], df[\"filtrada\"], linewidth=2, label=\"Media móvil\")\nplt.xlabel(\"Tiempo (s)\")\nplt.ylabel(\"Temperatura (°C)\")\nplt.title(\"Filtrado de ruido en un sensor\")\nplt.legend()\nplt.grid(True)\nplt.show()\n\n\n\n\n\n\n\n\nrolling(window=7) crea una ventana de 7 puntos; .mean() la promedia. Luego, la lógica de control: detectar cuándo la señal filtrada cruza el umbral (con la cruda habría falsas alarmas):\n\numbral = 27.5\nalarma = df[\"filtrada\"] &gt; umbral\nsegundos_en_alarma = alarma.sum() * 0.5   # 0.5 s por lectura\nprint(f\"Tiempo sobre el umbral: {segundos_en_alarma:.1f} s\")\n\nTiempo sobre el umbral: 0.5 s",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Aplicaciones en ingeniería: agro, mecatrónica, veterinaria y zootecnia</span>"
+    ]
+  },
+  {
+    "objectID": "aplicaciones-ingenieria.html#veterinaria-dosificación-por-peso-vivo",
+    "href": "aplicaciones-ingenieria.html#veterinaria-dosificación-por-peso-vivo",
+    "title": "8  Aplicaciones en ingeniería: agro, mecatrónica, veterinaria y zootecnia",
+    "section": "8.3 Veterinaria: dosificación por peso vivo",
+    "text": "8.3 Veterinaria: dosificación por peso vivo\nLa dosis de muchos medicamentos se calcula por kilogramo de peso vivo. Con un lote de animales, la vectorización evita errores de cálculo manual:\n\nanimales = pd.DataFrame({\n    \"id\": [\"A01\", \"A02\", \"A03\", \"A04\", \"A05\"],\n    \"peso_kg\": [380, 425, 350, 410, 365]\n})\n\ndosis_mg_kg = 10            # mg por kg de peso vivo\nconcentracion = 200         # mg por ml del producto comercial\n\nanimales[\"dosis_mg\"] = animales[\"peso_kg\"] * dosis_mg_kg\nanimales[\"ml_aplicar\"] = animales[\"dosis_mg\"] / concentracion\n\nprint(animales)\nprint(f\"\\nTotal de producto para el lote: {animales['ml_aplicar'].sum():.1f} ml\")\n\n    id  peso_kg  dosis_mg  ml_aplicar\n0  A01      380      3800       19.00\n1  A02      425      4250       21.25\n2  A03      350      3500       17.50\n3  A04      410      4100       20.50\n4  A05      365      3650       18.25\n\nTotal de producto para el lote: 96.5 ml\n\n\nUna tabla clara por animal y el total de producto a comprar: eso es exactamente lo que necesita un plan sanitario.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Aplicaciones en ingeniería: agro, mecatrónica, veterinaria y zootecnia</span>"
+    ]
+  },
+  {
+    "objectID": "aplicaciones-ingenieria.html#zootecnia-curva-de-crecimiento-y-ganancia-diaria",
+    "href": "aplicaciones-ingenieria.html#zootecnia-curva-de-crecimiento-y-ganancia-diaria",
+    "title": "8  Aplicaciones en ingeniería: agro, mecatrónica, veterinaria y zootecnia",
+    "section": "8.4 Zootecnia: curva de crecimiento y ganancia diaria",
+    "text": "8.4 Zootecnia: curva de crecimiento y ganancia diaria\nEl peso de un animal en crecimiento sigue bien el modelo de Gompertz:\n\\[W(t) = A \\, e^{-b\\, e^{-k t}}\\]\ndonde \\(A\\) es el peso adulto, \\(k\\) la velocidad de maduración y \\(b\\) un parámetro de forma. Simulemos un lote de pollos de engorde:\n\nA, b, k = 4500, 4.5, 0.045     # peso adulto (g), forma, velocidad\nt = np.linspace(0, 100, 200)   # días\n\npeso = A * np.exp(-b * np.exp(-k * t))\nganancia = np.gradient(peso, t)   # derivada numérica: g/día\n\nfig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4))\n\nax1.plot(t, peso)\nax1.set_xlabel(\"Edad (días)\")\nax1.set_ylabel(\"Peso (g)\")\nax1.set_title(\"Curva de crecimiento\")\nax1.grid(True)\n\nax2.plot(t, ganancia, color=\"green\")\nax2.set_xlabel(\"Edad (días)\")\nax2.set_ylabel(\"Ganancia (g/día)\")\nax2.set_title(\"Ganancia diaria de peso\")\nax2.grid(True)\n\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\n\nDos novedades: np.gradient calcula la derivada numérica (la ganancia diaria sin derivar a mano), y plt.subplots(1, 2) pone dos gráficas lado a lado. El día de máxima ganancia marca el momento económico óptimo de venta:\n\ndia_optimo = t[np.argmax(ganancia)]\nprint(f\"Máxima ganancia diaria: {ganancia.max():.1f} g/día, al día {dia_optimo:.0f}\")\n\nMáxima ganancia diaria: 74.5 g/día, al día 34",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Aplicaciones en ingeniería: agro, mecatrónica, veterinaria y zootecnia</span>"
+    ]
+  },
+  {
+    "objectID": "aplicaciones-ingenieria.html#ejercicios",
+    "href": "aplicaciones-ingenieria.html#ejercicios",
+    "title": "8  Aplicaciones en ingeniería: agro, mecatrónica, veterinaria y zootecnia",
+    "section": "8.5 Ejercicios",
+    "text": "8.5 Ejercicios\n\nRecalcula el balance hídrico con \\(K_c = 0.75\\) (etapa inicial del cultivo). ¿Cuánto baja la lámina semanal?\nEn la señal del sensor, cambia la ventana de la media móvil a 3 y luego a 15. ¿Qué ventana filtra mejor sin deformar la señal? Justifica con las gráficas.\nAgrega al DataFrame de animales una columna costo si el producto vale $850 por ml. ¿Cuánto cuesta tratar todo el lote?\nSimula con Gompertz el crecimiento de terneros: \\(A = 480\\) kg, \\(b = 3.8\\), \\(k = 0.0035\\), hasta 800 días. Encuentra el día de máxima ganancia.\nCalcula la conversión alimenticia de un lote: consumo total de alimento 8.2 toneladas, ganancia total de peso 2.5 toneladas. Luego, si el alimento cuesta $1.800/kg y el kilo en pie se vende a $8.500, ¿cuál fue el margen por kilo producido?\nMini-reto integrador (agro + mecatrónica + economía): un sistema de riego registra la humedad del suelo cada hora durante 5 días. (a) Simula la serie: humedad base que baja 2 puntos por día desde 55 %, más ruido normal de desviación 1.5 (usa rng.normal). (b) Filtra con media móvil de ventana 5. (c) Detecta en qué hora la señal filtrada cruza por debajo del 30 % (umbral de riego) — pista: np.argmax(filtrada &lt; 30). (d) Grafica cruda + filtrada + línea horizontal del umbral. (e) Cada riego cuesta $180.000; si el sistema riega cada vez que se cruza el umbral y la humedad se recupera a 55 % tras cada riego, estima cuántos riegos hubo en la simulación (puedes implementar el reinicio con un while).",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Aplicaciones en ingeniería: agro, mecatrónica, veterinaria y zootecnia</span>"
+    ]
+  },
+  {
+    "objectID": "aplicaciones-ingenieria.html#resumen",
+    "href": "aplicaciones-ingenieria.html#resumen",
+    "title": "8  Aplicaciones en ingeniería: agro, mecatrónica, veterinaria y zootecnia",
+    "section": "8.6 Resumen",
+    "text": "8.6 Resumen\n\nEl patrón ingenieril: modelo → vectorización → gráfica → decisión.\nAgro: balance hídrico \\(L = K_c \\cdot ET_0 - P_{ef}\\) para programar riego.\nMecatrónica: la media móvil (rolling) filtra ruido antes de aplicar umbrales de control.\nVeterinaria: dosificación por peso con columnas calculadas en pandas.\nZootecnia: modelo de Gompertz + np.gradient para ganancia diaria y momento óptimo de venta.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Aplicaciones en ingeniería: agro, mecatrónica, veterinaria y zootecnia</span>"
+    ]
+  },
+  {
+    "objectID": "proyectos.html",
+    "href": "proyectos.html",
+    "title": "9  Proyectos integradores",
+    "section": "",
+    "text": "9.1 Proyecto A — Ingeniería agrícola: ¿cuándo y cuánto regar?\nCada capítulo terminó con ejercicios guiados. Ahora es distinto: aquí hay cinco proyectos abiertos, uno por disciplina. En todos ellos pasa lo mismo que en la vida real: el enunciado no trae los datos ni todas las fórmulas — tendrás que investigar (fuentes oficiales, fichas técnicas, literatura) — y las preguntas son imposibles de responder a mano: la computación es indispensable.\nReglas del juego para todos los proyectos:\nContexto. Eres el asistente técnico de una finca con 5 ha de maíz en el Valle del Cauca. Debes proponer un calendario de riego para un mes completo.\nLo que debes investigar:\nLo que debes computar:",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Proyectos integradores</span>"
+    ]
+  },
+  {
+    "objectID": "proyectos.html#proyecto-a-ingeniería-agrícola-cuándo-y-cuánto-regar",
+    "href": "proyectos.html#proyecto-a-ingeniería-agrícola-cuándo-y-cuánto-regar",
+    "title": "9  Proyectos integradores",
+    "section": "",
+    "text": "Los coeficientes de cultivo \\(K_c\\) del maíz por etapa fenológica (fuente sugerida: FAO, documento Crop Evapotranspiration, FAO-56).\nLa precipitación y temperaturas históricas de tu municipio (IDEAM o NASA POWER, que tiene datos gratuitos por coordenada).\nEl método de Hargreaves completo para \\(ET_0\\) (en el capítulo 8 usamos una versión simplificada — encuentra la original y compara).\n\n\n\nUna serie diaria de 30 días de \\(ET_c\\), lluvia efectiva y lámina neta de riego (puedes usar datos reales o una simulación justificada con la climatología investigada).\nEl volumen total de agua del mes en m³/ha y su comparación contra el caudal disponible de la finca (dato que definirás e investigarás: caudal típico de un pozo o bocatoma pequeña).\nGráficas del balance hídrico y una tabla-resumen por semana.\nUna recomendación final: calendario de riego (qué días, cuánta lámina) y qué pasaría con dos semanas sin lluvia.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Proyectos integradores</span>"
+    ]
+  },
+  {
+    "objectID": "proyectos.html#proyecto-b-mecatrónica-confiabilidad-de-un-sensor-de-bajo-costo",
+    "href": "proyectos.html#proyecto-b-mecatrónica-confiabilidad-de-un-sensor-de-bajo-costo",
+    "title": "9  Proyectos integradores",
+    "section": "9.2 Proyecto B — Mecatrónica: confiabilidad de un sensor de bajo costo",
+    "text": "9.2 Proyecto B — Mecatrónica: confiabilidad de un sensor de bajo costo\nContexto. Tu empresa quiere usar sensores de humedad de suelo de $15.000 en vez de los de $1.500.000. Antes de venderlos, debes caracterizar su comportamiento.\nLo que debes investigar:\n\nLa curva de calibración de un sensor capacitivo real (busca la ficha técnica del sensor Capacitive Soil Moisture Sensor v1.2 o similar).\nQué es la deriva (drift) y el histéresis en sensores, y por qué importan en agricultura de precisión.\nFórmulas del filtro de media móvil exponencial (EMA) y su diferencia con la media móvil simple del capítulo 8.\n\nLo que debes computar:\n\nSimula 48 horas de lecturas (cada 5 min) de un sensor con ruido, deriva lenta y una calibración no lineal (define los parámetros con lo investigado).\nImplementa y compara media móvil simple vs. EMA; cuantifica el error de cada una respecto a la señal verdadera (RMSE — investiga su fórmula).\nDiseña una lógica de alarma con histéresis (enciende riego bajo 30 %, apaga sobre 38 %) y cuenta cuántas falsas activaciones evita respecto a un umbral simple.\nConclusión de ingeniería: ¿el sensor barato es usable? ¿Bajo qué condiciones?",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Proyectos integradores</span>"
+    ]
+  },
+  {
+    "objectID": "proyectos.html#proyecto-c-administración-y-economía-evaluación-completa-de-un-proyecto-productivo",
+    "href": "proyectos.html#proyecto-c-administración-y-economía-evaluación-completa-de-un-proyecto-productivo",
+    "title": "9  Proyectos integradores",
+    "section": "9.3 Proyecto C — Administración y economía: evaluación completa de un proyecto productivo",
+    "text": "9.3 Proyecto C — Administración y economía: evaluación completa de un proyecto productivo\nContexto. Una asociación de productores evalúa montar una planta de beneficio de café. Debes entregar el análisis de viabilidad financiera.\nLo que debes investigar:\n\nPrecios históricos del café (Federación Nacional de Cafeteras publica el precio interno diario).\nLa tasa de descuento apropiada para proyectos rurales en Colombia (investiga qué es la tasa social de descuento del DNP).\nCostos típicos de una planta de beneficio pequeña (literatura de extensión rural, Cenicafé).\n\nLo que debes computar:\n\nFlujo de caja a 10 años con tus supuestos documentados (inversión, capacidad, costos variables y fijos).\nVAN y TIR con las funciones del capítulo 7.\nAnálisis de sensibilidad: tabla de VAN para 5 precios de café × 5 niveles de producción (usa doble ciclo for y un DataFrame).\nMonte Carlo con 10.000 escenarios (precio y producción aleatorios con distribuciones justificadas) y probabilidad de pérdida.\nDictamen final de una página: se monta o no se monta, y por qué.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Proyectos integradores</span>"
+    ]
+  },
+  {
+    "objectID": "proyectos.html#proyecto-d-veterinaria-y-zootecnia-plan-de-ceba-de-un-lote",
+    "href": "proyectos.html#proyecto-d-veterinaria-y-zootecnia-plan-de-ceba-de-un-lote",
+    "title": "9  Proyectos integradores",
+    "section": "9.4 Proyecto D — Veterinaria y zootecnia: plan de ceba de un lote",
+    "text": "9.4 Proyecto D — Veterinaria y zootecnia: plan de ceba de un lote\nContexto. Una finca compra 40 terneros de 200 kg y quiere venderlos cuando el margen sea máximo. Los costos de alimentación suben con el peso; el precio por kg en pie es fijo.\nLo que debes investigar:\n\nParámetros reales del modelo Gompertz (o logístico) para la raza de interés (literatura zootécnica: artículos de crecimiento en Bos indicus o la raza local).\nRequerimientos nutricionales y conversión alimenticia por etapa (tablas NRC o equivalentes).\nPrecios actuales del ganado en pie y del concentrado en tu región.\n\nLo que debes computar:\n\nCurva de crecimiento del lote a 700 días con los parámetros investigados.\nCosto diario de alimentación (función del peso) e ingreso potencial por venta en cada día.\nEl margen por animal en función del día de venta: gráfica y día óptimo con np.argmax.\nDosificación de un tratamiento para todo el lote en el día 180 (mg/kg → ml por animal, como en el capítulo 8).\nSensibilidad: ¿cómo cambia el día óptimo si el alimento sube 20 %?",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Proyectos integradores</span>"
+    ]
+  },
+  {
+    "objectID": "proyectos.html#proyecto-e-ciencia-de-datos-general-auditoría-de-un-dataset-real",
+    "href": "proyectos.html#proyecto-e-ciencia-de-datos-general-auditoría-de-un-dataset-real",
+    "title": "9  Proyectos integradores",
+    "section": "9.5 Proyecto E — Ciencia de datos general: auditoría de un dataset real",
+    "text": "9.5 Proyecto E — Ciencia de datos general: auditoría de un dataset real\nContexto. Te entregan (o tú descargas) un dataset real de tu interés — producción agrícola municipal (Datos Abiertos Colombia), precios de alimentos (DANE/SIPSA), calidad del agua — y debes auditarlo y extraerle una historia.\nLo que debes investigar:\n\nDescargar un dataset real de datos.gov.co en formato CSV.\nEl diccionario de datos: qué significa cada columna.\nBuenas prácticas de calidad de datos (valores faltantes, duplicados, outliers).\n\nLo que debes computar:\n\nCarga con pd.read_csv y diagnóstico: dimensiones, tipos, describe(), conteo de faltantes y duplicados.\nLimpieza justificada: decide qué hacer con cada problema encontrado y documéntalo.\nTres preguntas de negocio que tú formules, respondidas con groupby, filtros y gráficas.\nUn hallazgo final: algo que solo se veía después del análisis.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Proyectos integradores</span>"
+    ]
+  },
+  {
+    "objectID": "proyectos.html#rúbrica-sugerida-para-docentes",
+    "href": "proyectos.html#rúbrica-sugerida-para-docentes",
+    "title": "9  Proyectos integradores",
+    "section": "9.6 Rúbrica sugerida (para docentes)",
+    "text": "9.6 Rúbrica sugerida (para docentes)\n\n\n\n\n\n\n\n\n\nCriterio\nPeso\nExcelente (5)\nInsuficiente (&lt; 3)\n\n\n\n\nInvestigación y fuentes\n20 %\nFuentes oficiales citadas y usadas correctamente\nSin fuentes o datos inventados sin justificar\n\n\nCorrección computacional\n30 %\nEl código corre de principio a fin sin errores en Colab\nEl notebook no corre\n\n\nAnálisis y gráficas\n30 %\nGráficas con etiquetas, tablas claras, interpretación correcta\nGráficas sin contexto o mal interpretadas\n\n\nConclusiones\n20 %\nDecisión clara apoyada en los resultados\nConclusiones desconectadas del análisis\n\n\n\n\n\n\n\n\n\nTip\n\n\n\nPara el estudiante: el objetivo no es que te salga perfecto a la primera. Es que enfrentes el ciclo completo — investigar, programar, equivocarte, corregir, concluir — que es exactamente lo que harás como profesional.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Proyectos integradores</span>"
     ]
   },
   {
     "objectID": "big-data.html",
     "href": "big-data.html",
-    "title": "8  Capítulo 8: Introducción a big data",
+    "title": "10  Capítulo 8: Introducción a big data",
     "section": "",
     "text": "En construcción.",
     "crumbs": [
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Capítulo 8: Introducción a big data</span>"
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Capítulo 8: Introducción a big data</span>"
     ]
   }
 ]

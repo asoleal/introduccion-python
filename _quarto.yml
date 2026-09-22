@@ -18,6 +18,8 @@ book:
     - numpy-graficas.qmd
     - pandas.qmd
     - economia-administracion.qmd
+    - aplicaciones-ingenieria.qmd
+    - proyectos.qmd
     - big-data.qmd
 
 format:

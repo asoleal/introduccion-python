@@ -1,0 +1,110 @@
+# Proyectos integradores
+
+Cada capítulo terminó con ejercicios guiados. Ahora es distinto: aquí hay **cinco proyectos abiertos**, uno por disciplina. En todos ellos pasa lo mismo que en la vida real: el enunciado no trae los datos ni todas las fórmulas — **tendrás que investigar** (fuentes oficiales, fichas técnicas, literatura) — y las preguntas son imposibles de responder a mano: **la computación es indispensable**.
+
+**Reglas del juego para todos los proyectos:**
+
+- Todo el análisis en un notebook de Colab, con celdas de texto que expliquen lo que haces (usa Markdown).
+- Documenta las fuentes de cada dato o fórmula que investigues (enlace + fecha de consulta).
+- Toda conclusión debe apoyarse en una tabla, una gráfica o un número calculado — no en intuiciones.
+- Estructura mínima del notebook: *Contexto → Datos y fuentes → Análisis → Gráficas → Conclusiones*.
+
+## Proyecto A — Ingeniería agrícola: ¿cuándo y cuánto regar?
+
+**Contexto.** Eres el asistente técnico de una finca con 5 ha de maíz en el Valle del Cauca. Debes proponer un calendario de riego para un mes completo.
+
+**Lo que debes investigar:**
+
+1. Los coeficientes de cultivo $K_c$ del maíz por etapa fenológica (fuente sugerida: FAO, documento *Crop Evapotranspiration*, FAO-56).
+2. La precipitación y temperaturas históricas de tu municipio (IDEAM o NASA POWER, que tiene datos gratuitos por coordenada).
+3. El método de Hargreaves completo para $ET_0$ (en el capítulo 8 usamos una versión simplificada — encuentra la original y compara).
+
+**Lo que debes computar:**
+
+- Una serie diaria de 30 días de $ET_c$, lluvia efectiva y lámina neta de riego (puedes usar datos reales o una simulación justificada con la climatología investigada).
+- El volumen total de agua del mes en m³/ha y su comparación contra el caudal disponible de la finca (dato que definirás e investigarás: caudal típico de un pozo o bocatoma pequeña).
+- Gráficas del balance hídrico y una tabla-resumen por semana.
+- Una recomendación final: calendario de riego (qué días, cuánta lámina) y qué pasaría con dos semanas sin lluvia.
+
+## Proyecto B — Mecatrónica: confiabilidad de un sensor de bajo costo
+
+**Contexto.** Tu empresa quiere usar sensores de humedad de suelo de \$15.000 en vez de los de \$1.500.000. Antes de venderlos, debes caracterizar su comportamiento.
+
+**Lo que debes investigar:**
+
+1. La curva de calibración de un sensor capacitivo real (busca la ficha técnica del sensor *Capacitive Soil Moisture Sensor v1.2* o similar).
+2. Qué es la deriva (*drift*) y el histéresis en sensores, y por qué importan en agricultura de precisión.
+3. Fórmulas del filtro de media móvil exponencial (EMA) y su diferencia con la media móvil simple del capítulo 8.
+
+**Lo que debes computar:**
+
+- Simula 48 horas de lecturas (cada 5 min) de un sensor con ruido, deriva lenta y una calibración no lineal (define los parámetros con lo investigado).
+- Implementa y compara media móvil simple vs. EMA; cuantifica el error de cada una respecto a la señal verdadera (RMSE — investiga su fórmula).
+- Diseña una lógica de alarma con histéresis (enciende riego bajo 30 %, apaga sobre 38 %) y cuenta cuántas falsas activaciones evita respecto a un umbral simple.
+- Conclusión de ingeniería: ¿el sensor barato es usable? ¿Bajo qué condiciones?
+
+## Proyecto C — Administración y economía: evaluación completa de un proyecto productivo
+
+**Contexto.** Una asociación de productores evalúa montar una planta de beneficio de café. Debes entregar el análisis de viabilidad financiera.
+
+**Lo que debes investigar:**
+
+1. Precios históricos del café (Federación Nacional de Cafeteras publica el precio interno diario).
+2. La tasa de descuento apropiada para proyectos rurales en Colombia (investiga qué es la tasa social de descuento del DNP).
+3. Costos típicos de una planta de beneficio pequeña (literatura de extensión rural, Cenicafé).
+
+**Lo que debes computar:**
+
+- Flujo de caja a 10 años con tus supuestos documentados (inversión, capacidad, costos variables y fijos).
+- VAN y TIR con las funciones del capítulo 7.
+- Análisis de sensibilidad: tabla de VAN para 5 precios de café × 5 niveles de producción (usa doble ciclo `for` y un DataFrame).
+- Monte Carlo con 10.000 escenarios (precio y producción aleatorios con distribuciones justificadas) y probabilidad de pérdida.
+- Dictamen final de una página: se monta o no se monta, y por qué.
+
+## Proyecto D — Veterinaria y zootecnia: plan de ceba de un lote
+
+**Contexto.** Una finca compra 40 terneros de 200 kg y quiere venderlos cuando el margen sea máximo. Los costos de alimentación suben con el peso; el precio por kg en pie es fijo.
+
+**Lo que debes investigar:**
+
+1. Parámetros reales del modelo Gompertz (o logístico) para la raza de interés (literatura zootécnica: artículos de crecimiento en *Bos indicus* o la raza local).
+2. Requerimientos nutricionales y conversión alimenticia por etapa (tablas NRC o equivalentes).
+3. Precios actuales del ganado en pie y del concentrado en tu región.
+
+**Lo que debes computar:**
+
+- Curva de crecimiento del lote a 700 días con los parámetros investigados.
+- Costo diario de alimentación (función del peso) e ingreso potencial por venta en cada día.
+- El margen por animal en función del día de venta: gráfica y día óptimo con `np.argmax`.
+- Dosificación de un tratamiento para todo el lote en el día 180 (mg/kg → ml por animal, como en el capítulo 8).
+- Sensibilidad: ¿cómo cambia el día óptimo si el alimento sube 20 %?
+
+## Proyecto E — Ciencia de datos general: auditoría de un dataset real
+
+**Contexto.** Te entregan (o tú descargas) un dataset real de tu interés — producción agrícola municipal (Datos Abiertos Colombia), precios de alimentos (DANE/SIPSA), calidad del agua — y debes auditarlo y extraerle una historia.
+
+**Lo que debes investigar:**
+
+1. Descargar un dataset real de [datos.gov.co](https://www.datos.gov.co) en formato CSV.
+2. El diccionario de datos: qué significa cada columna.
+3. Buenas prácticas de calidad de datos (valores faltantes, duplicados, outliers).
+
+**Lo que debes computar:**
+
+- Carga con `pd.read_csv` y diagnóstico: dimensiones, tipos, `describe()`, conteo de faltantes y duplicados.
+- Limpieza justificada: decide qué hacer con cada problema encontrado y documéntalo.
+- Tres preguntas de negocio que tú formules, respondidas con `groupby`, filtros y gráficas.
+- Un hallazgo final: algo que solo se veía después del análisis.
+
+## Rúbrica sugerida (para docentes)
+
+| Criterio | Peso | Excelente (5) | Insuficiente (< 3) |
+|:---------|:----:|:--------------|:-------------------|
+| Investigación y fuentes | 20 % | Fuentes oficiales citadas y usadas correctamente | Sin fuentes o datos inventados sin justificar |
+| Corrección computacional | 30 % | El código corre de principio a fin sin errores en Colab | El notebook no corre |
+| Análisis y gráficas | 30 % | Gráficas con etiquetas, tablas claras, interpretación correcta | Gráficas sin contexto o mal interpretadas |
+| Conclusiones | 20 % | Decisión clara apoyada en los resultados | Conclusiones desconectadas del análisis |
+
+::: {.callout-tip}
+**Para el estudiante:** el objetivo no es que te salga perfecto a la primera. Es que enfrentes el ciclo completo — investigar, programar, equivocarte, corregir, concluir — que es exactamente lo que harás como profesional.
+:::

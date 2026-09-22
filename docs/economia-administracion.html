@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>7&nbsp; Capítulo 7: Economía y administración – Introducción a Python para Ingeniería, Datos y Economía</title>
+<title>7&nbsp; Aplicaciones en administración y economía – Introducción a Python para Ingeniería, Datos y Economía</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -26,6 +26,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -36,7 +71,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./big-data.html" rel="next">
+<link href="./aplicaciones-ingenieria.html" rel="next">
 <link href="./pandas.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -76,6 +111,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -89,7 +153,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./economia-administracion.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Capítulo 7: Economía y administración</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./economia-administracion.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Aplicaciones en administración y economía</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -150,25 +214,37 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./numpy-graficas.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Capítulo 5: NumPy y gráficas</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">NumPy y gráficas: cómputo científico</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pandas.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Capítulo 6: pandas</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">pandas: manejo de datos</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./economia-administracion.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Capítulo 7: Economía y administración</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Aplicaciones en administración y economía</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./aplicaciones-ingenieria.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Aplicaciones en ingeniería: agro, mecatrónica, veterinaria y zootecnia</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./proyectos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Proyectos integradores</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./big-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Capítulo 8: Introducción a big data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Capítulo 8: Introducción a big data</span></span></a>
   </div>
 </li>
     </ul>
@@ -176,15 +252,27 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#valor-futuro-y-valor-presente" id="toc-valor-futuro-y-valor-presente" class="nav-link active" data-scroll-target="#valor-futuro-y-valor-presente"><span class="header-section-number">7.1</span> Valor futuro y valor presente</a></li>
+  <li><a href="#valor-actual-neto-van-vale-la-pena-el-proyecto" id="toc-valor-actual-neto-van-vale-la-pena-el-proyecto" class="nav-link" data-scroll-target="#valor-actual-neto-van-vale-la-pena-el-proyecto"><span class="header-section-number">7.2</span> Valor Actual Neto (VAN): ¿vale la pena el proyecto?</a></li>
+  <li><a href="#tasa-interna-de-retorno-tir" id="toc-tasa-interna-de-retorno-tir" class="nav-link" data-scroll-target="#tasa-interna-de-retorno-tir"><span class="header-section-number">7.3</span> Tasa Interna de Retorno (TIR)</a></li>
+  <li><a href="#regresión-lineal-aprender-de-los-datos" id="toc-regresión-lineal-aprender-de-los-datos" class="nav-link" data-scroll-target="#regresión-lineal-aprender-de-los-datos"><span class="header-section-number">7.4</span> Regresión lineal: aprender de los datos</a></li>
+  <li><a href="#simulación-monte-carlo-decidir-con-incertidumbre" id="toc-simulación-monte-carlo-decidir-con-incertidumbre" class="nav-link" data-scroll-target="#simulación-monte-carlo-decidir-con-incertidumbre"><span class="header-section-number">7.5</span> Simulación Monte Carlo: decidir con incertidumbre</a></li>
+  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">7.6</span> Ejercicios</a></li>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen"><span class="header-section-number">7.7</span> Resumen</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Capítulo 7: Economía y administración</span></h1>
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Aplicaciones en administración y economía</span></h1>
 </div>
 
 
@@ -201,9 +289,186 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>En construcción.</p>
+<p>Llegó el momento de poner todo a trabajar: variables, funciones, ciclos, NumPy, pandas y gráficas. En este capítulo resolverás cuatro problemas clásicos de administración y economía: <strong>interés compuesto</strong>, <strong>valor actual neto (VAN)</strong>, <strong>tasa interna de retorno (TIR)</strong> y <strong>simulación Monte Carlo</strong> para decisiones bajo incertidumbre.</p>
+<section id="valor-futuro-y-valor-presente" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="valor-futuro-y-valor-presente"><span class="header-section-number">7.1</span> Valor futuro y valor presente</h2>
+<p>El dinero tiene fecha: $1.000.000 hoy no valen lo mismo que $1.000.000 en cinco años. El <strong>valor futuro</strong> ya lo conoces:</p>
+<div id="e5b87c6e" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> valor_futuro(capital, tasa, años):</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> capital <span class="op">*</span> (<span class="dv">1</span> <span class="op">+</span> tasa) <span class="op">**</span> años</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>vf <span class="op">=</span> valor_futuro(<span class="dv">1000000</span>, <span class="fl">0.12</span>, <span class="dv">5</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Valor futuro: $</span><span class="sc">{</span>vf<span class="sc">:,.0f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Valor futuro: $1,762,342</code></pre>
+</div>
+</div>
+<p>La operación inversa es el <strong>valor presente</strong>: ¿cuánto vale hoy un pago futuro?</p>
+<div id="5e14d985" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> valor_presente(pago_futuro, tasa, años):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pago_futuro <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> tasa) <span class="op">**</span> años</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>vp <span class="op">=</span> valor_presente(<span class="dv">1762342</span>, <span class="fl">0.12</span>, <span class="dv">5</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Valor presente: $</span><span class="sc">{</span>vp<span class="sc">:,.0f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Valor presente: $1,000,000</code></pre>
+</div>
+</div>
+</section>
+<section id="valor-actual-neto-van-vale-la-pena-el-proyecto" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="valor-actual-neto-van-vale-la-pena-el-proyecto"><span class="header-section-number">7.2</span> Valor Actual Neto (VAN): ¿vale la pena el proyecto?</h2>
+<p>Un proyecto es una secuencia de <strong>flujos de caja</strong>: primero inviertes (flujo negativo) y luego recibes ingresos año a año. El VAN trae todos esos flujos a valor presente y los suma:</p>
+<p><span class="math display">\[VAN = \sum_{t=0}^{n} \frac{F_t}{(1 + r)^t}\]</span></p>
+<p>Regla de decisión: <strong>VAN &gt; 0</strong> → el proyecto crea valor; <strong>VAN &lt; 0</strong> → lo destruye.</p>
+<div id="7028f3c9" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> van(tasa, flujos):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">sum</span>(f <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> tasa) <span class="op">**</span> t <span class="cf">for</span> t, f <span class="kw">in</span> <span class="bu">enumerate</span>(flujos))</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Proyecto: invertir 10 millones hoy, recibir 3 millones por 5 años</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>flujos <span class="op">=</span> [<span class="op">-</span><span class="dv">10000000</span>, <span class="dv">3000000</span>, <span class="dv">3000000</span>, <span class="dv">3000000</span>, <span class="dv">3000000</span>, <span class="dv">3000000</span>]</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>tasa_descuento <span class="op">=</span> <span class="fl">0.12</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>resultado <span class="op">=</span> van(tasa_descuento, flujos)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"VAN al 12%: $</span><span class="sc">{</span>resultado<span class="sc">:,.0f}</span><span class="ss">"</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> resultado <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"El proyecto crea valor: adelante"</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"El proyecto destruye valor: no invertir"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>VAN al 12%: $814,329
+El proyecto crea valor: adelante</code></pre>
+</div>
+</div>
+<p>La función usa dos cosas nuevas que vale la pena mirar: <code>enumerate(flujos)</code> entrega cada flujo <strong>con su posición</strong> <code>t</code> (el año), y la construcción <code>sum(... for ... in ...)</code> es una <strong>expresión generadora</strong>: suma sin necesidad de crear una lista intermedia.</p>
+</section>
+<section id="tasa-interna-de-retorno-tir" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="tasa-interna-de-retorno-tir"><span class="header-section-number">7.3</span> Tasa Interna de Retorno (TIR)</h2>
+<p>La TIR es la tasa que hace el VAN exactamente cero: la rentabilidad “verdadera” del proyecto. No tiene fórmula directa; se encuentra por <strong>búsqueda numérica</strong>. El método de <strong>bisección</strong> parte el intervalo a la mitad en cada paso:</p>
+<div id="efce4310" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> tir(flujos):</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    bajo, alto <span class="op">=</span> <span class="fl">0.0</span>, <span class="fl">1.0</span>          <span class="co"># la TIR está entre 0% y 100%</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">100</span>):           <span class="co"># 100 iteraciones son de sobra</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>        medio <span class="op">=</span> (bajo <span class="op">+</span> alto) <span class="op">/</span> <span class="dv">2</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> van(medio, flujos) <span class="op">&gt;</span> <span class="dv">0</span>: <span class="co"># si el VAN es positivo, la TIR está arriba</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>            bajo <span class="op">=</span> medio</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>            alto <span class="op">=</span> medio</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> medio</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>tasa_interna <span class="op">=</span> tir(flujos)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"TIR del proyecto: </span><span class="sc">{</span>tasa_interna<span class="sc">:.2%}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>TIR del proyecto: 15.24%</code></pre>
+</div>
+</div>
+<p>Observa el formato <code>{tasa_interna:.2%}</code>: convierte el decimal a porcentaje con dos cifras. Como la TIR (15,24 %) supera la tasa de descuento (12 %), el proyecto es atractivo — la misma conclusión del VAN, vista desde la rentabilidad.</p>
+</section>
+<section id="regresión-lineal-aprender-de-los-datos" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="regresión-lineal-aprender-de-los-datos"><span class="header-section-number">7.4</span> Regresión lineal: aprender de los datos</h2>
+<p>La regresión encuentra la recta que mejor describe la relación entre dos variables: <span class="math inline">\(y = mx + b\)</span>. Con NumPy se calcula en una línea:</p>
+<div id="aed42895" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>publicidad <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>])            <span class="co"># millones invertidos</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>ventas <span class="op">=</span> np.array([<span class="dv">52</span>, <span class="dv">58</span>, <span class="dv">65</span>, <span class="dv">71</span>, <span class="dv">79</span>, <span class="dv">85</span>])          <span class="co"># millones vendidos</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>m, b <span class="op">=</span> np.polyfit(publicidad, ventas, <span class="dv">1</span>)   <span class="co"># pendiente y corte</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Modelo: ventas = </span><span class="sc">{</span>m<span class="sc">:.1f}</span><span class="ss"> × publicidad + </span><span class="sc">{</span>b<span class="sc">:.1f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Modelo: ventas = 6.7 × publicidad + 44.9</code></pre>
+</div>
+</div>
+<p>Cada millón adicional en publicidad se asocia con <code>m</code> millones adicionales en ventas. Visualicemos datos y modelo:</p>
+<div id="72f0ec46" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">7</span>, <span class="dv">100</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>plt.scatter(publicidad, ventas, label<span class="op">=</span><span class="st">"Datos reales"</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>plt.plot(x, m <span class="op">*</span> x <span class="op">+</span> b, color<span class="op">=</span><span class="st">"red"</span>, label<span class="op">=</span><span class="ss">f"y = </span><span class="sc">{</span>m<span class="sc">:.1f}</span><span class="ss">x + </span><span class="sc">{</span>b<span class="sc">:.1f}</span><span class="ss">"</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Publicidad (millones $)"</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Ventas (millones $)"</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Ventas vs. inversión en publicidad"</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="economia-administracion_files/figure-html/cell-7-output-1.png" width="585" height="452" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Con el modelo puedes <strong>predecir</strong>: si inviertes 8 millones, esperas <code>m * 8 + b</code> millones en ventas. (Ojo: predecir dentro del rango observado es razonable; extrapolar muy lejos es peligroso).</p>
+</section>
+<section id="simulación-monte-carlo-decidir-con-incertidumbre" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="simulación-monte-carlo-decidir-con-incertidumbre"><span class="header-section-number">7.5</span> Simulación Monte Carlo: decidir con incertidumbre</h2>
+<p>La vida real no tiene un solo futuro, tiene miles. La simulación Monte Carlo genera muchos escenarios aleatorios y mira qué pasa “en promedio” y “en el peor caso”.</p>
+<p>Ejemplo: la utilidad de una cosecha depende del precio y del rendimiento, ambos inciertos. Supón que el precio sigue una distribución normal con media $9.500/kg y desviación $800, y el rendimiento es normal con media 4,2 ton/ha y desviación 0,6:</p>
+<div id="6918f174" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">42</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>escenarios <span class="op">=</span> <span class="dv">10000</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>precios <span class="op">=</span> rng.normal(<span class="dv">9500</span>, <span class="dv">800</span>, escenarios)        <span class="co"># $/kg</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>rendimientos <span class="op">=</span> rng.normal(<span class="fl">4.2</span>, <span class="fl">0.6</span>, escenarios)    <span class="co"># ton/ha</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>hectareas <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>costos <span class="op">=</span> <span class="dv">28000000</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>utilidad <span class="op">=</span> precios <span class="op">*</span> rendimientos <span class="op">*</span> <span class="dv">1000</span> <span class="op">*</span> hectareas <span class="op">-</span> costos</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Utilidad esperada: $</span><span class="sc">{</span>utilidad<span class="sc">.</span>mean()<span class="sc">:,.0f}</span><span class="ss">"</span>)</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Peor 5% de escenarios: $</span><span class="sc">{</span>np<span class="sc">.</span>percentile(utilidad, <span class="dv">5</span>)<span class="sc">:,.0f}</span><span class="ss">"</span>)</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Probabilidad de pérdida: </span><span class="sc">{</span>(utilidad <span class="op">&lt;</span> <span class="dv">0</span>)<span class="sc">.</span>mean()<span class="sc">:.1%}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Utilidad esperada: $371,754,211
+Peor 5% de escenarios: $267,681,774
+Probabilidad de pérdida: 0.0%</code></pre>
+</div>
+</div>
+<p>Y la gráfica que resume todo el riesgo:</p>
+<div id="0610a13a" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>plt.hist(utilidad <span class="op">/</span> <span class="fl">1e6</span>, bins<span class="op">=</span><span class="dv">50</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>plt.axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">"red"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, label<span class="op">=</span><span class="st">"Punto de equilibrio"</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Utilidad (millones $)"</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Frecuencia"</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Distribución de la utilidad (10.000 escenarios)"</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="economia-administracion_files/figure-html/cell-9-output-1.png" width="594" height="452" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>En vez de un solo número, ahora tienes la <strong>distribución completa</strong>: la utilidad más probable, el peor escenario razonable (percentil 5) y la probabilidad exacta de perder plata. Así deciden los analistas modernos.</p>
+</section>
+<section id="ejercicios" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">7.6</span> Ejercicios</h2>
+<ol type="1">
+<li>Calcula el valor presente de recibir $20.000.000 en 3 años con tasa del 10 %.</li>
+<li>Evalúa con VAN (tasa 15 %) este proyecto: inversión de $50 millones hoy, flujos de $15, $18, $20, $22 y $25 millones en los años 1 a 5. ¿Se acepta?</li>
+<li>Calcula la TIR del proyecto del ejercicio 2 con la función <code>tir()</code> de este capítulo.</li>
+<li>Ajusta una regresión entre estos datos de fertilizante (kg/ha) y rendimiento (ton/ha): <code>fert = np.array([50, 80, 110, 140, 170])</code>, <code>rend = np.array([3.1, 3.9, 4.6, 5.0, 5.2])</code>. Predice el rendimiento para 120 kg/ha y grafica datos y recta.</li>
+<li>Replica la simulación Monte Carlo de la cosecha pero con 20 hectáreas y costos de $55 millones. ¿Sube o baja la probabilidad de pérdida?</li>
+<li><strong>Mini-reto (decisión de inversión completa):</strong> una empresa evalúa comprar una planta empacadora por $80 millones. Los flujos esperados son $20 millones anuales por 6 años, la tasa de descuento es 14 %. (a) Calcula el VAN y decide. (b) Calcula la TIR. (c) Los flujos son inciertos: simula 10.000 escenarios donde cada flujo anual es normal con media 20 y desviación 4 (millones), calcula el VAN de cada escenario (usa un <code>for</code> sobre escenarios) y reporta la probabilidad de que el proyecto destruya valor. (d) Grafica el histograma de los VAN simulados.</li>
+</ol>
+</section>
+<section id="resumen" class="level2" data-number="7.7">
+<h2 data-number="7.7" class="anchored" data-anchor-id="resumen"><span class="header-section-number">7.7</span> Resumen</h2>
+<ul>
+<li><strong>Valor futuro/presente</strong>: el dinero se mueve en el tiempo con <span class="math inline">\((1+r)^n\)</span>.</li>
+<li><strong>VAN</strong>: suma de flujos descontados; positivo → invertir. Se implementa con <code>sum</code> y <code>enumerate</code>.</li>
+<li><strong>TIR</strong>: la tasa que hace VAN = 0; se encuentra por búsqueda (bisección).</li>
+<li><strong>Regresión lineal</strong> con <code>np.polyfit</code>: convierte datos en un modelo predictivo <span class="math inline">\(y = mx + b\)</span>.</li>
+<li><strong>Monte Carlo</strong>: miles de escenarios aleatorios revelan la utilidad esperada, el peor caso y la probabilidad de pérdida.</li>
+</ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -608,13 +873,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./pandas.html" class="pagination-link" aria-label="Capítulo 6: pandas">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Capítulo 6: pandas</span></span>
+      <a href="./pandas.html" class="pagination-link" aria-label="pandas: manejo de datos">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">pandas: manejo de datos</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./big-data.html" class="pagination-link" aria-label="Capítulo 8: Introducción a big data">
-        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Capítulo 8: Introducción a big data</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./aplicaciones-ingenieria.html" class="pagination-link" aria-label="Aplicaciones en ingeniería: agro, mecatrónica, veterinaria y zootecnia">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Aplicaciones en ingeniería: agro, mecatrónica, veterinaria y zootecnia</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
