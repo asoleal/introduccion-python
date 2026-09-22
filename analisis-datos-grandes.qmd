@@ -1,6 +1,6 @@
 # Análisis de datos grandes en la práctica
 
-En el capítulo anterior viste que un millón de filas caben cómodas en pandas. Ahora subamos la apuesta: trabajarás con datos que **no conviene cargar completos en memoria**. Aprenderás cuatro técnicas profesionales que funcionan en Colab (y en cualquier portátil): **lectura por chunks**, **optimización de memoria**, el formato **Parquet**, y un primer vistazo a **PySpark**.
+En el capítulo anterior viste que un millón de filas caben cómodas en pandas. Ahora subamos la apuesta: trabajarás con datos que **no conviene cargar completos en memoria**. Aprenderás cuatro técnicas profesionales que funcionan en Colab (y en cualquier portátil): **lectura por chunks**, **optimización de memoria**, el formato **Parquet**, y un primer vistazo a **PySpark**. El capítulo cierra con un proyecto de auditoría sobre un dataset realista y sucio.
 
 ## Primero: crear el dataset grande
 
@@ -136,7 +136,79 @@ Mira la sintaxis: `groupBy`, `sum`, `orderBy` — es pandas con otro acento. La 
 2. Procesa por chunks el archivo grande para calcular el **monto total por tienda** (no por producto). ¿Qué tienda vendió más?
 3. Convierte el dataset a Parquet y verifica: tamaños en disco y tiempos de lectura. ¿Vale la pena en tu equipo?
 4. Compara la media de `cantidad` en el dataset completo vs. muestras de 0,1 %, 1 % y 10 %. ¿A partir de qué tamaño la muestra se estabiliza?
-5. **Mini-reto (integrador):** la cadena quiere el **top 5 de combinaciones tienda-producto por monto**. (a) Hazlo cargando todo el CSV optimizando tipos. (b) Hazlo de nuevo procesando por chunks, acumulando en un diccionario con claves `(tienda, producto)`. (c) Verifica que ambos resultados coinciden. (d) Reporta cuál método usó menos memoria y cuál fue más rápido. Esta comparación — resultado correcto + recursos medidos — es exactamente lo que un ingeniero de datos documenta.
+5. Procesa por chunks el archivo grande para encontrar el **top 5 de combinaciones tienda-producto por monto**, acumulando en un diccionario con claves `(tienda, producto)`. Verifica el resultado cargando todo el CSV con tipos optimizados.
+
+## Proyecto de cierre: auditoría de la cadena "AgroAndina"
+
+**Contexto.** La gerencia de una cadena agroindustrial te entrega el volcado anual de ventas de sus 120 tiendas: 3 millones de registros. El archivo viene sucio, como siempre en la vida real: valores faltantes, productos escritos de mil formas (`"café"`, `"Café"`, `"CAFE"`, `" café"`...) y errores de digitación en precios. Tu misión: auditarlo, limpiarlo y responder las preguntas de la gerencia. **Sin computación esto es imposible; sin criterio, la computación no sirve.**
+
+El dataset está publicado en el repositorio del libro:
+
+```{python}
+url = "https://raw.githubusercontent.com/asoleal/introduccion-python/main/data/ventas_cadena.parquet"
+ventas_aa = pd.read_parquet(url)
+
+print(f"{len(ventas_aa):,} registros cargados")
+print(ventas_aa.head())
+```
+
+### Paso 1 — Auditoría (antes de calcular nada)
+
+Cuantifica el estado del dataset:
+
+```{python}
+print("Valores faltantes por columna:")
+print(ventas_aa.isna().sum())
+
+print(f"\nVariantes de escritura de producto: {ventas_aa['producto'].nunique()}")
+print(ventas_aa["producto"].value_counts().head(15))
+
+print(f"\nPrecios negativos: {(ventas_aa['precio'] < 0).sum():,}")
+print(f"Precios absurdamente altos (> 50.000): {(ventas_aa['precio'] > 50000).sum():,}")
+```
+
+### Paso 2 — Limpieza (documenta cada decisión)
+
+Pistas de implementación — tú decides y justificas:
+
+```{python}
+limpio = ventas_aa.copy()
+
+# Normalizar nombres: quitar espacios, minúsculas, sin tildes
+limpio["producto"] = (limpio["producto"]
+                      .str.strip()
+                      .str.lower()
+                      .str.replace("café", "cafe"))
+
+# Eliminar precios imposibles
+limpio = limpio[(limpio["precio"] > 0) & (limpio["precio"] <= 50000)]
+
+# ¿Qué hacer con los faltantes? Eliminarlos es una opción defendible:
+limpio = limpio.dropna()
+
+print(f"Registros antes: {len(ventas_aa):,} — después: {len(limpio):,}")
+```
+
+### Paso 3 — Las preguntas de la gerencia
+
+Con el dataset limpio, responde (tabla + gráfica para cada una):
+
+1. **¿Cuál producto genera más dinero?** Monto total por producto (crea la columna `monto = cantidad * precio`).
+2. **¿Cuáles son las 10 tiendas con menores ventas?** La gerencia evalúa cerrarlas — tu tabla es el insumo de esa decisión.
+3. **¿Cómo evolucionaron las ventas mes a mes?** Agrupa por mes (pista: `limpio["fecha"].dt.to_period("M")`) y grafica la serie.
+
+### Paso 4 — El memo
+
+Escribe **media página** dirigida a la gerencia: los tres hallazgos principales y una recomendación accionable. Sin jerga técnica: la gerencia no sabe qué es un DataFrame, pero entiende plata y riesgo.
+
+### Criterios de evaluación
+
+| Criterio | Pregunta que debe responder tu notebook |
+|----------|------------------------------------------|
+| Auditoría | ¿Cuantificaste todos los problemas antes de limpiar? |
+| Limpieza | ¿Cada decisión (eliminar, normalizar, filtrar) está justificada por escrito? |
+| Análisis | ¿Las tres preguntas tienen tabla y gráfica correctas? |
+| Comunicación | ¿El memo lo entendería alguien que no programa? |
 
 ## Resumen (y cierre del libro)
 
@@ -145,5 +217,6 @@ Mira la sintaxis: `groupBy`, `sum`, `orderBy` — es pandas con otro acento. La 
 - **Parquet**: binario, columnar y comprimido — el formato de trabajo profesional.
 - **Muestrea** para explorar rápido; procesa completo solo al final.
 - **PySpark** es el siguiente nivel, y ya conoces su lógica.
+- El proyecto de cierre integra todo: auditar, limpiar, analizar y **comunicar**.
 
-Empezaste escribiendo `print("Hola, mundo")` y terminas procesando millones de registros con técnicas de nivel profesional. De aquí en adelante, el camino es practicar: toma un dataset de tu disciplina (los proyectos del capítulo 9 son un buen inicio) y resuélvelo completo. Ese es el verdadero último ejercicio del libro.
+Empezaste escribiendo `print("Hola, mundo")` y terminas auditando tres millones de registros y escribiendo recomendaciones de gerencia. De aquí en adelante, el camino es practicar: toma un dataset de tu disciplina (los proyectos del capítulo 9 son un buen inicio) y resuélvelo completo. Ese es el verdadero último ejercicio del libro.
