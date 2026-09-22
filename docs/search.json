@@ -272,11 +272,71 @@
   {
     "objectID": "estructuras-datos.html",
     "href": "estructuras-datos.html",
-    "title": "4  Capítulo 4: Estructuras de datos",
+    "title": "4  Estructuras de datos: listas, tuplas y diccionarios",
     "section": "",
-    "text": "En construcción.",
+    "text": "4.1 Listas: colecciones ordenadas que puedes modificar\nUna variable guarda un valor. Pero en la práctica manejas colecciones: las lecturas de un sensor durante el día, los precios de 20 productos, las coordenadas de las parcelas. Para eso existen las estructuras de datos. En este capítulo verás las tres esenciales: listas, tuplas y diccionarios.\nUna lista es una secuencia de valores entre corchetes [], separados por comas:",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Capítulo 4: Estructuras de datos</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Estructuras de datos: listas, tuplas y diccionarios</span>"
+    ]
+  },
+  {
+    "objectID": "estructuras-datos.html#listas-colecciones-ordenadas-que-puedes-modificar",
+    "href": "estructuras-datos.html#listas-colecciones-ordenadas-que-puedes-modificar",
+    "title": "4  Estructuras de datos: listas, tuplas y diccionarios",
+    "section": "",
+    "text": "lecturas = [22.5, 23.1, 24.0, 23.8, 25.2]  # temperaturas de un sensor\n\n4.1.1 Acceder a un elemento: los índices empiezan en cero\nCada elemento tiene una posición llamada índice. La regla que confunde a todo principiante: el primer elemento es el índice 0, no el 1:\nlecturas = [22.5, 23.1, 24.0, 23.8, 25.2]\n\nprint(lecturas[0])   # primera lectura\nprint(lecturas[2])   # tercera lectura\nprint(lecturas[-1])  # última lectura (el -1 cuenta desde el final)\n\n\n4.1.2 Modificar, agregar y contar\nLas listas son mutables: puedes cambiarlas después de crearlas:\nprecios = [9500, 8200, 10500]\n\nprecios[0] = 9800        # modificar: el primer precio cambió\nprecios.append(7600)     # agregar al final\nprint(precios)\nprint(len(precios))      # cuántos elementos tiene\n\n\n4.1.3 Operaciones útiles sin escribir ciclos\nPython trae funciones que resumen una lista en una línea:\nproducciones = [4.2, 3.8, 5.1, 4.6, 3.9]\n\nprint(sum(producciones))   # total\nprint(max(producciones))   # la mayor\nprint(min(producciones))   # la menor\nprint(len(producciones))   # cuántas parcelas\nprint(sum(producciones) / len(producciones))  # promedio\n\n\n4.1.4 Rebanadas (slicing): tomar una parte\nCon [inicio:fin] tomas un pedazo de la lista (incluye el inicio, no incluye el fin):\nlecturas = [22.5, 23.1, 24.0, 23.8, 25.2]\n\nprint(lecturas[1:3])   # del índice 1 al 2\nprint(lecturas[:2])    # las dos primeras\nprint(lecturas[3:])    # del índice 3 al final\n\n\n4.1.5 Recorrer una lista\nYa lo hiciste en el capítulo anterior: el for nació para esto:\nventas = [12.5, 15.2, 9.8, 18.1]  # millones por trimestre\n\nfor v in ventas:\n    if v &lt; 10:\n        print(f\"Trimestre bajo: {v}\")",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Estructuras de datos: listas, tuplas y diccionarios</span>"
+    ]
+  },
+  {
+    "objectID": "estructuras-datos.html#tuplas-colecciones-que-no-deben-cambiar",
+    "href": "estructuras-datos.html#tuplas-colecciones-que-no-deben-cambiar",
+    "title": "4  Estructuras de datos: listas, tuplas y diccionarios",
+    "section": "4.2 Tuplas: colecciones que no deben cambiar",
+    "text": "4.2 Tuplas: colecciones que no deben cambiar\nUna tupla se escribe con paréntesis () y es inmutable: una vez creada, no se puede modificar. Sirve para datos que conceptualmente van juntos y no deben alterarse, como las coordenadas de una parcela:\nubicacion = (3.42, -76.53)  # latitud, longitud\n\nprint(ubicacion[0])  # latitud\nSi intentas modificarla, Python te protege con un error:\nubicacion[0] = 4.0   # TypeError: las tuplas no se modifican\nRegla práctica: si los datos representan algo fijo (coordenadas, una fecha, un registro que no debe tocarse), usa tupla. Si van a cambiar (lecturas, precios, inventarios), usa lista.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Estructuras de datos: listas, tuplas y diccionarios</span>"
+    ]
+  },
+  {
+    "objectID": "estructuras-datos.html#diccionarios-datos-con-nombre-no-con-posición",
+    "href": "estructuras-datos.html#diccionarios-datos-con-nombre-no-con-posición",
+    "title": "4  Estructuras de datos: listas, tuplas y diccionarios",
+    "section": "4.3 Diccionarios: datos con nombre, no con posición",
+    "text": "4.3 Diccionarios: datos con nombre, no con posición\nEn una lista accedes por posición (precios[0]). Pero ¿y si quieres acceder por nombre? Para eso están los diccionarios: pares de clave y valor entre llaves {}:\nprecios = {\n    \"café\": 9500,\n    \"cacao\": 8200,\n    \"banano\": 7600\n}\n\nprint(precios[\"café\"])   # acceder por clave\nAgregar y modificar es asignar a una clave:\nprecios[\"banano\"] = 7800      # modificar\nprecios[\"panela\"] = 5200      # agregar un producto nuevo\nprint(precios)\nRecorrer un diccionario con .items() te da clave y valor a la vez:\ninventario = {\"motobombas\": 3, \"sensores_humedad\": 12, \"valvulas\": 25}\n\nfor equipo, cantidad in inventario.items():\n    if cantidad &lt; 5:\n        print(f\"Reponer {equipo}: quedan {cantidad}\")\n\n4.3.1 Un diccionario puede guardar una ficha completa\nLos diccionarios brillan cuando un valor es a su vez otra estructura:\nempleado = {\n    \"nombre\": \"María Pérez\",\n    \"cargo\": \"Analista\",\n    \"salario\": 2800000,\n    \"areas\": [\"compras\", \"logística\"]\n}\n\nprint(empleado[\"nombre\"])\nprint(empleado[\"salario\"] * 12)   # salario anual\nEste patrón — una ficha con campos nombrados — es la base de casi todo el manejo de datos que verás en el capítulo de pandas.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Estructuras de datos: listas, tuplas y diccionarios</span>"
+    ]
+  },
+  {
+    "objectID": "estructuras-datos.html#cuál-estructura-usar",
+    "href": "estructuras-datos.html#cuál-estructura-usar",
+    "title": "4  Estructuras de datos: listas, tuplas y diccionarios",
+    "section": "4.4 ¿Cuál estructura usar?",
+    "text": "4.4 ¿Cuál estructura usar?\n\n\n\n\n\n\n\n\n\n\nEstructura\nSintaxis\n¿Se modifica?\nAcceso por\nÚsala para\n\n\n\n\nLista\n[1, 2, 3]\nSí\nPosición\nSeries de mediciones, colecciones que crecen\n\n\nTupla\n(1, 2)\nNo\nPosición\nDatos fijos que van juntos (coordenadas)\n\n\nDiccionario\n{\"a\": 1}\nSí\nNombre (clave)\nFichas, inventarios, catálogos, configuración",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Estructuras de datos: listas, tuplas y diccionarios</span>"
+    ]
+  },
+  {
+    "objectID": "estructuras-datos.html#ejercicios",
+    "href": "estructuras-datos.html#ejercicios",
+    "title": "4  Estructuras de datos: listas, tuplas y diccionarios",
+    "section": "4.5 Ejercicios",
+    "text": "4.5 Ejercicios\n\nCrea una lista con las temperaturas de 7 días. Imprime la máxima, la mínima y el promedio (con sum y len).\nDe la lista costos = [45000, 120000, 38000, 90000, 67000], imprime solo los costos mayores a 50000 usando un for y un if.\nCrea una tupla con la coordenada de tu ciudad y otra con la de una finca. Imprime la distancia en latitud (diferencia simple del primer elemento).\nCrea un diccionario con 4 productos agrícolas y sus precios. Sube todos los precios un 10 % recorriéndolo con .items() y reasignando cada valor.\nCrea un diccionario que represente un sensor con las claves id, tipo, parcela y lecturas (una lista de 5 valores). Imprime el promedio de sus lecturas accediendo a través del diccionario.\nMini-reto (administración): tienes esta lista de ventas mensuales (millones): [42, 38, 55, 61, 47, 39, 52, 58, 63, 49, 44, 57]. Sin usar funciones hechas, solo un for y acumuladores: calcula el promedio anual, cuenta cuántos meses superaron el promedio e imprime ambos resultados. Luego, guarda en un diccionario resumen las claves \"promedio\" y \"meses_sobre_promedio\".",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Estructuras de datos: listas, tuplas y diccionarios</span>"
+    ]
+  },
+  {
+    "objectID": "estructuras-datos.html#resumen",
+    "href": "estructuras-datos.html#resumen",
+    "title": "4  Estructuras de datos: listas, tuplas y diccionarios",
+    "section": "4.6 Resumen",
+    "text": "4.6 Resumen\n\nLista []: ordenada y modificable; el caballo de batalla. Índices desde 0.\nappend() agrega, len() cuenta, sum()/max()/min() resumen, [i:j] rebana.\nTupla (): igual a la lista pero inmutable; para datos fijos.\nDiccionario {}: pares clave-valor; acceso por nombre con d[\"clave\"], recorrido con .items().\nElegir bien la estructura es la mitad del programa.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Estructuras de datos: listas, tuplas y diccionarios</span>"
     ]
   },
   {
