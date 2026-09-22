@@ -6,7 +6,7 @@ Imagina una caja con una etiqueta. Dentro de la caja guardas algo (un número, u
 
 En Python, guardar un valor en una variable se llama **asignar**, y se hace con el signo `=`:
 
-```python
+```{python}
 precio = 9500
 ```
 
@@ -14,7 +14,7 @@ Lee esa línea así: "la variable `precio` guarda el valor 9500". Ojo: el `=` de
 
 A partir de ahí, puedes usar la variable en cualquier cálculo:
 
-```python
+```{python}
 precio = 9500
 cantidad = 37
 total = precio * cantidad
@@ -27,13 +27,13 @@ La gran ventaja: si el precio cambia, solo modificas una línea y todo lo demás
 
 Python es estricto con los nombres. Estos son válidos:
 
-```python
+```{python}
 precio_tonelada = 9500
 temperatura2 = 25.4
 nombre_finca = "La Esperanza"
 ```
 
-Estos **no** son válidos (ejecútalos y lee el error):
+Estos **no** son válidos (ejecútalos en Colab y lee el error):
 
 ```python
 2temperatura = 25      # no puede empezar con número
@@ -58,22 +58,22 @@ Todo valor en Python tiene un **tipo**. Para empezar solo necesitas conocer cuat
 
 Python detecta el tipo automáticamente según lo que guardes. Puedes preguntárselo con la función `type()`:
 
-```python
+```{python}
 precio = 9500
 print(type(precio))
 ```
 
-```python
+```{python}
 rendimiento = 4.2
 print(type(rendimiento))
 ```
 
-```python
+```{python}
 nombre = "Ana"
 print(type(nombre))
 ```
 
-```python
+```{python}
 es_rentable = True
 print(type(es_rentable))
 ```
@@ -88,7 +88,7 @@ A veces necesitas transformar un tipo en otro. Se hace con funciones que tienen 
 
 El caso clásico: los números que vienen como texto no se pueden sumar:
 
-```python
+```{python}
 a = "2"
 b = "3"
 print(a + b)
@@ -96,7 +96,7 @@ print(a + b)
 
 ¿Sorprendido? El resultado es `"23"`, no `5`. Como `a` y `b` son **texto**, el `+` los une en lugar de sumarlos (pegar textos se llama **concatenar**). La solución es convertirlos primero:
 
-```python
+```{python}
 a = "2"
 b = "3"
 print(int(a) + int(b))
@@ -106,17 +106,27 @@ print(int(a) + int(b))
 
 Hasta ahora los valores estaban escritos en el código. Pero normalmente querrás preguntarle a la persona que usa tu programa. Eso se hace con `input()`:
 
-```python
+```{python}
+#| eval: false
 nombre = input("¿Cómo te llamas? ")
 print("Hola,", nombre)
+```
+
+En Colab verías algo como:
+
+```text
+¿Cómo te llamas? Ana
+Hola, Ana
 ```
 
 Al ejecutar, el programa se detiene, muestra la pregunta y espera a que escribas algo y presiones `Enter`.
 
 ::: {.callout-important}
-**Lo que input() devuelve siempre es texto** (`str`), aunque la persona escriba un número. Si vas a hacer cuentas con esa respuesta, conviértela:
+**Lo que input() devuelve siempre es texto** (`str`), aunque la persona escriba un número. Si vas a hacer cuentas con esa respuesta, conviértela primero con `int()` o `float()`.
+:::
 
-```python
+```{python}
+#| eval: false
 edad = input("¿Cuántos años tienes? ")
 edad = int(edad)
 print("El próximo año tendrás", edad + 1)
@@ -124,16 +134,16 @@ print("El próximo año tendrás", edad + 1)
 
 O en una sola línea, que es como lo verás en la práctica:
 
-```python
+```{python}
+#| eval: false
 edad = int(input("¿Cuántos años tienes? "))
 ```
-:::
 
 ## Imprimir con formato: las f-strings
 
 Ya sabes que `print()` muestra cosas. Cuando quieras mezclar texto con variables de forma elegante, usa una **f-string**: una cadena con una `f` antes de las comillas, donde las variables van entre llaves `{}`:
 
-```python
+```{python}
 precio = 9500
 cantidad = 37
 total = precio * cantidad
@@ -142,7 +152,7 @@ print(f"El total de la cosecha es ${total}")
 
 Todo lo que está dentro de las llaves se evalúa. Puedes incluso hacer cuentas ahí dentro:
 
-```python
+```{python}
 tasa = 0.12
 capital = 1000000
 print(f"En 5 años tendrás ${capital * (1 + tasa) ** 5}")
@@ -152,7 +162,7 @@ print(f"En 5 años tendrás ${capital * (1 + tasa) ** 5}")
 
 Todo lo que escribas después de un `#` en una línea, Python lo ignora por completo. Sirve para dejar notas que expliquen tu código:
 
-```python
+```{python}
 # Cálculo del valor futuro a 5 años
 tasa = 0.12          # tasa anual
 capital = 1000000    # inversión inicial en pesos
@@ -167,12 +177,12 @@ Comenta tu código pensando en la persona que lo leerá en seis meses. Esa perso
 1. Crea tres variables con tu nombre, tu edad y tu estatura (en metros, con decimal). Imprímelas con una f-string en una sola frase.
 2. Pregunta al usuario cuántas hectáreas tiene su finca y cuántas toneladas produce por hectárea. Calcula e imprime la producción total.
 3. Pregunta al usuario su salario mensual y calcula cuánto gana al año. Imprime el resultado con una f-string.
-4. Ejecuta esto, lee el error y corrígelo:
+4. Ejecuta esto en Colab, observa qué pasa y corrígelo:
    ```python
    precio = input("Precio: ")
    print(precio * 2)
    ```
-   (Pista: multiplica texto por dos y verás algo raro, pero no es lo que queremos).
+   (Pista: multiplicar texto por dos no es lo que queremos).
 5. **Mini-reto (economía):** pide al usuario un capital inicial, una tasa de interés anual (en porcentaje, ej. 12) y un número de años. Calcula el valor futuro con interés compuesto e imprímelo con formato: `Con $X al Y% durante Z años, tendrás $W`. Recuerda convertir la tasa de porcentaje a decimal dividiendo entre 100.
 
 ## Resumen

@@ -23,7 +23,15 @@ book:
 format:
   html:
     theme: cosmo
+    css: styles.css
   pdf:
     pdf-engine: xelatex
     documentclass: scrreprt
     latex-auto-install: false
+    include-in-header:
+      text: |
+        \usepackage{fvextra}
+        \AtBeginDocument{%
+          \RecustomVerbatimEnvironment{verbatim}{Verbatim}{
+            frame=single, rulecolor=\color{black!40},
+            bgcolor=black!8, fontsize=\small, framesep=3mm}}

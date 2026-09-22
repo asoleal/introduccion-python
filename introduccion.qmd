@@ -14,17 +14,13 @@ En este libro trabajaremos con **Google Colab**: un entorno gratuito de Google q
 2. Haz clic en **Nuevo notebook**.
 3. En la primera celda, escribe (o copia) lo siguiente:
 
-```python
+```{python}
 print("Hola, mundo")
 ```
 
 4. Ejecuta la celda con el botón ▶️ o con las teclas `Shift + Enter`.
 
-En pantalla aparecerá:
-
-```text
-Hola, mundo
-```
+La caja oscura debajo del código muestra la **salida**: lo que el programa imprime. En este libro verás siempre ese par — el código y su resultado — igual que en Colab.
 
 ¿Qué acaba de pasar? `print()` es una **función**: una instrucción que le dice a Python "muestra esto en pantalla". El texto entre comillas se llama **cadena de caracteres** (*string*). Acabas de escribir y ejecutar tu primer programa.
 
@@ -36,19 +32,19 @@ Un notebook de Colab tiene dos tipos de celdas: **código** (se ejecuta) y **tex
 
 Antes de programar "en serio", usa Python como una calculadora. Copia y ejecuta cada línea:
 
-```python
+```{python}
 2 + 3
 ```
 
-```python
+```{python}
 10 / 4
 ```
 
-```python
+```{python}
 2 ** 10
 ```
 
-```python
+```{python}
 17 % 5
 ```
 
@@ -68,7 +64,7 @@ Los operadores básicos son:
 
 Un ejemplo con sentido económico: si inviertes \$1.000.000 a una tasa del 12 % anual durante 5 años, el valor futuro es:
 
-```python
+```{python}
 1000000 * (1 + 0.12) ** 5
 ```
 

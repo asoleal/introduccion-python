@@ -112,6 +112,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
+<link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="nav-sidebar floating quarto-light">
@@ -154,7 +155,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Introducción a Python para Ingeniería, Datos y Economía</span></a>
+ <span class="menu-text">Prólogo</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -260,98 +261,167 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="listas-colecciones-ordenadas-que-puedes-modificar" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="listas-colecciones-ordenadas-que-puedes-modificar"><span class="header-section-number">4.1</span> Listas: colecciones ordenadas que puedes modificar</h2>
 <p>Una lista es una secuencia de valores entre corchetes <code>[]</code>, separados por comas:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>lecturas <span class="op">=</span> [<span class="fl">22.5</span>, <span class="fl">23.1</span>, <span class="fl">24.0</span>, <span class="fl">23.8</span>, <span class="fl">25.2</span>]  <span class="co"># temperaturas de un sensor</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="83e426f1" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>lecturas <span class="op">=</span> [<span class="fl">22.5</span>, <span class="fl">23.1</span>, <span class="fl">24.0</span>, <span class="fl">23.8</span>, <span class="fl">25.2</span>]  <span class="co"># temperaturas de un sensor</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(lecturas)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[22.5, 23.1, 24.0, 23.8, 25.2]</code></pre>
+</div>
+</div>
 <section id="acceder-a-un-elemento-los-índices-empiezan-en-cero" class="level3" data-number="4.1.1">
 <h3 data-number="4.1.1" class="anchored" data-anchor-id="acceder-a-un-elemento-los-índices-empiezan-en-cero"><span class="header-section-number">4.1.1</span> Acceder a un elemento: los índices empiezan en cero</h3>
 <p>Cada elemento tiene una posición llamada <strong>índice</strong>. La regla que confunde a todo principiante: <strong>el primer elemento es el índice 0</strong>, no el 1:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>lecturas <span class="op">=</span> [<span class="fl">22.5</span>, <span class="fl">23.1</span>, <span class="fl">24.0</span>, <span class="fl">23.8</span>, <span class="fl">25.2</span>]</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(lecturas[<span class="dv">0</span>])   <span class="co"># primera lectura</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(lecturas[<span class="dv">2</span>])   <span class="co"># tercera lectura</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(lecturas[<span class="op">-</span><span class="dv">1</span>])  <span class="co"># última lectura (el -1 cuenta desde el final)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="95224bb1" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>lecturas <span class="op">=</span> [<span class="fl">22.5</span>, <span class="fl">23.1</span>, <span class="fl">24.0</span>, <span class="fl">23.8</span>, <span class="fl">25.2</span>]</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(lecturas[<span class="dv">0</span>])   <span class="co"># primera lectura</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(lecturas[<span class="dv">2</span>])   <span class="co"># tercera lectura</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(lecturas[<span class="op">-</span><span class="dv">1</span>])  <span class="co"># última lectura (el -1 cuenta desde el final)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>22.5
+24.0
+25.2</code></pre>
+</div>
+</div>
 </section>
 <section id="modificar-agregar-y-contar" class="level3" data-number="4.1.2">
 <h3 data-number="4.1.2" class="anchored" data-anchor-id="modificar-agregar-y-contar"><span class="header-section-number">4.1.2</span> Modificar, agregar y contar</h3>
 <p>Las listas son <strong>mutables</strong>: puedes cambiarlas después de crearlas:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>precios <span class="op">=</span> [<span class="dv">9500</span>, <span class="dv">8200</span>, <span class="dv">10500</span>]</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>precios[<span class="dv">0</span>] <span class="op">=</span> <span class="dv">9800</span>        <span class="co"># modificar: el primer precio cambió</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>precios.append(<span class="dv">7600</span>)     <span class="co"># agregar al final</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(precios)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(precios))      <span class="co"># cuántos elementos tiene</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="32a1b684" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>precios <span class="op">=</span> [<span class="dv">9500</span>, <span class="dv">8200</span>, <span class="dv">10500</span>]</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>precios[<span class="dv">0</span>] <span class="op">=</span> <span class="dv">9800</span>        <span class="co"># modificar: el primer precio cambió</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>precios.append(<span class="dv">7600</span>)     <span class="co"># agregar al final</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(precios)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(precios))      <span class="co"># cuántos elementos tiene</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[9800, 8200, 10500, 7600]
+4</code></pre>
+</div>
+</div>
 </section>
 <section id="operaciones-útiles-sin-escribir-ciclos" class="level3" data-number="4.1.3">
 <h3 data-number="4.1.3" class="anchored" data-anchor-id="operaciones-útiles-sin-escribir-ciclos"><span class="header-section-number">4.1.3</span> Operaciones útiles sin escribir ciclos</h3>
 <p>Python trae funciones que resumen una lista en una línea:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>producciones <span class="op">=</span> [<span class="fl">4.2</span>, <span class="fl">3.8</span>, <span class="fl">5.1</span>, <span class="fl">4.6</span>, <span class="fl">3.9</span>]</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">sum</span>(producciones))   <span class="co"># total</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">max</span>(producciones))   <span class="co"># la mayor</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">min</span>(producciones))   <span class="co"># la menor</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(producciones))   <span class="co"># cuántas parcelas</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">sum</span>(producciones) <span class="op">/</span> <span class="bu">len</span>(producciones))  <span class="co"># promedio</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="51ec899d" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>producciones <span class="op">=</span> [<span class="fl">4.2</span>, <span class="fl">3.8</span>, <span class="fl">5.1</span>, <span class="fl">4.6</span>, <span class="fl">3.9</span>]</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">sum</span>(producciones))   <span class="co"># total</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">max</span>(producciones))   <span class="co"># la mayor</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">min</span>(producciones))   <span class="co"># la menor</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(producciones))   <span class="co"># cuántas parcelas</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">sum</span>(producciones) <span class="op">/</span> <span class="bu">len</span>(producciones))  <span class="co"># promedio</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>21.599999999999998
+5.1
+3.8
+5
+4.319999999999999</code></pre>
+</div>
+</div>
 </section>
 <section id="rebanadas-slicing-tomar-una-parte" class="level3" data-number="4.1.4">
 <h3 data-number="4.1.4" class="anchored" data-anchor-id="rebanadas-slicing-tomar-una-parte"><span class="header-section-number">4.1.4</span> Rebanadas (slicing): tomar una parte</h3>
 <p>Con <code>[inicio:fin]</code> tomas un pedazo de la lista (incluye el inicio, <strong>no</strong> incluye el fin):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>lecturas <span class="op">=</span> [<span class="fl">22.5</span>, <span class="fl">23.1</span>, <span class="fl">24.0</span>, <span class="fl">23.8</span>, <span class="fl">25.2</span>]</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(lecturas[<span class="dv">1</span>:<span class="dv">3</span>])   <span class="co"># del índice 1 al 2</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(lecturas[:<span class="dv">2</span>])    <span class="co"># las dos primeras</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(lecturas[<span class="dv">3</span>:])    <span class="co"># del índice 3 al final</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="e8d05f59" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>lecturas <span class="op">=</span> [<span class="fl">22.5</span>, <span class="fl">23.1</span>, <span class="fl">24.0</span>, <span class="fl">23.8</span>, <span class="fl">25.2</span>]</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(lecturas[<span class="dv">1</span>:<span class="dv">3</span>])   <span class="co"># del índice 1 al 2</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(lecturas[:<span class="dv">2</span>])    <span class="co"># las dos primeras</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(lecturas[<span class="dv">3</span>:])    <span class="co"># del índice 3 al final</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[23.1, 24.0]
+[22.5, 23.1]
+[23.8, 25.2]</code></pre>
+</div>
+</div>
 </section>
 <section id="recorrer-una-lista" class="level3" data-number="4.1.5">
 <h3 data-number="4.1.5" class="anchored" data-anchor-id="recorrer-una-lista"><span class="header-section-number">4.1.5</span> Recorrer una lista</h3>
 <p>Ya lo hiciste en el capítulo anterior: el <code>for</code> nació para esto:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ventas <span class="op">=</span> [<span class="fl">12.5</span>, <span class="fl">15.2</span>, <span class="fl">9.8</span>, <span class="fl">18.1</span>]  <span class="co"># millones por trimestre</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> v <span class="kw">in</span> ventas:</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> v <span class="op">&lt;</span> <span class="dv">10</span>:</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Trimestre bajo: </span><span class="sc">{</span>v<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="e7a10430" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ventas <span class="op">=</span> [<span class="fl">12.5</span>, <span class="fl">15.2</span>, <span class="fl">9.8</span>, <span class="fl">18.1</span>]  <span class="co"># millones por trimestre</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> v <span class="kw">in</span> ventas:</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> v <span class="op">&lt;</span> <span class="dv">10</span>:</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Trimestre bajo: </span><span class="sc">{</span>v<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Trimestre bajo: 9.8</code></pre>
+</div>
+</div>
 </section>
 </section>
 <section id="tuplas-colecciones-que-no-deben-cambiar" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="tuplas-colecciones-que-no-deben-cambiar"><span class="header-section-number">4.2</span> Tuplas: colecciones que no deben cambiar</h2>
 <p>Una tupla se escribe con paréntesis <code>()</code> y es <strong>inmutable</strong>: una vez creada, no se puede modificar. Sirve para datos que conceptualmente van juntos y no deben alterarse, como las coordenadas de una parcela:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ubicacion <span class="op">=</span> (<span class="fl">3.42</span>, <span class="op">-</span><span class="fl">76.53</span>)  <span class="co"># latitud, longitud</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ubicacion[<span class="dv">0</span>])  <span class="co"># latitud</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="4ba501cf" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>ubicacion <span class="op">=</span> (<span class="fl">3.42</span>, <span class="op">-</span><span class="fl">76.53</span>)  <span class="co"># latitud, longitud</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ubicacion[<span class="dv">0</span>])  <span class="co"># latitud</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>3.42</code></pre>
+</div>
+</div>
 <p>Si intentas modificarla, Python te protege con un error:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>ubicacion[<span class="dv">0</span>] <span class="op">=</span> <span class="fl">4.0</span>   <span class="co"># TypeError: las tuplas no se modifican</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>ubicacion[<span class="dv">0</span>] <span class="op">=</span> <span class="fl">4.0</span>   <span class="co"># TypeError: las tuplas no se modifican</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="text"><code>TypeError: 'tuple' object does not support item assignment</code></pre>
 <p>Regla práctica: si los datos representan algo fijo (coordenadas, una fecha, un registro que no debe tocarse), usa tupla. Si van a cambiar (lecturas, precios, inventarios), usa lista.</p>
 </section>
 <section id="diccionarios-datos-con-nombre-no-con-posición" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="diccionarios-datos-con-nombre-no-con-posición"><span class="header-section-number">4.3</span> Diccionarios: datos con nombre, no con posición</h2>
 <p>En una lista accedes por posición (<code>precios[0]</code>). Pero ¿y si quieres acceder <strong>por nombre</strong>? Para eso están los diccionarios: pares de <strong>clave</strong> y <strong>valor</strong> entre llaves <code>{}</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>precios <span class="op">=</span> {</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"café"</span>: <span class="dv">9500</span>,</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cacao"</span>: <span class="dv">8200</span>,</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"banano"</span>: <span class="dv">7600</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(precios[<span class="st">"café"</span>])   <span class="co"># acceder por clave</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="8789b4b3" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>precios <span class="op">=</span> {</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"café"</span>: <span class="dv">9500</span>,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cacao"</span>: <span class="dv">8200</span>,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"banano"</span>: <span class="dv">7600</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(precios[<span class="st">"café"</span>])   <span class="co"># acceder por clave</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>9500</code></pre>
+</div>
+</div>
 <p>Agregar y modificar es asignar a una clave:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>precios[<span class="st">"banano"</span>] <span class="op">=</span> <span class="dv">7800</span>      <span class="co"># modificar</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>precios[<span class="st">"panela"</span>] <span class="op">=</span> <span class="dv">5200</span>      <span class="co"># agregar un producto nuevo</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(precios)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="646ab50f" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>precios <span class="op">=</span> {<span class="st">"café"</span>: <span class="dv">9500</span>, <span class="st">"cacao"</span>: <span class="dv">8200</span>, <span class="st">"banano"</span>: <span class="dv">7600</span>}</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>precios[<span class="st">"banano"</span>] <span class="op">=</span> <span class="dv">7800</span>      <span class="co"># modificar</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>precios[<span class="st">"panela"</span>] <span class="op">=</span> <span class="dv">5200</span>      <span class="co"># agregar un producto nuevo</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(precios)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{'café': 9500, 'cacao': 8200, 'banano': 7800, 'panela': 5200}</code></pre>
+</div>
+</div>
 <p>Recorrer un diccionario con <code>.items()</code> te da clave y valor a la vez:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>inventario <span class="op">=</span> {<span class="st">"motobombas"</span>: <span class="dv">3</span>, <span class="st">"sensores_humedad"</span>: <span class="dv">12</span>, <span class="st">"valvulas"</span>: <span class="dv">25</span>}</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> equipo, cantidad <span class="kw">in</span> inventario.items():</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> cantidad <span class="op">&lt;</span> <span class="dv">5</span>:</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Reponer </span><span class="sc">{</span>equipo<span class="sc">}</span><span class="ss">: quedan </span><span class="sc">{</span>cantidad<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="ec24bc6f" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>inventario <span class="op">=</span> {<span class="st">"motobombas"</span>: <span class="dv">3</span>, <span class="st">"sensores_humedad"</span>: <span class="dv">12</span>, <span class="st">"valvulas"</span>: <span class="dv">25</span>}</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> equipo, cantidad <span class="kw">in</span> inventario.items():</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> cantidad <span class="op">&lt;</span> <span class="dv">5</span>:</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Reponer </span><span class="sc">{</span>equipo<span class="sc">}</span><span class="ss">: quedan </span><span class="sc">{</span>cantidad<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Reponer motobombas: quedan 3</code></pre>
+</div>
+</div>
 <section id="un-diccionario-puede-guardar-una-ficha-completa" class="level3" data-number="4.3.1">
 <h3 data-number="4.3.1" class="anchored" data-anchor-id="un-diccionario-puede-guardar-una-ficha-completa"><span class="header-section-number">4.3.1</span> Un diccionario puede guardar una ficha completa</h3>
 <p>Los diccionarios brillan cuando un valor es a su vez otra estructura:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>empleado <span class="op">=</span> {</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"nombre"</span>: <span class="st">"María Pérez"</span>,</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cargo"</span>: <span class="st">"Analista"</span>,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"salario"</span>: <span class="dv">2800000</span>,</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"areas"</span>: [<span class="st">"compras"</span>, <span class="st">"logística"</span>]</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(empleado[<span class="st">"nombre"</span>])</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(empleado[<span class="st">"salario"</span>] <span class="op">*</span> <span class="dv">12</span>)   <span class="co"># salario anual</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="87f09985" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>empleado <span class="op">=</span> {</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"nombre"</span>: <span class="st">"María Pérez"</span>,</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cargo"</span>: <span class="st">"Analista"</span>,</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"salario"</span>: <span class="dv">2800000</span>,</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"areas"</span>: [<span class="st">"compras"</span>, <span class="st">"logística"</span>]</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(empleado[<span class="st">"nombre"</span>])</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(empleado[<span class="st">"salario"</span>] <span class="op">*</span> <span class="dv">12</span>)   <span class="co"># salario anual</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>María Pérez
+33600000</code></pre>
+</div>
+</div>
 <p>Este patrón — una ficha con campos nombrados — es la base de casi todo el manejo de datos que verás en el capítulo de pandas.</p>
 </section>
 </section>
@@ -404,7 +474,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol type="1">
 <li>Crea una lista con las temperaturas de 7 días. Imprime la máxima, la mínima y el promedio (con <code>sum</code> y <code>len</code>).</li>
 <li>De la lista <code>costos = [45000, 120000, 38000, 90000, 67000]</code>, imprime solo los costos mayores a 50000 usando un <code>for</code> y un <code>if</code>.</li>
-<li>Crea una tupla con la coordenada de tu ciudad y otra con la de una finca. Imprime la distancia en latitud (diferencia simple del primer elemento).</li>
+<li>Crea una tupla con la coordenada de tu ciudad y otra con la de una finca. Imprime la diferencia de latitud entre ambas.</li>
 <li>Crea un diccionario con 4 productos agrícolas y sus precios. Sube todos los precios un 10 % recorriéndolo con <code>.items()</code> y reasignando cada valor.</li>
 <li>Crea un diccionario que represente un sensor con las claves <code>id</code>, <code>tipo</code>, <code>parcela</code> y <code>lecturas</code> (una lista de 5 valores). Imprime el promedio de sus lecturas accediendo a través del diccionario.</li>
 <li><strong>Mini-reto (administración):</strong> tienes esta lista de ventas mensuales (millones): <code>[42, 38, 55, 61, 47, 39, 52, 58, 63, 49, 44, 57]</code>. Sin usar funciones hechas, solo un <code>for</code> y acumuladores: calcula el promedio anual, cuenta cuántos meses superaron el promedio e imprime ambos resultados. Luego, guarda en un diccionario <code>resumen</code> las claves <code>"promedio"</code> y <code>"meses_sobre_promedio"</code>.</li>

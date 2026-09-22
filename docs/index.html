@@ -77,6 +77,7 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
+<link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="nav-sidebar floating quarto-light">
@@ -88,7 +89,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Introducción a Python para Ingeniería, Datos y Economía</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Prólogo</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -119,7 +120,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Introducción a Python para Ingeniería, Datos y Economía</span></a>
+ <span class="menu-text">Prólogo</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -180,9 +181,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Tabla de contenidos</h2>
    
   <ul>
-  <li><a href="#introducción-a-python-para-ingeniería-datos-y-economía" id="toc-introducción-a-python-para-ingeniería-datos-y-economía" class="nav-link active" data-scroll-target="#introducción-a-python-para-ingeniería-datos-y-economía">Introducción a Python para Ingeniería, Datos y Economía</a>
+  <li><a href="#prólogo" id="toc-prólogo" class="nav-link active" data-scroll-target="#prólogo">Prólogo</a>
   <ul class="collapse">
-  <li><a href="#prólogo" id="toc-prólogo" class="nav-link" data-scroll-target="#prólogo">Prólogo</a></li>
   <li><a href="#cómo-usar-este-libro" id="toc-cómo-usar-este-libro" class="nav-link" data-scroll-target="#cómo-usar-este-libro">Cómo usar este libro</a></li>
   </ul></li>
   </ul>
@@ -222,19 +222,20 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="introducción-a-python-para-ingeniería-datos-y-economía" class="level1 unnumbered">
-<h1 class="unnumbered">Introducción a Python para Ingeniería, Datos y Economía</h1>
-<p><strong>John Leal</strong></p>
-<section id="prólogo" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="prólogo">Prólogo</h2>
+<section id="prólogo" class="level1 unnumbered">
+<h1 class="unnumbered">Prólogo</h1>
 <p>Este libro está pensado para estudiantes y profesionales de ingeniería, análisis de datos y economía que desean aprender a programar en Python desde cero. No se asume ninguna experiencia previa en programación: los conceptos se introducen de forma progresiva, con ejemplos cercanos a la ingeniería, la estadística y la economía, para que cada tema tenga un contexto claro y aplicable.</p>
-<p>Todo el código está diseñado para ejecutarse en Google Colab, el entorno gratuito de notebooks de Google. No necesitas instalar nada en tu computadora: basta un navegador y una cuenta de Google. Cada capítulo contiene bloques de código listos para copiar y pegar en una celda de Colab, de modo que puedes leer, ejecutar y experimentar en el mismo momento.</p>
-<p>Al terminar este libro habrás aprendido los fundamentos del lenguaje Python —variables, tipos de datos, operadores y control de flujo—, las estructuras de datos esenciales, el cálculo numérico con NumPy, la visualización de gráficas, el análisis de datos con pandas, y una introducción a las aplicaciones en economía, administración y big data.</p>
-</section>
+<p>Todo el código está diseñado para ejecutarse en Google Colab, el entorno gratuito de notebooks de Google. No necesitas instalar nada en tu computadora: basta un navegador y una cuenta de Google. Cada capítulo contiene bloques de código listos para copiar y pegar en una celda de Colab, de modo que puedes leer, ejecutar y experimentar de inmediato.</p>
+<p>Al finalizar el libro serás capaz de escribir programas en Python, procesar datos con pandas, resolver problemas de ingeniería y economía (valor futuro, VAN, simulación Monte Carlo) y entender los conceptos básicos del mundo del big data.</p>
 <section id="cómo-usar-este-libro" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="cómo-usar-este-libro">Cómo usar este libro</h2>
-<p>Cada bloque de código de este libro se copia y se pega tal cual en una celda de Google Colab. Para ello, abre <a href="https://colab.research.google.com">colab.research.google.com</a>, crea un notebook nuevo y copia los bloques de cada capítulo en orden, ejecutándolos con el botón de reproducción (o con <code>Ctrl + Enter</code>).</p>
-<p>Te recomendamos crear un notebook por capítulo, ejecutar cada bloque paso a paso y modificar los valores de los ejemplos para comprobar qué ocurre: aprender a programar se logra escribiendo y ejecutando código, no solo leyéndolo.</p>
+<ol type="1">
+<li><strong>Lee con Colab abierto.</strong> Cada bloque de código está hecho para copiarse y pegarse directamente en una celda de Colab. Ejecuta todo lo que veas: programar se aprende haciendo.</li>
+<li><strong>Modifica los ejemplos.</strong> Cambia los valores, rompe el código a propósito, lee los errores. Experimentar es parte del método.</li>
+<li><strong>Haz los ejercicios.</strong> Al final de cada capítulo hay ejercicios y un mini-reto que integra lo aprendido con un problema de ingeniería, administración o economía.</li>
+<li><strong>Lleva un notebook por capítulo.</strong> Serán tu cuaderno de apuntes ejecutable y tu portafolio de práctica.</li>
+</ol>
+<p>La ruta del libro es progresiva: los capítulos 1 a 4 construyen los fundamentos del lenguaje; el 5 y el 6 introducen el cómputo científico y el manejo de datos; el 7 aplica todo a problemas de administración y economía; y el 8 cierra con una introducción a big data.</p>
 
 
 </section>

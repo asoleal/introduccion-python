@@ -6,18 +6,18 @@ Hasta ahora tus programas ejecutan las líneas una tras otra, de arriba hacia ab
 
 Un sistema de riego automático tiene una lógica muy simple: *si la humedad del suelo es baja, activar la bomba*. En Python eso se escribe casi igual que en español:
 
-```python
+```{python}
 humedad = 25  # porcentaje medido por el sensor
 
 if humedad < 30:
     print("Humedad baja: activar riego")
 ```
 
-Ejecútalo. Luego cambia `humedad` a `45` y ejecútalo de nuevo: no aparece nada, porque la condición ya no se cumple.
+Ahora cambia `humedad` a `45` y vuelve a ejecutar: no aparece nada, porque la condición ya no se cumple.
 
 Para cubrir más casos se usan `elif` ("si no, entonces si...") y `else` ("en cualquier otro caso"):
 
-```python
+```{python}
 humedad = 25
 
 if humedad < 30:
@@ -56,7 +56,7 @@ Las condiciones se construyen con estos operadores:
 
 Con `and` y `or` puedes combinar condiciones, como una alarma de invernadero que se activa por temperatura **o** por humedad:
 
-```python
+```{python}
 temperatura = 38
 humedad = 45
 
@@ -72,16 +72,16 @@ Un sensor toma una lectura cada hora. Un administrador calcula la nómina de 50 
 
 La forma más simple usa `range()`, que genera una secuencia de números:
 
-```python
-for hora in range(24):
+```{python}
+for hora in range(6):
     print(f"Tomando lectura de la hora {hora}")
 ```
 
-Esto ejecuta el `print` 24 veces, con `hora` tomando los valores 0, 1, 2, ..., 23.
+Esto ejecuta el `print` 6 veces, con `hora` tomando los valores 0, 1, 2, 3, 4, 5. (Usamos 6 para no llenar la página; en la práctica serían 24 lecturas al día).
 
 Ejemplo agro: calcular la producción total recorriendo las parcelas de una finca:
 
-```python
+```{python}
 producciones = [4.2, 3.8, 5.1, 4.6, 3.9]  # toneladas por parcela
 total = 0
 
@@ -95,7 +95,7 @@ El patrón `total = total + p` se llama **acumulador**: una variable que empieza
 
 Ejemplo de administración: proyectar las ventas de los próximos 5 años con crecimiento del 8 % anual:
 
-```python
+```{python}
 ventas = 50000000  # ventas del año actual
 
 for año in range(1, 6):
@@ -109,7 +109,7 @@ Fíjate en el truco `{ventas:,.0f}` dentro de la f-string: formatea el número c
 
 El `for` repite un número conocido de veces. El `while` repite **mientras una condición sea verdadera** — cuando no sabes cuántas vueltas harán falta:
 
-```python
+```{python}
 tanque = 0      # litros
 capacidad = 1000
 
@@ -128,7 +128,7 @@ Si la condición de un `while` jamás se hace falsa, el ciclo corre para siempre
 
 Ya usaste funciones que vienen con Python: `print()`, `input()`, `int()`. Ahora crearás las tuyas. Una función es un procedimiento con nombre: le das entradas (**parámetros**), hace su trabajo y te devuelve un resultado (**retorno**).
 
-```python
+```{python}
 def valor_futuro(capital, tasa, años):
     vf = capital * (1 + tasa) ** años
     return vf
@@ -140,7 +140,7 @@ def valor_futuro(capital, tasa, años):
 
 Se usa así, todas las veces que quieras:
 
-```python
+```{python}
 inversion1 = valor_futuro(1000000, 0.12, 5)
 inversion2 = valor_futuro(5000000, 0.08, 10)
 
@@ -152,7 +152,7 @@ La ventaja enorme: la fórmula se escribe **una sola vez**. Si mañana hay que c
 
 Otro ejemplo, ahora de mecatrónica: una función que clasifica la lectura de un sensor de temperatura:
 
-```python
+```{python}
 def clasificar_temperatura(t):
     if t < 15:
         return "frío"

@@ -1,0 +1,17 @@
+/* Salida de código con apariencia de consola */
+.cell-output {
+  background-color: #2b2b2b;
+  color: #f0f0f0;
+  font-family: "DejaVu Sans Mono", monospace;
+  font-size: 0.9em;
+  padding: 0.6em 1em;
+  border-radius: 6px;
+  border-left: 4px solid #4caf50;
+}
+
+.cell-output pre {
+  background-color: transparent;
+  color: #f0f0f0;
+  border: none;
+  margin: 0;
+}
