@@ -1,6 +1,6 @@
 # Introducción a Python para Ingeniería, Datos y Economía {.unnumbered}
 
-**A. Soleal**
+**John Leal**
 
 ## Prólogo {.unnumbered}
 

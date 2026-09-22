@@ -1,23 +1,119 @@
-# Capítulo 1: Introducción
+# Introducción a Python y Google Colab
 
 ## ¿Qué es Python y por qué lo usaremos en Google Colab?
 
-Python es un lenguaje de programación de alto nivel, interpretado y de propósito general, creado por Guido van Rossum a principios de los años noventa. Su filosofía prioriza la legibilidad: su sintaxis se parece al lenguaje natural y utiliza sangrías en lugar de símbolos complejos, lo que lo convierte en una excelente opción como primer lenguaje. Aunque es sencillo de aprender, es lo bastante potente para construir desde pequeños scripts hasta aplicaciones completas.
+Python es un lenguaje de programación de propósito general, creado con una idea central: que el código se lea casi como texto en inglés. Esa claridad lo convirtió en el lenguaje más usado del mundo en ciencia de datos, ingeniería, economía e inteligencia artificial.
 
-Python es hoy el lenguaje más usado en ciencia de datos, machine learning e ingeniería gracias a la fuerza de su ecosistema: bibliotecas como NumPy y pandas para el cálculo y el análisis de datos, Matplotlib y Seaborn para la visualización, y Scikit-learn, TensorFlow o PyTorch para el aprendizaje automático. A eso se suman una comunidad enorme, abundante documentación y su adopción como estándar tanto en empresas como en universidades; aprender Python abre directamente la puerta al trabajo con datos.
+¿Por qué Python y no otro lenguaje? Porque con las mismas diez líneas de código que en otros lenguajes apenas configurarían el entorno, en Python ya estás analizando datos reales, graficando una función o calculando el valor presente neto de un proyecto.
 
-Google Colab (abreviatura de Colaboratory) es un entorno gratuito de notebooks de Jupyter que Google hospeda en la nube y que se ejecuta en el navegador. No hay que instalar nada: con una cuenta de Google dispones de un editor donde escribes y ejecutas código Python, redactas texto con formato e incorporas gráficas y resultados en un mismo documento. Además, Colab ofrece acceso gratuito ocasional a unidades de procesamiento gráfico (GPU), lo que lo convierte en la herramienta ideal para aprender y para proyectos de análisis de datos.
+En este libro trabajaremos con **Google Colab**: un entorno gratuito de Google que corre en el navegador. No necesitas instalar nada en tu computador; solo una cuenta de Google. Cada bloque de código de este libro está diseñado para que lo copies, lo pegues en una celda de Colab y lo ejecutes.
 
-### Actividad guiada: tu primer programa en Colab
+## Tu primer programa
 
-1. Abre en tu navegador la dirección [colab.research.google.com](https://colab.research.google.com) e inicia sesión con tu cuenta de Google.
-2. Haz clic en **Nuevo notebook** para crear un documento en blanco.
-3. En la celda de código que aparece, escribe (o copia y pega) lo siguiente:
+1. Abre [colab.research.google.com](https://colab.research.google.com) en tu navegador.
+2. Haz clic en **Nuevo notebook**.
+3. En la primera celda, escribe (o copia) lo siguiente:
 
 ```python
 print("Hola, mundo")
 ```
 
-4. Pulsa el botón de reproducción situado a la izquierda de la celda (o `Ctrl + Enter`).
+4. Ejecuta la celda con el botón ▶️ o con las teclas `Shift + Enter`.
 
-Debajo de la celda aparecerá el texto `Hola, mundo`. Acabas de ejecutar tu primer programa: `print()` es una función que muestra en pantalla lo que le pasas entre paréntesis, y `"Hola, mundo"` es una cadena de texto, es decir, una secuencia de caracteres encerrada entre comillas. Ese ritmo —escribir una instrucción en una celda y ejecutarla para ver su resultado de inmediato— será la base del trabajo durante todo el libro.
+En pantalla aparecerá:
+
+```text
+Hola, mundo
+```
+
+¿Qué acaba de pasar? `print()` es una **función**: una instrucción que le dice a Python "muestra esto en pantalla". El texto entre comillas se llama **cadena de caracteres** (*string*). Acabas de escribir y ejecutar tu primer programa.
+
+::: {.callout-note}
+Un notebook de Colab tiene dos tipos de celdas: **código** (se ejecuta) y **texto** (se lee, como este párrafo). Agrégalas con los botones `+ Código` y `+ Texto`.
+:::
+
+## Python como calculadora
+
+Antes de programar "en serio", usa Python como una calculadora. Copia y ejecuta cada línea:
+
+```python
+2 + 3
+```
+
+```python
+10 / 4
+```
+
+```python
+2 ** 10
+```
+
+```python
+17 % 5
+```
+
+Los operadores básicos son:
+
+| Operador | Significado      | Ejemplo   | Resultado |
+|:--------:|:-----------------|:---------:|:---------:|
+| `+`      | Suma             | `2 + 3`   | `5`       |
+| `-`      | Resta            | `7 - 4`   | `3`       |
+| `*`      | Multiplicación   | `3 * 5`   | `15`      |
+| `/`      | División         | `10 / 4`  | `2.5`     |
+| `**`     | Potencia         | `2 ** 10` | `1024`    |
+| `//`     | División entera  | `17 // 5` | `3`       |
+| `%`      | Residuo (módulo) | `17 % 5`  | `2`       |
+
+: Operadores aritméticos básicos de Python {#tbl-operadores}
+
+Un ejemplo con sentido económico: si inviertes \$1.000.000 a una tasa del 12 % anual durante 5 años, el valor futuro es:
+
+```python
+1000000 * (1 + 0.12) ** 5
+```
+
+Observa que Python respeta el orden de las operaciones (primero paréntesis, luego potencias, luego multiplicación y división, al final suma y resta), igual que en álgebra.
+
+## Los errores son tus amigos
+
+Escribe esto en una celda y ejecútalo:
+
+```python
+print("Hola"
+```
+
+Verás algo como:
+
+```text
+SyntaxError: incomplete input
+```
+
+No te alarmes: un error no rompe nada. Python te está diciendo **qué** falló (`SyntaxError`: error de sintaxis) y en este caso es evidente: falta cerrar el paréntesis. Corrige y ejecuta de nuevo.
+
+::: {.callout-tip}
+Regla de oro para todo el libro: **lee los errores de abajo hacia arriba**. La última línea del mensaje casi siempre dice exactamente qué salió mal.
+:::
+
+## Guardar tu trabajo
+
+Colab guarda tus notebooks automáticamente en tu Google Drive (carpeta `Colab Notebooks`). Buenas prácticas desde el primer día:
+
+- Renombra el notebook: clic en el título de arriba a la izquierda. Usa nombres sin espacios ni tildes: `capitulo01_introduccion.ipynb`.
+- Para descargarlo: `Archivo → Descargar → Descargar .ipynb`.
+- Crea un notebook por capítulo de este libro; te servirán como tu propio cuaderno de apuntes ejecutable.
+
+## Ejercicios
+
+1. Ejecuta `print("Tu nombre")` con tu nombre real.
+2. Calcula cuántos segundos tiene un año (365 días) usando solo operadores.
+3. Calcula el valor futuro de \$5.000.000 al 8 % anual durante 10 años.
+4. Provoca a propósito un error quitando una comilla en un `print`, lee el mensaje y corrígelo.
+5. **Mini-reto:** una hectárea produce 4,2 toneladas de café. ¿Cuántas toneladas producen 37 hectáreas? ¿Y si el precio es \$9.500.000 por tonelada, cuánto vale la cosecha total? Resuélvelo en una sola celda con dos operaciones.
+
+## Resumen
+
+- Python es un lenguaje claro y es el estándar en datos e ingeniería.
+- Colab te permite programar sin instalar nada, desde el navegador.
+- `print()` muestra resultados en pantalla.
+- Python funciona como calculadora con los operadores `+ - * / ** // %`.
+- Los errores son mensajes de ayuda: léelos de abajo hacia arriba.

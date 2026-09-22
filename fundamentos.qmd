@@ -1,3 +1,185 @@
-# Capítulo 2: Fundamentos
+# Fundamentos: variables y tipos de datos
 
-En construcción.
+## ¿Qué es una variable?
+
+Imagina una caja con una etiqueta. Dentro de la caja guardas algo (un número, un texto), y la etiqueta te permite encontrarla después. Eso es una **variable**: un nombre que guarda un valor.
+
+En Python, guardar un valor en una variable se llama **asignar**, y se hace con el signo `=`:
+
+```python
+precio = 9500
+```
+
+Lee esa línea así: "la variable `precio` guarda el valor 9500". Ojo: el `=` de Python **no es** el igual de las matemáticas; no afirma que dos cosas sean iguales, sino que **guarda** el valor de la derecha en el nombre de la izquierda.
+
+A partir de ahí, puedes usar la variable en cualquier cálculo:
+
+```python
+precio = 9500
+cantidad = 37
+total = precio * cantidad
+print(total)
+```
+
+La gran ventaja: si el precio cambia, solo modificas una línea y todo lo demás se recalcula solo. Cambia `precio` a `10200` y vuelve a ejecutar.
+
+## Reglas para nombrar variables
+
+Python es estricto con los nombres. Estos son válidos:
+
+```python
+precio_tonelada = 9500
+temperatura2 = 25.4
+nombre_finca = "La Esperanza"
+```
+
+Estos **no** son válidos (ejecútalos y lee el error):
+
+```python
+2temperatura = 25      # no puede empezar con número
+precio-tonelada = 9500 # no puede tener guiones
+precio tonelada = 9500 # no puede tener espacios
+```
+
+::: {.callout-note}
+**Convención de este libro:** nombres en minúsculas, sin tildes, con palabras separadas por guion bajo: `valor_futuro`, `tasa_anual`, `numero_hectareas`. No es obligatorio, pero es el estilo que usa todo el mundo de Python.
+:::
+
+## Los cuatro tipos de datos básicos
+
+Todo valor en Python tiene un **tipo**. Para empezar solo necesitas conocer cuatro:
+
+| Tipo | Nombre | Qué guarda | Ejemplo |
+|:----:|:-------|:-----------|:--------|
+| `int` | Entero | Números sin decimales | `37`, `-5`, `1000000` |
+| `float` | Decimal | Números con decimales | `4.2`, `0.12`, `-3.5` |
+| `str` | Texto | Cadenas de caracteres | `"café"`, `"La Esperanza"` |
+| `bool` | Booleano | Verdadero o falso | `True`, `False` |
+
+Python detecta el tipo automáticamente según lo que guardes. Puedes preguntárselo con la función `type()`:
+
+```python
+precio = 9500
+print(type(precio))
+```
+
+```python
+rendimiento = 4.2
+print(type(rendimiento))
+```
+
+```python
+nombre = "Ana"
+print(type(nombre))
+```
+
+```python
+es_rentable = True
+print(type(es_rentable))
+```
+
+::: {.callout-warning}
+**Cuidado con el punto y la coma:** en Python los decimales se escriben con **punto**, no con coma. Escribe `4.2`, no `4,2`. Si escribes `4,2` Python no dará un error obvio: pensará que son dos números separados. Es uno de los errores más comunes de quienes empiezan en países hispanos.
+:::
+
+## Convertir entre tipos
+
+A veces necesitas transformar un tipo en otro. Se hace con funciones que tienen el nombre del tipo: `int()`, `float()`, `str()`.
+
+El caso clásico: los números que vienen como texto no se pueden sumar:
+
+```python
+a = "2"
+b = "3"
+print(a + b)
+```
+
+¿Sorprendido? El resultado es `"23"`, no `5`. Como `a` y `b` son **texto**, el `+` los une en lugar de sumarlos (pegar textos se llama **concatenar**). La solución es convertirlos primero:
+
+```python
+a = "2"
+b = "3"
+print(int(a) + int(b))
+```
+
+## Pedir datos al usuario: `input()`
+
+Hasta ahora los valores estaban escritos en el código. Pero normalmente querrás preguntarle a la persona que usa tu programa. Eso se hace con `input()`:
+
+```python
+nombre = input("¿Cómo te llamas? ")
+print("Hola,", nombre)
+```
+
+Al ejecutar, el programa se detiene, muestra la pregunta y espera a que escribas algo y presiones `Enter`.
+
+::: {.callout-important}
+**Lo que input() devuelve siempre es texto** (`str`), aunque la persona escriba un número. Si vas a hacer cuentas con esa respuesta, conviértela:
+
+```python
+edad = input("¿Cuántos años tienes? ")
+edad = int(edad)
+print("El próximo año tendrás", edad + 1)
+```
+
+O en una sola línea, que es como lo verás en la práctica:
+
+```python
+edad = int(input("¿Cuántos años tienes? "))
+```
+:::
+
+## Imprimir con formato: las f-strings
+
+Ya sabes que `print()` muestra cosas. Cuando quieras mezclar texto con variables de forma elegante, usa una **f-string**: una cadena con una `f` antes de las comillas, donde las variables van entre llaves `{}`:
+
+```python
+precio = 9500
+cantidad = 37
+total = precio * cantidad
+print(f"El total de la cosecha es ${total}")
+```
+
+Todo lo que está dentro de las llaves se evalúa. Puedes incluso hacer cuentas ahí dentro:
+
+```python
+tasa = 0.12
+capital = 1000000
+print(f"En 5 años tendrás ${capital * (1 + tasa) ** 5}")
+```
+
+## Comentarios: notas para humanos
+
+Todo lo que escribas después de un `#` en una línea, Python lo ignora por completo. Sirve para dejar notas que expliquen tu código:
+
+```python
+# Cálculo del valor futuro a 5 años
+tasa = 0.12          # tasa anual
+capital = 1000000    # inversión inicial en pesos
+vf = capital * (1 + tasa) ** 5
+print(f"Valor futuro: ${vf}")
+```
+
+Comenta tu código pensando en la persona que lo leerá en seis meses. Esa persona, casi siempre, serás tú.
+
+## Ejercicios
+
+1. Crea tres variables con tu nombre, tu edad y tu estatura (en metros, con decimal). Imprímelas con una f-string en una sola frase.
+2. Pregunta al usuario cuántas hectáreas tiene su finca y cuántas toneladas produce por hectárea. Calcula e imprime la producción total.
+3. Pregunta al usuario su salario mensual y calcula cuánto gana al año. Imprime el resultado con una f-string.
+4. Ejecuta esto, lee el error y corrígelo:
+   ```python
+   precio = input("Precio: ")
+   print(precio * 2)
+   ```
+   (Pista: multiplica texto por dos y verás algo raro, pero no es lo que queremos).
+5. **Mini-reto (economía):** pide al usuario un capital inicial, una tasa de interés anual (en porcentaje, ej. 12) y un número de años. Calcula el valor futuro con interés compuesto e imprímelo con formato: `Con $X al Y% durante Z años, tendrás $W`. Recuerda convertir la tasa de porcentaje a decimal dividiendo entre 100.
+
+## Resumen
+
+- Una **variable** es un nombre que guarda un valor; se asigna con `=`.
+- Los cuatro tipos básicos: `int` (enteros), `float` (decimales), `str` (texto), `bool` (verdadero/falso).
+- Los decimales se escriben con **punto**: `4.2`.
+- `input()` siempre devuelve texto; usa `int()` o `float()` para hacer cuentas.
+- Las **f-strings** (`f"...{variable}..."`) mezclan texto y valores fácilmente.
+- Los **comentarios** con `#` documentan tu código.
