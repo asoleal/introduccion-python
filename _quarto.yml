@@ -21,6 +21,7 @@ book:
     - aplicaciones-ingenieria.qmd
     - proyectos.qmd
     - big-data.qmd
+    - analisis-datos-grandes.qmd
 
 format:
   html:

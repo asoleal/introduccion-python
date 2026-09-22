@@ -1,3 +1,104 @@
-# Capítulo 8: Introducción a big data
+# Big data: conceptos y ecosistema
 
-En construcción.
+Llegaste al último tema del libro, y empiezo con una advertencia honesta: **la mayoría de problemas que enfrentarás no son big data**. Un archivo de 500 MB con ventas de diez años no es big data; es un archivo grande, y pandas lo maneja bien (como verás en el próximo capítulo). Entender la diferencia te ahorrará años de usar herramientas equivocadas. Este capítulo es conceptual: el mapa. El siguiente es el terreno, con código.
+
+## ¿Qué es big data? Las 3 V
+
+No hay una definición de tamaño ("a partir de X GB es big data"). La definición útil es por **características**, las llamadas 3 V:
+
+| V | Significado | Pregunta de diagnóstico |
+|---|-------------|-------------------------|
+| **Volumen** | Tanto dato que no cabe en la memoria de un computador | ¿Mi archivo supera la RAM de mi equipo? |
+| **Velocidad** | Los datos llegan como flujo continuo (sensores, transacciones) | ¿Recibo miles de registros por segundo? |
+| **Variedad** | Datos mezclados: tablas, texto, imágenes, audio, video | ¿Tengo que combinar formatos incompatibles? |
+
+(A veces se agregan una cuarta y quinta: **veracidad** —qué tan confiables son— y **valor** —para qué sirven—. Las dos importan más que el tamaño).
+
+La regla práctica: si tus datos caben en la memoria de un portátil normal (8-16 GB), **no necesitas big data**, necesitas buena técnica con pandas. Big data empieza cuando eso ya no es posible o la velocidad lo exige.
+
+## ¿Por qué no basta un computador más grande?
+
+Cuando los datos superan a un solo equipo, la solución cambia de filosofía: en vez de un computador más potente (*escalar verticalmente*), se usan **muchos computadores trabajando en paralelo** (*escalar horizontalmente*). Un **cluster** divide el archivo y el trabajo entre decenas o miles de máquinas y luego junta los resultados.
+
+Esta idea — partir el problema, procesar en paralelo, combinar — tiene un nombre famoso: **MapReduce**. No necesitas programarlo, pero sí entenderlo, porque toda la industria está construida sobre él.
+
+## El ecosistema: nombres que escucharás
+
+El mundo big data tiene muchas herramientas; aquí el mapa mínimo para no perderte en una conversación técnica:
+
+| Herramienta | Qué hace | Analogía |
+|-------------|----------|----------|
+| **Hadoop / HDFS** | Almacena archivos gigantes repartidos en un cluster | La bodega distribuida |
+| **Spark** | Procesa datos en paralelo, en memoria; el estándar actual | El motor de cálculo |
+| **Kafka** | Recibe flujos de datos en tiempo real (velocidad) | La banda transportadora |
+| **Parquet** | Formato de archivo columnar, compacto y rápido | El empaque eficiente |
+| **Data lake / warehouse** | Repositorios centralizados de todos los datos de una organización | La biblioteca central |
+| **Nube (AWS, GCP, Azure)** | Alquila clusters por horas, sin comprar hardware | La finca arrendada |
+
+En el próximo capítulo usarás **Parquet** directamente (funciona perfecto en Colab) y verás **PySpark**, la interfaz de Spark para Python.
+
+## Casos reales donde sí es big data
+
+- **Agro de precisión a escala:** miles de sensores por región reportando cada minuto + imágenes satelitales diarias → volumen, velocidad y variedad juntos.
+- **Banca:** millones de transacciones por minuto, detección de fraude en tiempo real.
+- **Retail:** historial de clicks y compras de millones de usuarios para sistemas de recomendación.
+- **Salud pública:** registros de millones de pacientes, imágenes médicas, secuenciación genómica.
+
+Y casos que **parecen** big data pero no lo son: el censo de un municipio, diez años de precios del café, las ventas de una empresa mediana. Todos caben en pandas.
+
+## Un experimento rápido para calibrar tu intuición
+
+Mide cuánto tarda pandas con un millón de filas — te sorprenderá lo lejos que llega:
+
+```{python}
+import numpy as np
+import pandas as pd
+import time
+
+rng = np.random.default_rng(0)
+inicio = time.time()
+
+df = pd.DataFrame({
+    "finca": rng.integers(1, 500, 1_000_000),
+    "produccion": rng.normal(4.2, 0.8, 1_000_000),
+    "precio": rng.normal(9500, 700, 1_000_000)
+})
+
+print(df.head())
+print(f"\nUn millón de filas cargadas en {time.time() - inicio:.2f} segundos")
+```
+
+```{python}
+inicio = time.time()
+resumen = df.groupby("finca")["produccion"].mean()
+print(f"Promedio por finca (500 grupos) calculado en {time.time() - inicio:.3f} segundos")
+print(resumen.head())
+```
+
+Un millón de filas, agrupadas en menos de un segundo. Esa es la lección: **la frontera del big data está mucho más arriba de lo que la gente cree**. Las técnicas del próximo capítulo te llevan cómodamente a decenas de millones de filas en Colab, sin tocar un cluster.
+
+## ¿Cuándo sí dar el salto?
+
+Considera herramientas big data (Spark, nube) cuando se cumpla **alguna** de estas:
+
+1. Tus datos superan la memoria RAM disponible y las técnicas del próximo capítulo (chunks, parquet) ya no alcanzan.
+2. Los datos llegan como flujo continuo que hay que procesar al instante (monitoreo en vivo).
+3. Varios equipos de una organización necesitan los mismos datos centralizados y gobernados.
+
+Si ninguna se cumple: pandas bien usado es más rápido de desarrollar, más barato y más fácil de mantener. **Usar un cluster para 100 MB es como usar un trailer para llevar una caja de huevos.**
+
+## Ejercicios (de investigación)
+
+1. Clasifica estos casos según las 3 V (¿cuáles V aplican?): (a) historial de ventas de un almacén por 5 años, 2 GB; (b) 2.000 sensores de humedad reportando cada 10 segundos; (c) radiografías + historias clínicas en texto de un hospital; (d) nómina mensual de 300 empleados en Excel.
+2. Investiga qué tamaño de memoria RAM ofrece Colab en su versión gratuita. ¿Hasta qué tamaño de CSV podrías cargar completo allí?
+3. Busca un caso documentado de big data en el agro colombiano o latinoamericano. ¿Qué herramientas del ecosistema usaron?
+4. Explica con tus palabras por qué MapReduce divide el trabajo en lugar de usar un solo computador más potente. ¿Qué ventaja tiene cuando una máquina falla?
+5. **Reflexión escrita:** un cliente te pide "una solución big data" para analizar las ventas de su tienda (un Excel de 80 MB). Escribe media página argumentando qué le recomiendas y por qué. (Este ejercicio vale más que cualquier código: te va a pasar en la vida real).
+
+## Resumen
+
+- Big data se define por **volumen, velocidad y variedad**, no por un tamaño mágico.
+- Cuando un computador no basta, se escala **horizontalmente**: clusters y procesamiento en paralelo (MapReduce).
+- El ecosistema clave: Hadoop (almacenar), Spark (procesar), Kafka (flujos), Parquet (formato), nube (infraestructura).
+- Un millón de filas se procesan en pandas en menos de un segundo: la frontera real está mucho más arriba de lo que crees.
+- La pregunta correcta no es "¿cómo uso big data?" sino "¿lo necesito?".
