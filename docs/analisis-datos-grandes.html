@@ -240,7 +240,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#técnica-4-muestrear-para-explorar" id="toc-técnica-4-muestrear-para-explorar" class="nav-link" data-scroll-target="#técnica-4-muestrear-para-explorar"><span class="header-section-number">11.5</span> Técnica 4: muestrear para explorar</a></li>
   <li><a href="#el-siguiente-nivel-pyspark" id="toc-el-siguiente-nivel-pyspark" class="nav-link" data-scroll-target="#el-siguiente-nivel-pyspark"><span class="header-section-number">11.6</span> El siguiente nivel: PySpark</a></li>
   <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">11.7</span> Ejercicios</a></li>
-  <li><a href="#resumen-y-cierre-del-libro" id="toc-resumen-y-cierre-del-libro" class="nav-link" data-scroll-target="#resumen-y-cierre-del-libro"><span class="header-section-number">11.8</span> Resumen (y cierre del libro)</a></li>
+  <li><a href="#proyecto-de-cierre-auditoría-de-la-cadena-agroandina" id="toc-proyecto-de-cierre-auditoría-de-la-cadena-agroandina" class="nav-link" data-scroll-target="#proyecto-de-cierre-auditoría-de-la-cadena-agroandina"><span class="header-section-number">11.8</span> Proyecto de cierre: auditoría de la cadena “AgroAndina”</a>
+  <ul class="collapse">
+  <li><a href="#paso-1-auditoría-antes-de-calcular-nada" id="toc-paso-1-auditoría-antes-de-calcular-nada" class="nav-link" data-scroll-target="#paso-1-auditoría-antes-de-calcular-nada"><span class="header-section-number">11.8.1</span> Paso 1 — Auditoría (antes de calcular nada)</a></li>
+  <li><a href="#paso-2-limpieza-documenta-cada-decisión" id="toc-paso-2-limpieza-documenta-cada-decisión" class="nav-link" data-scroll-target="#paso-2-limpieza-documenta-cada-decisión"><span class="header-section-number">11.8.2</span> Paso 2 — Limpieza (documenta cada decisión)</a></li>
+  <li><a href="#paso-3-las-preguntas-de-la-gerencia" id="toc-paso-3-las-preguntas-de-la-gerencia" class="nav-link" data-scroll-target="#paso-3-las-preguntas-de-la-gerencia"><span class="header-section-number">11.8.3</span> Paso 3 — Las preguntas de la gerencia</a></li>
+  <li><a href="#paso-4-el-memo" id="toc-paso-4-el-memo" class="nav-link" data-scroll-target="#paso-4-el-memo"><span class="header-section-number">11.8.4</span> Paso 4 — El memo</a></li>
+  <li><a href="#criterios-de-evaluación" id="toc-criterios-de-evaluación" class="nav-link" data-scroll-target="#criterios-de-evaluación"><span class="header-section-number">11.8.5</span> Criterios de evaluación</a></li>
+  </ul></li>
+  <li><a href="#resumen-y-cierre-del-libro" id="toc-resumen-y-cierre-del-libro" class="nav-link" data-scroll-target="#resumen-y-cierre-del-libro"><span class="header-section-number">11.9</span> Resumen (y cierre del libro)</a></li>
   </ul>
 </nav>
     </div>
@@ -266,11 +274,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>En el capítulo anterior viste que un millón de filas caben cómodas en pandas. Ahora subamos la apuesta: trabajarás con datos que <strong>no conviene cargar completos en memoria</strong>. Aprenderás cuatro técnicas profesionales que funcionan en Colab (y en cualquier portátil): <strong>lectura por chunks</strong>, <strong>optimización de memoria</strong>, el formato <strong>Parquet</strong>, y un primer vistazo a <strong>PySpark</strong>.</p>
+<p>En el capítulo anterior viste que un millón de filas caben cómodas en pandas. Ahora subamos la apuesta: trabajarás con datos que <strong>no conviene cargar completos en memoria</strong>. Aprenderás cuatro técnicas profesionales que funcionan en Colab (y en cualquier portátil): <strong>lectura por chunks</strong>, <strong>optimización de memoria</strong>, el formato <strong>Parquet</strong>, y un primer vistazo a <strong>PySpark</strong>. El capítulo cierra con un proyecto de auditoría sobre un dataset realista y sucio.</p>
 <section id="primero-crear-el-dataset-grande" class="level2" data-number="11.1">
 <h2 data-number="11.1" class="anchored" data-anchor-id="primero-crear-el-dataset-grande"><span class="header-section-number">11.1</span> Primero: crear el dataset grande</h2>
 <p>Para practicar necesitamos un archivo pesado. Generemos uno sintético: 2 millones de registros de ventas de una cadena agroindustrial:</p>
-<div id="ae73eb84" class="cell" data-execution_count="1">
+<div id="99fa7233" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -291,7 +299,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Archivo creado con 2,000,000 filas</code></pre>
 </div>
 </div>
-<div id="971339b2" class="cell" data-execution_count="2">
+<div id="fc1c5683" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Tamaño en disco: </span><span class="sc">{</span>os<span class="sc">.</span>path<span class="sc">.</span>getsize(<span class="st">'ventas_grandes.csv'</span>) <span class="op">/</span> <span class="fl">1e6</span><span class="sc">:.1f}</span><span class="ss"> MB"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -303,7 +311,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="técnica-1-optimizar-la-memoria-con-tipos-de-datos" class="level2" data-number="11.2">
 <h2 data-number="11.2" class="anchored" data-anchor-id="técnica-1-optimizar-la-memoria-con-tipos-de-datos"><span class="header-section-number">11.2</span> Técnica 1: optimizar la memoria con tipos de datos</h2>
 <p>Carguemos el archivo completo y miremos cuánta memoria gasta:</p>
-<div id="bd9ac19b" class="cell" data-execution_count="3">
+<div id="43f9dd33" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"ventas_grandes.csv"</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df.info(memory_usage<span class="op">=</span><span class="st">"deep"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -322,7 +330,7 @@ memory usage: 286.1 MB</code></pre>
 </div>
 </div>
 <p>Fíjate en la última línea: el total en memoria. Ahora el truco: pandas usa por defecto <code>int64</code> y <code>float64</code> (8 bytes por número), pero muchos datos no necesitan tanta precisión. Y las columnas de texto repetido (como <code>producto</code>) se pueden convertir a <strong>category</strong>:</p>
-<div id="16c9fa8b" class="cell" data-execution_count="4">
+<div id="259e61c0" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"tienda"</span>] <span class="op">=</span> df[<span class="st">"tienda"</span>].astype(<span class="st">"int16"</span>)       <span class="co"># 120 tiendas caben en int16</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"cantidad"</span>] <span class="op">=</span> df[<span class="st">"cantidad"</span>].astype(<span class="st">"int8"</span>)    <span class="co"># valores 1-50</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"precio"</span>] <span class="op">=</span> df[<span class="st">"precio"</span>].astype(<span class="st">"float32"</span>)</span>
@@ -349,7 +357,7 @@ memory usage: 145.0 MB</code></pre>
 <section id="técnica-2-leer-por-chunks-nunca-cargar-todo" class="level2" data-number="11.3">
 <h2 data-number="11.3" class="anchored" data-anchor-id="técnica-2-leer-por-chunks-nunca-cargar-todo"><span class="header-section-number">11.3</span> Técnica 2: leer por chunks (nunca cargar todo)</h2>
 <p>Cuando el archivo no cabe en memoria, se procesa <strong>por pedazos</strong>: <code>chunksize</code> convierte <code>read_csv</code> en un iterador que entrega el archivo por bloques:</p>
-<div id="47b0f905" class="cell" data-execution_count="5">
+<div id="309a27ef" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ventas_por_producto <span class="op">=</span> {}</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> chunk <span class="kw">in</span> pd.read_csv(<span class="st">"ventas_grandes.csv"</span>, chunksize<span class="op">=</span><span class="dv">300_000</span>):</span>
@@ -373,7 +381,7 @@ memory usage: 145.0 MB</code></pre>
 <section id="técnica-3-parquet-el-formato-profesional" class="level2" data-number="11.4">
 <h2 data-number="11.4" class="anchored" data-anchor-id="técnica-3-parquet-el-formato-profesional"><span class="header-section-number">11.4</span> Técnica 3: Parquet, el formato profesional</h2>
 <p>El CSV es universal pero ineficiente: texto plano, pesado y lento de leer. <strong>Parquet</strong> guarda los datos en binario, por columnas y comprimidos. Comparémoslos:</p>
-<div id="f1105052" class="cell" data-execution_count="6">
+<div id="a9775474" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df.to_parquet(<span class="st">"ventas_grandes.parquet"</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>csv_mb  <span class="op">=</span> os.path.getsize(<span class="st">"ventas_grandes.csv"</span>) <span class="op">/</span> <span class="fl">1e6</span></span>
@@ -385,7 +393,7 @@ memory usage: 145.0 MB</code></pre>
 Parquet: 16.3 MB  (20% del tamaño)</code></pre>
 </div>
 </div>
-<div id="bceaca1e" class="cell" data-execution_count="7">
+<div id="0f07c094" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>t0 <span class="op">=</span> time.time()<span class="op">;</span> pd.read_csv(<span class="st">"ventas_grandes.csv"</span>)<span class="op">;</span>     t_csv <span class="op">=</span> time.time() <span class="op">-</span> t0</span>
@@ -394,8 +402,8 @@ Parquet: 16.3 MB  (20% del tamaño)</code></pre>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Leer CSV:     </span><span class="sc">{</span>t_csv<span class="sc">:.2f}</span><span class="ss"> s"</span>)</span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Leer Parquet: </span><span class="sc">{</span>t_pq<span class="sc">:.2f}</span><span class="ss"> s"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Leer CSV:     1.19 s
-Leer Parquet: 0.63 s</code></pre>
+<pre><code>Leer CSV:     1.25 s
+Leer Parquet: 0.44 s</code></pre>
 </div>
 </div>
 <p>Mismo contenido, una fracción del tamaño y mucho más rápido. Además, Parquet recuerda los tipos de datos (no hay que convertir fechas ni categorías de nuevo). <strong>Regla profesional: CSV para intercambiar con humanos, Parquet para trabajar.</strong></p>
@@ -403,7 +411,7 @@ Leer Parquet: 0.63 s</code></pre>
 <section id="técnica-4-muestrear-para-explorar" class="level2" data-number="11.5">
 <h2 data-number="11.5" class="anchored" data-anchor-id="técnica-4-muestrear-para-explorar"><span class="header-section-number">11.5</span> Técnica 4: muestrear para explorar</h2>
 <p>Para explorar no necesitas todos los datos: una <strong>muestra aleatoria</strong> de 1 % suele mostrar las mismas distribuciones y patrones, en segundos:</p>
-<div id="41789358" class="cell" data-execution_count="8">
+<div id="c197d229" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>muestra <span class="op">=</span> df.sample(frac<span class="op">=</span><span class="fl">0.01</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Muestra: </span><span class="sc">{</span><span class="bu">len</span>(muestra)<span class="sc">:,}</span><span class="ss"> filas"</span>)</span>
@@ -418,7 +426,7 @@ Precio medio — completo: 8,000 | muestra: 7,969</code></pre>
 <section id="el-siguiente-nivel-pyspark" class="level2" data-number="11.6">
 <h2 data-number="11.6" class="anchored" data-anchor-id="el-siguiente-nivel-pyspark"><span class="header-section-number">11.6</span> El siguiente nivel: PySpark</h2>
 <p>Cuando ni estas técnicas alcanzan, entra <strong>Spark</strong> — el motor de procesamiento en cluster del capítulo anterior. Su interfaz Python se llama <strong>PySpark</strong> y, curiosamente, puedes probarlo en Colab. El código de abajo es un adelanto (no lo ejecutes aquí; en Colab requiere <code>!pip install pyspark</code>):</p>
-<div id="488a97b6" class="cell" data-execution_count="9">
+<div id="269e0077" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql <span class="im">import</span> SparkSession</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql <span class="im">import</span> functions <span class="im">as</span> F</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -438,19 +446,156 @@ Precio medio — completo: 8,000 | muestra: 7,969</code></pre>
 <li>Procesa por chunks el archivo grande para calcular el <strong>monto total por tienda</strong> (no por producto). ¿Qué tienda vendió más?</li>
 <li>Convierte el dataset a Parquet y verifica: tamaños en disco y tiempos de lectura. ¿Vale la pena en tu equipo?</li>
 <li>Compara la media de <code>cantidad</code> en el dataset completo vs.&nbsp;muestras de 0,1 %, 1 % y 10 %. ¿A partir de qué tamaño la muestra se estabiliza?</li>
-<li><strong>Mini-reto (integrador):</strong> la cadena quiere el <strong>top 5 de combinaciones tienda-producto por monto</strong>. (a) Hazlo cargando todo el CSV optimizando tipos. (b) Hazlo de nuevo procesando por chunks, acumulando en un diccionario con claves <code>(tienda, producto)</code>. (c) Verifica que ambos resultados coinciden. (d) Reporta cuál método usó menos memoria y cuál fue más rápido. Esta comparación — resultado correcto + recursos medidos — es exactamente lo que un ingeniero de datos documenta.</li>
+<li>Procesa por chunks el archivo grande para encontrar el <strong>top 5 de combinaciones tienda-producto por monto</strong>, acumulando en un diccionario con claves <code>(tienda, producto)</code>. Verifica el resultado cargando todo el CSV con tipos optimizados.</li>
 </ol>
 </section>
-<section id="resumen-y-cierre-del-libro" class="level2" data-number="11.8">
-<h2 data-number="11.8" class="anchored" data-anchor-id="resumen-y-cierre-del-libro"><span class="header-section-number">11.8</span> Resumen (y cierre del libro)</h2>
+<section id="proyecto-de-cierre-auditoría-de-la-cadena-agroandina" class="level2" data-number="11.8">
+<h2 data-number="11.8" class="anchored" data-anchor-id="proyecto-de-cierre-auditoría-de-la-cadena-agroandina"><span class="header-section-number">11.8</span> Proyecto de cierre: auditoría de la cadena “AgroAndina”</h2>
+<p><strong>Contexto.</strong> La gerencia de una cadena agroindustrial te entrega el volcado anual de ventas de sus 120 tiendas: 3 millones de registros. El archivo viene sucio, como siempre en la vida real: valores faltantes, productos escritos de mil formas (<code>"café"</code>, <code>"Café"</code>, <code>"CAFE"</code>, <code>" café"</code>…) y errores de digitación en precios. Tu misión: auditarlo, limpiarlo y responder las preguntas de la gerencia. <strong>Sin computación esto es imposible; sin criterio, la computación no sirve.</strong></p>
+<p>El dataset está publicado en el repositorio del libro:</p>
+<div id="c3a730d7" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://raw.githubusercontent.com/asoleal/introduccion-python/main/data/ventas_cadena.parquet"</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>ventas_aa <span class="op">=</span> pd.read_parquet(url)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="bu">len</span>(ventas_aa)<span class="sc">:,}</span><span class="ss"> registros cargados"</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ventas_aa.head())</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>3,000,000 registros cargados
+                fecha  tienda producto  cantidad  precio
+0 2025-01-01 00:00:00     103    cacao      51.0  7238.0
+1 2025-01-01 00:01:00      22  banano        4.0  7961.0
+2 2025-01-01 00:02:00       4   PANELA      35.0  5620.0
+3 2025-01-01 00:03:00      77     cafe       7.0  9453.0
+4 2025-01-01 00:04:00      44   panela      32.0  6218.0</code></pre>
+</div>
+</div>
+<section id="paso-1-auditoría-antes-de-calcular-nada" class="level3" data-number="11.8.1">
+<h3 data-number="11.8.1" class="anchored" data-anchor-id="paso-1-auditoría-antes-de-calcular-nada"><span class="header-section-number">11.8.1</span> Paso 1 — Auditoría (antes de calcular nada)</h3>
+<p>Cuantifica el estado del dataset:</p>
+<div id="33a0d903" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Valores faltantes por columna:"</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ventas_aa.isna().<span class="bu">sum</span>())</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Variantes de escritura de producto: </span><span class="sc">{</span>ventas_aa[<span class="st">'producto'</span>]<span class="sc">.</span>nunique()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ventas_aa[<span class="st">"producto"</span>].value_counts().head(<span class="dv">15</span>))</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Precios negativos: </span><span class="sc">{</span>(ventas_aa[<span class="st">'precio'</span>] <span class="op">&lt;</span> <span class="dv">0</span>)<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">:,}</span><span class="ss">"</span>)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Precios absurdamente altos (&gt; 50.000): </span><span class="sc">{</span>(ventas_aa[<span class="st">'precio'</span>] <span class="op">&gt;</span> <span class="dv">50000</span>)<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">:,}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Valores faltantes por columna:
+fecha           0
+tienda          0
+producto        0
+cantidad    60000
+precio      60000
+dtype: int64
+
+Variantes de escritura de producto: 18
+producto
+Panela      167232
+ cafe       167188
+café        167129
+aguacate    167082
+Café        167080
+PANELA      167042
+CACAO       166978
+panela      166976
+banano      166736
+Cacao       166698
+Aguacate    166658
+Banano      166640
+BANANO      166532
+café        166422
+cacao       166374
+Name: count, dtype: int64
+
+Precios negativos: 7,344
+Precios absurdamente altos (&gt; 50.000): 7,338</code></pre>
+</div>
+</div>
+</section>
+<section id="paso-2-limpieza-documenta-cada-decisión" class="level3" data-number="11.8.2">
+<h3 data-number="11.8.2" class="anchored" data-anchor-id="paso-2-limpieza-documenta-cada-decisión"><span class="header-section-number">11.8.2</span> Paso 2 — Limpieza (documenta cada decisión)</h3>
+<p>Pistas de implementación — tú decides y justificas:</p>
+<div id="2d4ca9d1" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>limpio <span class="op">=</span> ventas_aa.copy()</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalizar nombres: quitar espacios, minúsculas, sin tildes</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>limpio[<span class="st">"producto"</span>] <span class="op">=</span> (limpio[<span class="st">"producto"</span>]</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>                      .<span class="bu">str</span>.strip()</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>                      .<span class="bu">str</span>.lower()</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>                      .<span class="bu">str</span>.replace(<span class="st">"café"</span>, <span class="st">"cafe"</span>))</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Eliminar precios imposibles</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>limpio <span class="op">=</span> limpio[(limpio[<span class="st">"precio"</span>] <span class="op">&gt;</span> <span class="dv">0</span>) <span class="op">&amp;</span> (limpio[<span class="st">"precio"</span>] <span class="op">&lt;=</span> <span class="dv">50000</span>)]</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="co"># ¿Qué hacer con los faltantes? Eliminarlos es una opción defendible:</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>limpio <span class="op">=</span> limpio.dropna()</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Registros antes: </span><span class="sc">{</span><span class="bu">len</span>(ventas_aa)<span class="sc">:,}</span><span class="ss"> — después: </span><span class="sc">{</span><span class="bu">len</span>(limpio)<span class="sc">:,}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Registros antes: 3,000,000 — después: 2,866,801</code></pre>
+</div>
+</div>
+</section>
+<section id="paso-3-las-preguntas-de-la-gerencia" class="level3" data-number="11.8.3">
+<h3 data-number="11.8.3" class="anchored" data-anchor-id="paso-3-las-preguntas-de-la-gerencia"><span class="header-section-number">11.8.3</span> Paso 3 — Las preguntas de la gerencia</h3>
+<p>Con el dataset limpio, responde (tabla + gráfica para cada una):</p>
+<ol type="1">
+<li><strong>¿Cuál producto genera más dinero?</strong> Monto total por producto (crea la columna <code>monto = cantidad * precio</code>).</li>
+<li><strong>¿Cuáles son las 10 tiendas con menores ventas?</strong> La gerencia evalúa cerrarlas — tu tabla es el insumo de esa decisión.</li>
+<li><strong>¿Cómo evolucionaron las ventas mes a mes?</strong> Agrupa por mes (pista: <code>limpio["fecha"].dt.to_period("M")</code>) y grafica la serie.</li>
+</ol>
+</section>
+<section id="paso-4-el-memo" class="level3" data-number="11.8.4">
+<h3 data-number="11.8.4" class="anchored" data-anchor-id="paso-4-el-memo"><span class="header-section-number">11.8.4</span> Paso 4 — El memo</h3>
+<p>Escribe <strong>media página</strong> dirigida a la gerencia: los tres hallazgos principales y una recomendación accionable. Sin jerga técnica: la gerencia no sabe qué es un DataFrame, pero entiende plata y riesgo.</p>
+</section>
+<section id="criterios-de-evaluación" class="level3" data-number="11.8.5">
+<h3 data-number="11.8.5" class="anchored" data-anchor-id="criterios-de-evaluación"><span class="header-section-number">11.8.5</span> Criterios de evaluación</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 80%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Criterio</th>
+<th>Pregunta que debe responder tu notebook</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Auditoría</td>
+<td>¿Cuantificaste todos los problemas antes de limpiar?</td>
+</tr>
+<tr class="even">
+<td>Limpieza</td>
+<td>¿Cada decisión (eliminar, normalizar, filtrar) está justificada por escrito?</td>
+</tr>
+<tr class="odd">
+<td>Análisis</td>
+<td>¿Las tres preguntas tienen tabla y gráfica correctas?</td>
+</tr>
+<tr class="even">
+<td>Comunicación</td>
+<td>¿El memo lo entendería alguien que no programa?</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="resumen-y-cierre-del-libro" class="level2" data-number="11.9">
+<h2 data-number="11.9" class="anchored" data-anchor-id="resumen-y-cierre-del-libro"><span class="header-section-number">11.9</span> Resumen (y cierre del libro)</h2>
 <ul>
 <li><strong>Optimiza tipos</strong> (<code>int8</code>, <code>float32</code>, <code>category</code>): misma información, mitad de memoria.</li>
 <li><strong>Chunks</strong>: procesa por pedazos con acumuladores; la memoria deja de ser el límite.</li>
 <li><strong>Parquet</strong>: binario, columnar y comprimido — el formato de trabajo profesional.</li>
 <li><strong>Muestrea</strong> para explorar rápido; procesa completo solo al final.</li>
 <li><strong>PySpark</strong> es el siguiente nivel, y ya conoces su lógica.</li>
+<li>El proyecto de cierre integra todo: auditar, limpiar, analizar y <strong>comunicar</strong>.</li>
 </ul>
-<p>Empezaste escribiendo <code>print("Hola, mundo")</code> y terminas procesando millones de registros con técnicas de nivel profesional. De aquí en adelante, el camino es practicar: toma un dataset de tu disciplina (los proyectos del capítulo 9 son un buen inicio) y resuélvelo completo. Ese es el verdadero último ejercicio del libro.</p>
+<p>Empezaste escribiendo <code>print("Hola, mundo")</code> y terminas auditando tres millones de registros y escribiendo recomendaciones de gerencia. De aquí en adelante, el camino es practicar: toma un dataset de tu disciplina (los proyectos del capítulo 9 son un buen inicio) y resuélvelo completo. Ese es el verdadero último ejercicio del libro.</p>
 
 
 </section>
